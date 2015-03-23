@@ -1,0 +1,100 @@
+{# src/CV/PlatformBundle/Resources/view/Advert/view.html.twig #}
+
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une annonce - {{ parent() }}
+{% endblock %}
+
+{% block cvplatform_body %}
+
+    <p>
+      {# On affiche tous les messages flash dont le nom est « info » #}
+      {% for message in app.session.flashbag.get('confirm-booking-ride') %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </p>
+
+<div class="well">
+  <p>
+       <div class="container">
+          <div class="row">
+              <div class="col-md-3">
+                Conducteur : 
+              </div>
+              <div class="col-md-3">
+                {{ride.user}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Lieu de départ : 
+              </div>
+              <div class="col-md-3">
+                {{ride.departure}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Lieu d'arrivé : 
+              </div>
+              <div class="col-md-3">
+                {{ride.arrival}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Date et heure de départ : 
+              </div>
+              <div class="col-md-3">
+                {{ride.departureDate|date}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Prix : 
+              </div>
+              <div class="col-md-3">
+                {{ride.price}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Nombre de passager : 
+              </div>
+              <div class="col-md-3">
+                {{ride.numberPassenger}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Offre publiée le : 
+              </div>
+              <div class="col-md-3">
+                {{ride.offerPublished|date}}  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                Détails du voyage : 
+              </div>
+              <div class="col-md-3">
+                {{ride.details}}  
+              </div>
+          </div>
+    </div>
+  </p></br>
+  <p>
+    <a href="{{ path('cv_platform_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+
+    <a href="{{ path('cv_platform_confirm_booking_ride', {'id': ride.id }) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-hand-up"></i>
+      Réserver
+    </a>
+  </p>
+</div>
+
+{% endblock %}

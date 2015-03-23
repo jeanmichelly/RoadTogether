@@ -1,0 +1,15 @@
+cv_profile_edit:
+    path:      /myprofile/edit
+    defaults:  { _controller: CVProfileBundle:Profile:edit }
+
+cv_profile_edit_car:
+    path:      /car/edit/{id}
+    defaults:  { _controller: CVProfileBundle:Profile:editCar }
+    requirements:
+        id: \d+
+
+cv_profile_edit_preference:
+    path:      /preference/edit/{id}
+    defaults:  { _controller: CVProfileBundle:Profile:editPreference }
+    requirements:
+        id: \d+

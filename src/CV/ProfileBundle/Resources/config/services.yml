@@ -1,0 +1,4 @@
+services:
+#    cv_profile.example:
+#        class: CV\ProfileBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

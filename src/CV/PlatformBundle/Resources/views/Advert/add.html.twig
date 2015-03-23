@@ -1,0 +1,19 @@
+{# src/CV/PlatformBundle/Resources/views/Advert/add.html.twig #}
+
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une annonce - {{ parent() }}
+{% endblock %}
+
+{% block cvplatform_body %}
+
+  <h2>Ajouter une annonce</h2>
+
+  {{ include("CVPlatformBundle:Advert:form.html.twig") }}
+
+  <p>
+    Vous ajouter une annonce.
+  </p>
+
+{% endblock %}

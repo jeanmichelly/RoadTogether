@@ -1,0 +1,27 @@
+login:
+    path:      /{page}
+    defaults:  { _controller: CVPlatformBundle:Advert:index, page: 1 }
+    requirements:
+        page: \d*
+    
+cv_platform_view:
+    path:      /advert/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:view }
+    requirements:
+        id: \d+
+    
+cv_platform_add:
+    path:      /add
+    defaults:  { _controller: CVPlatformBundle:Advert:add }
+
+cv_platform_edit:
+    path:      /edit/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:edit }
+    requirements:
+        id: \d+
+
+cv_platform_delete:
+    path:      /delete/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:delete }
+    requirements:
+        id: \d+

@@ -1,0 +1,66 @@
+cv_platform_home:
+    path:      /{page}
+    defaults:  { _controller: CVPlatformBundle:Advert:index, page: 1 }
+    requirements:
+        page: \d*
+    
+cv_platform_view:
+    path:      /advert/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:view }
+    requirements:
+        id: \d+
+    
+cv_platform_add:
+    path:      /add
+    defaults:  { _controller: CVPlatformBundle:Advert:add }
+
+cv_platform_edit:
+    path:      /edit/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:edit }
+    requirements:
+        id: \d+
+
+cv_platform_delete:
+    path:      /delete/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:delete }
+    requirements:
+        id: \d+
+
+cv_platform_my_rides:
+    path:      /my-rides/{page}
+    defaults:  { _controller: CVPlatformBundle:Advert:ongoingRidesUser, page: 1 }
+
+
+cv_platform_search_rides:
+    path:      /search-rides
+    defaults:  { _controller: CVPlatformBundle:Advert:searchRidesUser }
+
+cv_platform_focus_rides:
+    path:      /focus-rides/{departure}/{arrival}/{departure_date}/{page}
+    defaults:  { _controller: CVPlatformBundle:Advert:focusRidesUser, page: 1 }
+
+cv_platform_booking_ride:
+    path:      /booking-ride/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:bookingRide }
+    requirements:
+        id: \d+
+
+cv_platform_confirm_booking_ride:
+    path:      /confirm-booking-ride/{id}
+    defaults:  { _controller: CVPlatformBundle:Advert:confirmBookingRide }
+    requirements:
+        id: \d+
+
+
+cv_platform_test:
+    path:      /test
+    defaults:  { _controller: CVPlatformBundle:Test:index }
+
+cv_platform_test_rides_filtered:
+    path:      /test/rides_filtered
+    defaults:  { _controller: CVPlatformBundle:Test:requestRidesFiltered }
+
+cv_platform_test_ongoing_rides_user:
+    path:      /test/ongoing_rides_user
+    defaults:  { _controller: CVPlatformBundle:Test:ongoingRidesUser }
+

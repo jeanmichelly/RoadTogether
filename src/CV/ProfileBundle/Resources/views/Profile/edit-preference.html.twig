@@ -1,0 +1,67 @@
+{# src/CV/PlatformBundle/Resources/view/Advert/view.html.twig #}
+
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Mes préférences - {{ parent() }}
+{% endblock %}
+
+{% block cvplatform_body %}
+<div class="well">
+
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+  <h3>Discussion</h3>
+
+{% for choice in form.discussion %}
+<p>
+    {{ form_widget(choice) }}
+    {{ form_label(choice) }}
+</p>
+{% endfor %}
+
+  <h3>Musique</h3>
+
+{% for choice in form.music %}
+<p>
+    {{ form_widget(choice) }}
+    {{ form_label(choice) }}
+</p>
+{% endfor %}
+
+  <h3>Cigarette</h3>
+
+{% for choice in form.cigarette %}
+<p>
+    {{ form_widget(choice) }}
+    {{ form_label(choice) }}
+</p>
+{% endfor %}
+
+  <h3>Animal</h3>
+
+{% for choice in form.animal %}
+<p>
+    {{ form_widget(choice) }}
+    {{ form_label(choice) }}
+</p>
+{% endfor %}
+
+ {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {# Génération automatique des champs pas encore écrits.
+     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+     et tous les champs cachés (type « hidden »). #}
+  {{ form_rest(form) }}
+  
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,4 @@
+services:
+#    cv_platform.example:
+#        class: CV\PlatformBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
