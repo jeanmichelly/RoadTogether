@@ -1,0 +1,6 @@
+628ac6,127.0.0.1,GET,http://localhost:8888/covoiturage/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DCVUserBundle%253ASecurity%253Alogin,1427150684,9b1274
+9b1274,::1,GET,http://localhost:8888/covoiturage/web/app_dev.php/platform,1427150684,
+728a9a,127.0.0.1,GET,http://localhost:8888/covoiturage/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DCVUserBundle%253ASecurity%253Alogin,1427150688,b75d55
+b75d55,::1,GET,http://localhost:8888/covoiturage/web/app_dev.php/platform,1427150688,
+e032e4,127.0.0.1,GET,http://localhost:8888/covoiturage/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DCVUserBundle%253ASecurity%253Alogin,1427150692,fd3ed6
+fd3ed6,::1,GET,http://localhost:8888/covoiturage/web/app_dev.php/platform,1427150692,

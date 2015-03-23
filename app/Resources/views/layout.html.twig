@@ -8,16 +8,19 @@
 
   <title>{% block title %}CV Plateforme{% endblock %}</title>
 
-  {% block stylesheets %}
-    {# On charge le CSS de bootstrap depuis le site directement #}
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-  {% endblock %}
+   {% block stylesheets %}
+      {% stylesheets output='css/main.css' filter='cssrewrite, ?yui_css'
+        'css/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+      {% endstylesheets %}
+    {% endblock %}
 </head>
+
+
 
 <body>
   <div class="container">
-    <div id="header" class="jumbotron">
+    <div id="header" class="hero-unit">
       <h1>Ma plateforme d'annonces</h1>
       <p>
         Ce projet est propulsé par Symfony2,
@@ -30,8 +33,9 @@
       </p>
     </div>
 
+
     <div class="row">
-      <div id="menu" class="col-md-3">
+      <div id="menu" class="span3">
         <h3>Les annonces</h3>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="{{ path('cv_platform_home') }}">Accueil</a></li>
@@ -40,14 +44,29 @@
           <li><a href="{{ path('cv_platform_my_rides') }}">Mes annonces</a> </li>
           <li><a href="{{ path('cv_profile_edit') }}">Mon profil</a> </li>
         </ul>
+       
+         {# On affiche un coin espace membre :
+             * Si le membre est identifiÃ© : lien de dÃ©connexion
+             * Sinon : formulaire de connexion #}
+          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <h3>Membre</h3>
+            <ul class="nav nav-pills nav-stacked">
+              <li>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
+              <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+            </ul>
+          {# On affiche le formulaire de login, sauf sur la page de connexion #}
+          {% elseif app.request.attributes.get('_route') != 'fos_user_security_login' %}
+            <h3>Identification</h3>
+            {{ render(controller('CVUserBundle:Security:login')) }}
+          {% endif %}
 
-        <h4>Dernières annonces</h4>
-        {{ render(controller("CVPlatformBundle:Advert:menu", {'limit': 3})) }}
+
       </div>
-      <div id="content" class="col-md-9">
+      <div id="content" class="span9">
         {% block body %}
         {% endblock %}
       </div>
+
     </div>
 
     <hr>
@@ -57,11 +76,16 @@
     </footer>
   </div>
 
-  {% block javascripts %}
-    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  {% endblock %}
+    {% block javascripts %}
+      {# jQuery depuis le CDN de Google, ou fallback sur une copie locale #}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="{{ asset('js/jquery.min.js') }}"><\/script>')</script>
+      {# Tous nos javascripts avec Assetic #}
+      {% javascripts output='js/main.js' filter='?yui_js'
+         'js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
 
 </body>
 </html>
