@@ -263,13 +263,20 @@ public function searchRidesUserAction(Request $request) {
 
     public function bookingRideAction($id) {
         $ride = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('CVPlatformBundle:Ride')
-        ->find($id)
+          ->getManager()
+          ->getRepository('CVPlatformBundle:Ride')
+          ->find($id)
         ;
- 
+        
+        $listPublicMessagesOfRide = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('CVPlatformBundle:PublicMessage')
+        ->publicMessagesOfRide($ride)
+        ;
+
         return $this->render('CVPlatformBundle:Advert:booking-ride.html.twig', array(
               'ride' => $ride,
+              'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
         ));
     }
 
@@ -302,10 +309,6 @@ public function searchRidesUserAction(Request $request) {
             'ride' => $ride,
             'form'   => $form->createView(),
         ));
-    }
-
-    public function publicMessageOfRideAction(){
-        return $this->render('CVPlatformBundle:Advert:public-message.html.twig');
     }
 
 }

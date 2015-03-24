@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class PublicMessageRepository extends EntityRepository
 {
+   	public function publicMessagesOfRide($ride) {
+      $listpublicMessagesOfRide = $this->createQueryBuilder('p')
+     ->groupBy('p.user')
+     ->orderBy('p.date', 'ASC')
+     ->getQuery()
+      ->getResult();
+		
+	    return $listpublicMessagesOfRide;
+   	}
 }

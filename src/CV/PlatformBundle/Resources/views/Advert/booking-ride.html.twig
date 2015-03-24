@@ -62,9 +62,11 @@
 
 <!-- Emplacement de l'afficheur -->
 <div class="well">
-  {{ render(controller('CVPlatformBundle:Advert:publicMessageOfRide')) }}
+    {{ dump(listPublicMessagesOfRide) }}
+    <ol class="messages">
 
-</ol>
+    </ol>
+
 <!-- gestion affichage -->
 <p class="boutons">
   <a href="#" class="voir_tous">Tous les messages (1)</a> 
@@ -75,6 +77,10 @@
     <textarea rows="5" cols="88" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
     <div align="right"><button class="btn btn-primary" type="button" >Publier <span class="badge">1</span></button></div>
 </div>
+
+
+
+
 </div>
     {% javascripts 'js/jquery.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
