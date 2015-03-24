@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block cvplatform_body %}
+    {% stylesheets '@CVPlatformBundle/Resources/public/css/accordeon.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
 
     <p>
       {# On affiche tous les messages flash dont le nom est « info » #}
@@ -19,68 +22,28 @@
   <p>
        <div class="container">
           <div class="row">
-              <div class="col-md-3">
-                Conducteur : 
-              </div>
-              <div class="col-md-3">
-                {{ride.user}}  
-              </div>
+              <div class="col-md-3">Conducteur : </div><div class="col-md-3">{{ride.user}} </div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Lieu de départ : 
-              </div>
-              <div class="col-md-3">
-                {{ride.departure}}  
-              </div>
+              <div class="col-md-3">Lieu de départ : </div><div class="col-md-3">{{ride.departure}}</div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Lieu d'arrivé : 
-              </div>
-              <div class="col-md-3">
-                {{ride.arrival}}  
-              </div>
+              <div class="col-md-3">Lieu d'arrivé : </div><div class="col-md-3">{{ride.arrival}}</div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Date et heure de départ : 
-              </div>
-              <div class="col-md-3">
-                {{ride.departureDate|date}}  
-              </div>
+              <div class="col-md-3">Date et heure de départ : </div><div class="col-md-3">{{ride.departureDate|date}}</div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Prix : 
-              </div>
-              <div class="col-md-3">
-                {{ride.price}}  
-              </div>
+              <div class="col-md-3">Prix : </div><div class="col-md-3">{{ride.price}}  </div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Nombre de passager : 
-              </div>
-              <div class="col-md-3">
-                {{ride.numberPassenger}}  
-              </div>
+              <div class="col-md-3">Nombre de passager : </div><div class="col-md-3">{{ride.numberPassenger}}</div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Offre publiée le : 
-              </div>
-              <div class="col-md-3">
-                {{ride.offerPublished|date}}  
-              </div>
+              <div class="col-md-3">Offre publiée le : </div><div class="col-md-3">{{ride.offerPublished|date}}</div>
           </div>
           <div class="row">
-              <div class="col-md-3">
-                Détails du voyage : 
-              </div>
-              <div class="col-md-3">
-                {{ride.details}}  
-              </div>
+              <div class="col-md-3">Détails du voyage : </div><div class="col-md-3">{{ride.details}}</div>
           </div>
     </div>
   </p></br>
@@ -96,5 +59,52 @@
     </a>
   </p>
 </div>
+
+<!-- Emplacement de l'afficheur -->
+<div class="well">
+  {{ render(controller('CVPlatformBundle:Advert:publicMessageOfRide')) }}
+
+</ol>
+<!-- gestion affichage -->
+<p class="boutons">
+  <a href="#" class="voir_tous">Tous les messages (1)</a> 
+  <a href="#" class="voir_recent">5 seulement</a>
+  <a href="#" class="replier_tous">Tout replier</a>
+</p>
+<div class="well">
+    <textarea rows="5" cols="88" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+    <div align="right"><button class="btn btn-primary" type="button" >Publier <span class="badge">1</span></button></div>
+</div>
+</div>
+    {% javascripts 'js/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".messages .corps:gt(0)").hide();
+          $(".messages li:gt(4)").hide();
+          $(".entete").click(function(){
+            $(this).next(".corps").slideToggle(500)
+            return false;
+          });
+          $(".replier_tous").click(function(){
+            $(".corps").slideUp(500)
+            return false;
+          });
+          $(".voir_tous").click(function(){
+            $(this).hide()
+            $(".voir_recent").show()
+            $(".messages li:gt(4)").slideDown()
+            return false;
+          });
+          $(".voir_recent").click(function(){
+            $(this).hide()
+            $(".voir_tous").show()
+            $(".messages li:gt(4)").slideUp()
+            return false;
+          });
+        });
+    </script>
 
 {% endblock %}

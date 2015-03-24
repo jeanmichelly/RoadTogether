@@ -304,4 +304,8 @@ public function searchRidesUserAction(Request $request) {
         ));
     }
 
+    public function publicMessageOfRideAction(){
+        return $this->render('CVPlatformBundle:Advert:public-message.html.twig');
+    }
+
 }
