@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class PublicMessageRepository extends EntityRepository
 {
+    public function publicMessagesOfRide($ride) {
+      	$listpublicMessagesOfRide = $this->findBy(
+  			array('ride' => $ride), 
+  			array('date' => 'ASC'),        
+  			null,                              
+  			0                   
+		);
+
+      	return $listpublicMessagesOfRide;
+    }
 }

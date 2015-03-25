@@ -11,6 +11,7 @@ use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
 use CV\PlatformBundle\Entity\Profile;
+use CV\PlatformBundle\Entity\PublicMessage;
 use CV\PlatformBundle\Entity\Reservation;
 
 class AdvertController extends Controller
@@ -263,16 +264,23 @@ public function searchRidesUserAction(Request $request) {
 
     public function bookingRideAction($id) {
         $ride = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('CVPlatformBundle:Ride')
-        ->find($id)
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->find($id)
         ;
- 
+        
+        $listPublicMessagesOfRide = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:PublicMessage')
+            ->publicMessagesOfRide($ride)
+        ;
+
         return $this->render('CVPlatformBundle:Advert:booking-ride.html.twig', array(
               'ride' => $ride,
+              'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
         ));
     }
-
+    
     public function confirmBookingRideAction($id, Request $request){
         $em = $this->getDoctrine()->getManager();
 
@@ -302,6 +310,17 @@ public function searchRidesUserAction(Request $request) {
             'ride' => $ride,
             'form'   => $form->createView(),
         ));
+    }
+    public function addPublicMessageAction($ride) {
+        $question = $request = $this->container->get('request')->get('question');
+        $em = $this->getDoctrine()->getManager();
+        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
+        $publicMessage = new PublicMessage($question, $ride, $this->get('security.context')->getToken()->getUser());
+        
+/*        $em->persist($publicMessage);
+        $em->flush();    */        
+ 
+        return $this->render('CVPlatformBundle:Advert:public-message.html.twig', array('publicMessage' => $publicMessage));
     }
 
 }
