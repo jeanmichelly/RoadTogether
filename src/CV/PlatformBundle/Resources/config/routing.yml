@@ -46,7 +46,7 @@ cv_platform_booking_ride:
         id: \d+
 
 cv_platform_add_public_message:
-    path:      /booking-ride/add_public_message
+    path:      /booking-ride/add_public_message/{ride}
     defaults:  { _controller: CVPlatformBundle:Advert:addPublicMessage }
 
 cv_platform_confirm_booking_ride:

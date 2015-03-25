@@ -311,10 +311,14 @@ public function searchRidesUserAction(Request $request) {
             'form'   => $form->createView(),
         ));
     }
-    public function addPublicMessageAction() {
-/*        $publicMessage = new PublicMessage($question, $ride, $this->get('security.context')->getToken()->getUser());
-*/
-          $publicMessage = new PublicMessage();
+    public function addPublicMessageAction($ride) {
+        $question = $request = $this->container->get('request')->get('question');
+        $em = $this->getDoctrine()->getManager();
+        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
+        $publicMessage = new PublicMessage($question, $ride, $this->get('security.context')->getToken()->getUser());
+        
+/*        $em->persist($publicMessage);
+        $em->flush();    */        
  
         return $this->render('CVPlatformBundle:Advert:public-message.html.twig', array('publicMessage' => $publicMessage));
     }

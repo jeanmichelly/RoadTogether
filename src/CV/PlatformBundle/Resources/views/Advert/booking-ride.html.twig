@@ -73,7 +73,7 @@
       <a href="#" class="replier_tous">Tout replier</a>
     </p>
     <div class="well">
-        <textarea rows="5" cols="107" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+        <textarea id="question" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
         <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
     </div>
 </div>
@@ -107,9 +107,11 @@
             });
 
             $("#publish").on("click", addPublicMessage);
-            function addPublicMessage(){    
-               $.ajax({
-                    url: "{{ path('cv_platform_add_public_message') }}",
+            function addPublicMessage(){
+                var question = 'question=' + document.getElementById('question').value;
+                $.ajax({
+                    url: "{{ path('cv_platform_add_public_message', {'ride': ride.id}) }}",
+                    data: question,
                     success: addingPublicMessage
                 }); 
             }
