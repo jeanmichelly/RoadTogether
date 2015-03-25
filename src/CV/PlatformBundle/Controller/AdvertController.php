@@ -11,6 +11,7 @@ use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
 use CV\PlatformBundle\Entity\Profile;
+use CV\PlatformBundle\Entity\PublicMessage;
 use CV\PlatformBundle\Entity\Reservation;
 
 class AdvertController extends Controller
@@ -279,7 +280,7 @@ public function searchRidesUserAction(Request $request) {
               'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
         ));
     }
-
+    
     public function confirmBookingRideAction($id, Request $request){
         $em = $this->getDoctrine()->getManager();
 
@@ -309,6 +310,13 @@ public function searchRidesUserAction(Request $request) {
             'ride' => $ride,
             'form'   => $form->createView(),
         ));
+    }
+    public function addPublicMessageAction() {
+/*        $publicMessage = new PublicMessage($question, $ride, $this->get('security.context')->getToken()->getUser());
+*/
+          $publicMessage = new PublicMessage();
+ 
+        return $this->render('CVPlatformBundle:Advert:public-message.html.twig', array('publicMessage' => $publicMessage));
     }
 
 }

@@ -45,12 +45,15 @@ cv_platform_booking_ride:
     requirements:
         id: \d+
 
+cv_platform_add_public_message:
+    path:      /booking-ride/add_public_message
+    defaults:  { _controller: CVPlatformBundle:Advert:addPublicMessage }
+
 cv_platform_confirm_booking_ride:
     path:      /confirm-booking-ride/{id}
     defaults:  { _controller: CVPlatformBundle:Advert:confirmBookingRide }
     requirements:
         id: \d+
-
 
 cv_platform_test:
     path:      /test

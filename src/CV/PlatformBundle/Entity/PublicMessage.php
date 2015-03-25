@@ -47,7 +47,13 @@ class PublicMessage
      */
     private $user;
 
-
+/*    public function __construct($question, $ride, $user){
+        $this->question = $question;
+        $this->date = date('Y-m-d H:i:s');
+        $this->ride = $ride;
+        $this->user = $user;
+    }
+*/
     /**
      * Get id
      *

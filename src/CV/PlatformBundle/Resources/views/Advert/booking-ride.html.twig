@@ -61,11 +61,11 @@
 
 <!-- Emplacement de l'afficheur -->
 <div class="well">
-    {% for publicMessage in listPublicMessagesOfRide %}
-        <ol class="messages">
+    <ol id="messages" class="messages">
+        {% for publicMessage in listPublicMessagesOfRide %}
             {% include 'CVPlatformBundle:Advert:public-message.html.twig' with {'publicMessage': publicMessage} %}
-        </ol>
-    {% endfor %}
+        {% endfor %}
+    </ol>
 
     <p class="boutons">
       <a href="#" class="voir_tous">Tous les messages ({{ listPublicMessagesOfRide|length }})</a> 
@@ -74,38 +74,48 @@
     </p>
     <div class="well">
         <textarea rows="5" cols="107" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
-        <div align="right"><button class="btn btn-primary" type="button" >Publier</button></div>
+        <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
     </div>
 </div>
     {% javascripts 'js/jquery.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".messages .corps:gt(0)").hide();
+                $(".messages li:gt(4)").hide();
+                $(".entete").click(function(){
+                    $(this).next(".corps").slideToggle(500)
+                    return false;
+                });
+                $(".replier_tous").click(function(){
+                    $(".corps").slideUp(500)
+                    return false;
+                });
+                $(".voir_tous").click(function(){
+                    $(this).hide()
+                    $(".voir_recent").show()
+                    $(".messages li:gt(4)").slideDown()
+                    return false;
+                });
+                $(".voir_recent").click(function(){
+                    $(this).hide()
+                    $(".voir_tous").show()
+                    $(".messages li:gt(4)").slideUp()
+                    return false;
+                });
+            });
+
+            $("#publish").on("click", addPublicMessage);
+            function addPublicMessage(){    
+               $.ajax({
+                    url: "{{ path('cv_platform_add_public_message') }}",
+                    success: addingPublicMessage
+                }); 
+            }
+            function addingPublicMessage(data) {
+                $("#messages").append(data);
+            }
+        </script>
     {% endjavascripts %}
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-          $(".messages .corps:gt(0)").hide();
-          $(".messages li:gt(4)").hide();
-          $(".entete").click(function(){
-            $(this).next(".corps").slideToggle(500)
-            return false;
-          });
-          $(".replier_tous").click(function(){
-            $(".corps").slideUp(500)
-            return false;
-          });
-          $(".voir_tous").click(function(){
-            $(this).hide()
-            $(".voir_recent").show()
-            $(".messages li:gt(4)").slideDown()
-            return false;
-          });
-          $(".voir_recent").click(function(){
-            $(this).hide()
-            $(".voir_tous").show()
-            $(".messages li:gt(4)").slideUp()
-            return false;
-          });
-        });
-    </script>
-
 {% endblock %}

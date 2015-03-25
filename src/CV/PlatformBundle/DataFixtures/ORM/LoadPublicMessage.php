@@ -46,14 +46,14 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
 
         $publicMessageTripRoundPassenger = new PublicMessage();
         $publicMessageTripRoundPassenger->setQuestion("Bonjour, pouvez vous venir me chercher devant l'UTT ?");
-        $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-4'));
+        $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-6'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('isa01'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
         $publicMessageTripRoundPassenger->setQuestion("Non j'ai pas envie");
-        $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-4'));
+        $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-7'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('mario032'));
         $manager->persist($publicMessageTripRoundPassenger);
