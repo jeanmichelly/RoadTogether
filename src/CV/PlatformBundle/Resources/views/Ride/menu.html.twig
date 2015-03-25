@@ -1,0 +1,11 @@
+{# src/CV/PlatformBundle/Resources/views/Ride/menu.html.twig #}
+
+<ul class="nav nav-pills nav-stacked">
+  {% for ride in listRides %}
+    <li>
+      <a href="{{ path('cv_platform_view', {'id': ride.id}) }}">
+        {{ ride.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

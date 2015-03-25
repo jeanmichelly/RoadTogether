@@ -1,18 +1,18 @@
-{# src/CV/PlatformBundle/Resources/views/Advert/index.html.twig #}
+{# src/CV/PlatformBundle/Resources/views/Ride/index.html.twig #}
 
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Mes annonces - {{ parent() }}
+  Réserver - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
 
 
-  <h2>Liste de mes annonces</h2>
+  <h2>Liste des annonces</h2>
 
 
-  {% for ride in listAdverts %}
+  {% for ride in listRides %}
       <div class="well">
       <i>Annonce créé le {{ ride.offerPublished|date('d/m/Y à H:i:s') }}</>
         <li>Lieu de départ : {{ ride.departure }}</li>
@@ -20,7 +20,7 @@
         <li>Prix : {{ ride.price }}</li>
 
     <p>
-    <a href="{{ path('cv_platform_view', {'id': ride.id   }) }}" 
+    <a href="{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}" 
          class="btn btn-default">
          <i class="glyphicon glyphicon-eye-open"></i>
          Voir détails

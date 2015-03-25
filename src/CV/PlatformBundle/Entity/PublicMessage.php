@@ -24,9 +24,9 @@ class PublicMessage
     /**
      * @var string
      *
-     * @ORM\Column(name="question", type="string", length=255)
+     * @ORM\Column(name="contenu", type="string", length=255)
      */
-    private $question;
+    private $contenu;
 
     /**
      * @var \DateTime
@@ -47,8 +47,8 @@ class PublicMessage
      */
     private $user;
 
-    public function __construct($question, $ride, $user){
-        $this->question = $question;
+    public function __construct($contenu, $ride, $user){
+        $this->contenu = $contenu;
         $this->date = date('Y-m-d H:i:s');
         $this->ride = $ride;
         $this->user = $user;
@@ -65,26 +65,26 @@ class PublicMessage
     }
 
     /**
-     * Set question
+     * Set contenu
      *
-     * @param string $question
+     * @param string $contenu
      * @return PublicMessage
      */
-    public function setQuestion($question)
+    public function setContenu($contenu)
     {
-        $this->question = $question;
+        $this->contenu = $contenu;
 
         return $this;
     }
 
     /**
-     * Get question
+     * Get contenu
      *
      * @return string 
      */
-    public function getQuestion()
+    public function getContenu()
     {
-        return $this->question;
+        return $this->contenu;
     }
 
     /**

@@ -1,57 +1,57 @@
 cv_platform_home:
     path:      /{page}
-    defaults:  { _controller: CVPlatformBundle:Advert:index, page: 1 }
+    defaults:  { _controller: CVPlatformBundle:Ride:index, page: 1 }
     requirements:
         page: \d*
     
 cv_platform_view:
-    path:      /advert/{id}
-    defaults:  { _controller: CVPlatformBundle:Advert:view }
+    path:      /ride/{id}
+    defaults:  { _controller: CVPlatformBundle:Ride:view }
     requirements:
         id: \d+
     
 cv_platform_add:
     path:      /add
-    defaults:  { _controller: CVPlatformBundle:Advert:add }
+    defaults:  { _controller: CVPlatformBundle:Ride:add }
 
 cv_platform_edit:
     path:      /edit/{id}
-    defaults:  { _controller: CVPlatformBundle:Advert:edit }
+    defaults:  { _controller: CVPlatformBundle:Ride:edit }
     requirements:
         id: \d+
 
 cv_platform_delete:
     path:      /delete/{id}
-    defaults:  { _controller: CVPlatformBundle:Advert:delete }
+    defaults:  { _controller: CVPlatformBundle:Ride:delete }
     requirements:
         id: \d+
 
 cv_platform_my_rides:
     path:      /my-rides/{page}
-    defaults:  { _controller: CVPlatformBundle:Advert:ongoingRidesUser, page: 1 }
+    defaults:  { _controller: CVPlatformBundle:Ride:ongoingRidesUser, page: 1 }
 
 
 cv_platform_search_rides:
     path:      /search-rides
-    defaults:  { _controller: CVPlatformBundle:Advert:searchRidesUser }
+    defaults:  { _controller: CVPlatformBundle:Ride:searchRidesUser }
 
 cv_platform_focus_rides:
     path:      /focus-rides/{departure}/{arrival}/{departure_date}/{page}
-    defaults:  { _controller: CVPlatformBundle:Advert:focusRidesUser, page: 1 }
+    defaults:  { _controller: CVPlatformBundle:Ride:focusRidesUser, page: 1 }
 
-cv_platform_booking_ride:
-    path:      /booking-ride/{id}
-    defaults:  { _controller: CVPlatformBundle:Advert:bookingRide }
+cv_platform_reservation_ride:
+    path:      /reservation-ride/{id}
+    defaults:  { _controller: CVPlatformBundle:Ride:reservationRide }
     requirements:
         id: \d+
 
 cv_platform_add_public_message:
-    path:      /booking-ride/add_public_message/{ride}
-    defaults:  { _controller: CVPlatformBundle:Advert:addPublicMessage }
+    path:      /reservation-ride/add_public_message/{ride}
+    defaults:  { _controller: CVPlatformBundle:Ride:addPublicMessage }
 
-cv_platform_confirm_booking_ride:
-    path:      /confirm-booking-ride/{id}
-    defaults:  { _controller: CVPlatformBundle:Advert:confirmBookingRide }
+cv_platform_confirm_reservation_ride:
+    path:      /confirm-reservation-ride/{id}
+    defaults:  { _controller: CVPlatformBundle:Ride:confirmReservationRide }
     requirements:
         id: \d+
 

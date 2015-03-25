@@ -10,49 +10,49 @@ use CV\PlatformBundle\Entity\PublicMessage;
 class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager) {
       	$publicMessageRoundTripPassenger = new PublicMessage();
-      	$publicMessageRoundTripPassenger->setQuestion("Pouvez vous venir me chercher à la gare de Marolles ? Cordialement");
+      	$publicMessageRoundTripPassenger->setContenu("Pouvez vous venir me chercher à la gare de Marolles ? Cordialement");
       	$publicMessageRoundTripPassenger->setDate(new \DateTime('1970-1-1'));
       	$publicMessageRoundTripPassenger->setRide($this->getReference('ride_round_trip'));
       	$publicMessageRoundTripPassenger->setUser($this->getReference('jeanmly'));
         $manager->persist($publicMessageRoundTripPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Oui bien sur");
+        $publicMessageTripRoundPassenger->setContenu("Oui bien sur");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-1'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('mario032'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Avez vous la place pour une valise 90x40cm ? ");
+        $publicMessageTripRoundPassenger->setContenu("Avez vous la place pour une valise 90x40cm ? ");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-3'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('jeanmly'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Est ce que je peux ramener mon bouldogue ? ");
+        $publicMessageTripRoundPassenger->setContenu("Est ce que je peux ramener mon bouldogue ? ");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-4'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('jeanmly'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Heu, faut peut être pas abusé là :/");
+        $publicMessageTripRoundPassenger->setContenu("Heu, faut peut être pas abusé là :/");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-5'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('mario032'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Bonjour, pouvez vous venir me chercher devant l'UTT ?");
+        $publicMessageTripRoundPassenger->setContenu("Bonjour, pouvez vous venir me chercher devant l'UTT ?");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-6'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('isa01'));
         $manager->persist($publicMessageTripRoundPassenger);
 
         $publicMessageTripRoundPassenger = new PublicMessage();
-        $publicMessageTripRoundPassenger->setQuestion("Non j'ai pas envie");
+        $publicMessageTripRoundPassenger->setContenu("Non j'ai pas envie");
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-7'));
         $publicMessageTripRoundPassenger->setRide($this->getReference('ride_round_trip'));
         $publicMessageTripRoundPassenger->setUser($this->getReference('mario032'));
