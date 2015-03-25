@@ -1,19 +1,19 @@
-{# S'il y a une erreur, on l'affiche dans un joli cadre #}
-{% if error %}
-  <div class="alert alert-error">{{ error }}</div>
-{% endif %}
-{# Le formulaire est exactement le mÃªme que dans "login", seul la prÃ©sentation diffÃ¨re un peu,
-   On ne met pas de label aux champs, mais des placeholders #}
-<form action="{{ path("fos_user_security_check") }}" method="post">
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-  <ul class="nav nav-pills nav-stacked">
-    <li><input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" /></li>
-    <li><input type="password" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" /></li>
-    <li>
-      <label for="remember_me" class="checkbox">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-      </label>
-    </li>
-  </ul>
-  <button type="submit" id="_submit" name="_submit" class="btn">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
-</form>
+<!--Pulling Awesome Font -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<ul class="nav nav-pills nav-stacked">
+    <div class="form-login"> 
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <input type="text" id="username" class="form-control input-sm chat-input" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/></br>
+            <input type="text" id="password"   class="form-control input-sm chat-input" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"     /></br>
+            <div class="wrapper">
+                <span class="group-btn">     
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-md">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}<i class="fa fa-sign-in"></i></button>
+                </span>
+            </div>
+
+        </form>
+    </div>
+</ul>
+
