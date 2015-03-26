@@ -312,10 +312,10 @@ public function searchRidesUserAction(Request $request) {
         ));
     }
     public function addPublicMessageAction($ride) {
-        $contenu = $request = $this->container->get('request')->get('contenu');
+        $content = $request = $this->container->get('request')->get('content');
         $em = $this->getDoctrine()->getManager();
         $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
-        $publicMessage = new PublicMessage($contenu, $ride, $this->get('security.context')->getToken()->getUser());
+        $publicMessage = new PublicMessage($content, $ride, $this->get('security.context')->getToken()->getUser());
         
 /*        $em->persist($publicMessage);
         $em->flush();    */        

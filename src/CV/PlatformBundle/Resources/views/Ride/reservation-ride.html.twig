@@ -73,7 +73,7 @@
       <a href="#" class="replier_tous">Tout replier</a>
     </p>
     <div class="well">
-        <textarea id="contenu" rows="5" cols="111" placeholder="Posez vos contenus ou réponses ici."></textarea><br/>
+        <textarea id="content" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
         <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
     </div>
 </div>
@@ -108,16 +108,16 @@
 
             $("#publish").on("click", addPublicMessage);
             function addPublicMessage(){
-                var contenu = 'contenu=' + document.getElementById('contenu').value;
+                var content = 'content=' + document.getElementById('content').value;
                 $.ajax({
                     url: "{{ path('cv_platform_add_public_message', {'ride': ride.id}) }}",
-                    data: contenu,
+                    data: content,
                     success: addingPublicMessage
                 }); 
             }
             function addingPublicMessage(data) {
                 $("#messages").append(data);
-                document.getElementById('contenu').value="";
+                document.getElementById('content').value="";
             }
         </script>
     {% endjavascripts %}
