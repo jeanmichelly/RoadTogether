@@ -105,9 +105,9 @@
                 },
                 function(isConfirm) {
                     if (isConfirm) {
-                        
-                    } else {
-                      
+                        $.ajax({
+                            url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
+                        }); 
                     }
                 });
             };
