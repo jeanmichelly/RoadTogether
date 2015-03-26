@@ -12,7 +12,7 @@ use CV\PlatformBundle\Entity\Reservation;
 
 class ReservationController extends Controller
 {
-    public function reservationRideAction($id) {
+    public function addAction($id) {
         $ride = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Ride')
@@ -31,7 +31,7 @@ class ReservationController extends Controller
         ));
     }
     
-    public function confirmReservationRideAction($id, Request $request){
+    public function confirmAction($id, Request $request){
         $em = $this->getDoctrine()->getManager();
 
         // On récupère l'annonce $id

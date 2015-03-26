@@ -12,14 +12,14 @@ use CV\PlatformBundle\Entity\Ride;
 
 class PublicMessageController extends Controller
 {
-    public function addPublicMessageAction($ride) {
+    public function addAction($ride) {
         $content = $this->container->get('request')->get('content');
         $em = $this->getDoctrine()->getManager();
         $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
         $publicMessage = new PublicMessage($content, $ride, $this->get('security.context')->getToken()->getUser());
         
 /*        $em->persist($publicMessage);
-        $em->flush();;    */        
+        $em->flush();    */        
  
         return $this->render('CVPlatformBundle:Ride:public-message.html.twig', array('publicMessage' => $publicMessage));
     }
