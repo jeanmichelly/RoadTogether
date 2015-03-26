@@ -19,7 +19,7 @@ class PublicMessageController extends Controller
         $publicMessage = new PublicMessage($content, $ride, $this->get('security.context')->getToken()->getUser());
         
 /*        $em->persist($publicMessage);
-        $em->flush();    */        
+        $em->flush();;    */        
  
         return $this->render('CVPlatformBundle:Ride:public-message.html.twig', array('publicMessage' => $publicMessage));
     }
