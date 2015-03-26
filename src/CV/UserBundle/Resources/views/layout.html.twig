@@ -3,11 +3,7 @@
 {# Dans notre layout, il faut dÃ©finir le block body #}
 {% block body %}
   {# On affiche les messages flash que dÃ©finissent les contrÃ´leurs du bundle #}
-  {% for key, message in app.session.flashbag.all() %}
-    <div class="alert alert-{{ key }}">
-      {{ message|trans({}, 'FOSUserBundle') }}
-    </div>
-  {% endfor %}
+  
   {# On dÃ©finit ce block, dans lequel vont venir s'insÃ©rer les autres vues du bundle #}
   {% block fos_user_content %}
   {% endblock fos_user_content %}
