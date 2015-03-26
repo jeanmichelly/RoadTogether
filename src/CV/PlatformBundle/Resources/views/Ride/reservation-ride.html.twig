@@ -127,11 +127,11 @@
         <script>
             document.querySelector('.sweet-13').onclick = function(){
                 swal({
-                    title: "Es-tu sure de vouloir réserver cette annonce ?",
+                    title: "Êtes vous sure de vouloir réserver cette annonce ?",
                     text: "Vous serez débité 2 jours après le voyage",
                     type: "warning",
                     showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
+                    confirmButtonClass: "btn-warning",
                     confirmButtonText: "Oui",
                     cancelButtonText: "Non",
                     closeOnConfirm: false,
@@ -139,9 +139,23 @@
                 },
                 function(isConfirm) {
                     if (isConfirm) {
-                        swal("Votre réservation a bien été enregistrée", "Veuillez donner le code que nous vous avons envoyé au conducteur à la fin de votre voyage", "success");
+                        swal({
+                            title: "Votre réservation a bien été enregistrée",
+                            text: "Veuillez donner le code que nous vous avons envoyé au conducteur à la fin de votre voyage",
+                            type: "success",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Ok",
+                            closeOnConfirm: true,
+                        });
                     } else {
-                        swal("Annulation", "Vous ne serez pas débité", "error");
+                        swal({
+                            title: "Annulation",
+                            text: "Vous ne serez pas débité",
+                            type: "error",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Ok",
+                            closeOnConfirm: true,
+                        });
                     }
                 });
             };
