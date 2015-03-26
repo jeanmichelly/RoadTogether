@@ -1,4 +1,4 @@
-{# src/CV/PlatformBundle/Resources/views/Advert/index.html.twig #}
+{# src/CV/PlatformBundle/Resources/views/Ride/index.html.twig #}
 
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
@@ -19,13 +19,13 @@
   <h2>Liste des annonces</h2>
 
   <ul>
-    {% for advert in listAdverts %}
+    {% for ride in listRides %}
       <li>
-        <a href="{{ path('cv_platform_view', {'id': advert.id}) }}">
-          {{ advert.title }}
+        <a href="{{ path('cv_platform_view', {'id': ride.id}) }}">
+          {{ ride.title }}
         </a>
-        par {{ advert.author }},
-        le {{ advert.date|date('d/m/Y') }}
+        par {{ ride.author }},
+        le {{ ride.date|date('d/m/Y') }}
       </li>
     {% else %}
       <li>Pas (encore !) d'annonces</li>

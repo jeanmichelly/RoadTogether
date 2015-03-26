@@ -10,11 +10,8 @@ use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
-use CV\PlatformBundle\Entity\Profile;
-use CV\PlatformBundle\Entity\PublicMessage;
-use CV\PlatformBundle\Entity\Reservation;
 
-class AdvertController extends Controller
+class RideController extends Controller
 {
   public function indexAction($page)
     {
@@ -30,10 +27,10 @@ class AdvertController extends Controller
     // Ici, on récupérera la liste des annonces, puis on la passera au template
 
     // Mais pour l'instant, on ne fait qu'appeler le template
-    // return $this->render('CVPlatformBundle:Advert:index.html.twig');
+    // return $this->render('CVPlatformBundle:Ride:index.html.twig');
     
     // Notre liste d'annonce en dur
-    $listAdverts = array(
+    $listRides = array(
       array(
         'title'   => 'Recherche développpeur Symfony2',
         'id'      => 1,
@@ -55,8 +52,8 @@ class AdvertController extends Controller
     );
 
     // Et modifiez le 2nd argument pour injecter notre liste
-    return $this->render('CVPlatformBundle:Advert:index.html.twig', array(
-      'listAdverts' => $listAdverts
+    return $this->render('CVPlatformBundle:Ride:index.html.twig', array(
+      'listRides' => $listRides
     ));
   }
 
@@ -64,16 +61,16 @@ class AdvertController extends Controller
   {
     // On fixe en dur une liste ici, bien entendu par la suite
     // on la récupérera depuis la BDD !
-    $listAdverts = array(
+    $listRides = array(
       array('id' => 2, 'title' => 'Recherche développeur Symfony2'),
       array('id' => 5, 'title' => 'Mission de webmaster'),
       array('id' => 9, 'title' => 'Offre de stage webdesigner')
     );
 
-    return $this->render('CVPlatformBundle:Advert:menu.html.twig', array(
+    return $this->render('CVPlatformBundle:Ride:menu.html.twig', array(
       // Tout l'intérêt est ici : le contrôleur passe
       // les variables nécessaires au template !
-      'listAdverts' => $listAdverts
+      'listRides' => $listRides
     ));
   }
 
@@ -90,7 +87,7 @@ $ride = $this->getDoctrine()
         'read_only' => true
     ));
 
- return $this->render('CVPlatformBundle:Advert:view.html.twig', array(
+ return $this->render('CVPlatformBundle:Ride:view.html.twig', array(
       'form' => $form->createView(),
     ));
 
@@ -114,7 +111,7 @@ $ride = $this->getDoctrine()
       return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
     }
 
-    return $this->render('CVPlatformBundle:Advert:add.html.twig', array(
+    return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
       'form' => $form->createView(),
     ));
   }
@@ -143,7 +140,7 @@ $ride = $this->getDoctrine()
       return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
     }
 
- return $this->render('CVPlatformBundle:Advert:edit.html.twig', array(
+ return $this->render('CVPlatformBundle:Ride:edit.html.twig', array(
       'form' => $form->createView(),
     ));
   }
@@ -153,9 +150,9 @@ $ride = $this->getDoctrine()
     $em = $this->getDoctrine()->getManager();
 
     // On récupère l'annonce $id
-    $advert = $em->getRepository('CVPlatformBundle:Ride')->find($id);
+    $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
 
-    if (null === $advert) {
+    if (null === $ride) {
       throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
     }
 
@@ -164,7 +161,7 @@ $ride = $this->getDoctrine()
     $form = $this->createFormBuilder()->getForm();
 
     if ($form->handleRequest($request)->isValid()) {
-      $em->remove($advert);
+      $em->remove($ride);
       $em->flush();
 
       $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
@@ -173,8 +170,8 @@ $ride = $this->getDoctrine()
     }
 
     // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-    return $this->render('CVPlatformBundle:Advert:delete.html.twig', array(
-      'advert' => $advert,
+    return $this->render('CVPlatformBundle:Ride:delete.html.twig', array(
+      'ride' => $ride,
       'form'   => $form->createView(),
     ));
     }
@@ -191,14 +188,14 @@ $ride = $this->getDoctrine()
 
     $userId = $this->get('security.context')->getToken()->getUser()->getId();
         // On récupère notre objet Paginator
-    $listAdverts = $this->getDoctrine()
+    $listRides = $this->getDoctrine()
       ->getManager()
       ->getRepository('CVPlatformBundle:Ride')
       ->requestOngoingRidesUser($page, $nbPerPage, $userId)
     ;
 
-        // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
-      $nbPages = ceil(count($listAdverts)/$nbPerPage);
+        // On calcule le nombre total de pages grâce au count($listRides) qui retourne le nombre total d'annonces
+      $nbPages = ceil(count($listRides)/$nbPerPage);
 
       // Si la page n'existe pas, on retourne une 404
     if ($page > $nbPages) {
@@ -206,8 +203,8 @@ $ride = $this->getDoctrine()
     }
 
         // On donne toutes les informations nécessaires à la vue
-    return $this->render('CVPlatformBundle:Advert:my-rides.html.twig', array(
-      'listAdverts' => $listAdverts,
+    return $this->render('CVPlatformBundle:Ride:my-rides.html.twig', array(
+      'listRides' => $listRides,
       'nbPages'     => $nbPages,
       'page'        => $page,
     ));
@@ -233,7 +230,7 @@ public function searchRidesUserAction(Request $request) {
                 )));
         }
 
-        return $this->render('CVPlatformBundle:Advert:search-rides.html.twig', array('form' => $form->createView()));
+        return $this->render('CVPlatformBundle:Ride:search-rides.html.twig', array('form' => $form->createView()));
     }
 
     public function focusRidesUserAction($departure, $arrival, $departure_date, $page) {
@@ -243,84 +240,23 @@ public function searchRidesUserAction(Request $request) {
 
         $nbPerPage = 5;
 
-        $listAdverts = $this->getDoctrine()
+        $listRides = $this->getDoctrine()
           ->getManager()
           ->getRepository('CVPlatformBundle:Ride')
           ->focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage)
         ;
 
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
+        $nbPages = ceil(count($listRides)/$nbPerPage);
 
         if ($page > $nbPages) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
-        return $this->render('CVPlatformBundle:Advert:focus-rides.html.twig', array(
-              'listAdverts' => $listAdverts,
+        return $this->render('CVPlatformBundle:Ride:focus-rides.html.twig', array(
+              'listRides' => $listRides,
               'nbPages'     => $nbPages,
               'page'        => $page
         ));
-    }
-
-    public function bookingRideAction($id) {
-        $ride = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->find($id)
-        ;
-        
-        $listPublicMessagesOfRide = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:PublicMessage')
-            ->publicMessagesOfRide($ride)
-        ;
-
-        return $this->render('CVPlatformBundle:Advert:booking-ride.html.twig', array(
-              'ride' => $ride,
-              'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
-        ));
-    }
-    
-    public function confirmBookingRideAction($id, Request $request){
-        $em = $this->getDoctrine()->getManager();
-
-        // On récupère l'annonce $id
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
-
-        if (null === $ride) {
-          throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
-        $form = $this->createFormBuilder()->getForm();
-
-        if ($form->handleRequest($request)->isValid()) {
-            $request->getSession()->getFlashBag()->add('confirm-booking-ride', "La réservation a bien été effectuée.");
-
-            $booking = new Reservation($ride, $this->get('security.context')->getToken()->getUser());
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($booking);
-            $em->flush();            
-
-            return $this->redirect($this->generateUrl('cv_platform_booking_ride', array(
-                'id' => $ride->getId(),
-            )));
-        }
-
-        return $this->render('CVPlatformBundle:Advert:confirm-booking-ride.html.twig', array(
-            'ride' => $ride,
-            'form'   => $form->createView(),
-        ));
-    }
-    public function addPublicMessageAction($ride) {
-        $question = $request = $this->container->get('request')->get('question');
-        $em = $this->getDoctrine()->getManager();
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
-        $publicMessage = new PublicMessage($question, $ride, $this->get('security.context')->getToken()->getUser());
-        
-/*        $em->persist($publicMessage);
-        $em->flush();    */        
- 
-        return $this->render('CVPlatformBundle:Advert:public-message.html.twig', array('publicMessage' => $publicMessage));
     }
 
 }

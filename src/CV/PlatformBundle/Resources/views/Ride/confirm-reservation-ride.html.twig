@@ -12,7 +12,7 @@
     Etes-vous certain de vouloir réserver cette annonce ?
   </p>
 
-  <form action="{{ path('cv_platform_confirm_booking_ride', {'id': ride.id}) }}" method="post">
+  <form action="{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id}) }}" method="post">
     <a href="{{ path('cv_platform_view', {'id': ride.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à l'annonce

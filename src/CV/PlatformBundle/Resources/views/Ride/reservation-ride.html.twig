@@ -1,4 +1,4 @@
-{# src/CV/PlatformBundle/Resources/view/Advert/view.html.twig #}
+{# src/CV/PlatformBundle/Resources/view/Ride/view.html.twig #}
 
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
@@ -13,7 +13,7 @@
 
     <p>
       {# On affiche tous les messages flash dont le nom est « info » #}
-      {% for message in app.session.flashbag.get('confirm-booking-ride') %}
+      {% for message in app.session.flashbag.get('confirm-reservation-ride') %}
         <p>{{ message }}</p>
       {% endfor %}
     </p>
@@ -52,7 +52,7 @@
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
         </a>
-        <a href="{{ path('cv_platform_confirm_booking_ride', {'id': ride.id }) }}" class="btn btn-default">
+        <a href="{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id }) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-hand-up"></i>
             Réserver
         </a>
@@ -63,7 +63,7 @@
 <div class="well">
     <ol id="messages" class="messages">
         {% for publicMessage in listPublicMessagesOfRide %}
-            {% include 'CVPlatformBundle:Advert:public-message.html.twig' with {'publicMessage': publicMessage} %}
+            {% include 'CVPlatformBundle:Ride:public-message.html.twig' with {'publicMessage': publicMessage} %}
         {% endfor %}
     </ol>
 
@@ -73,7 +73,7 @@
       <a href="#" class="replier_tous">Tout replier</a>
     </p>
     <div class="well">
-        <textarea id="question" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+        <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
         <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
     </div>
 </div>
@@ -108,16 +108,16 @@
 
             $("#publish").on("click", addPublicMessage);
             function addPublicMessage(){
-                var question = 'question=' + document.getElementById('question').value;
+                var content = 'content='+document.getElementById('contentT').value;
                 $.ajax({
                     url: "{{ path('cv_platform_add_public_message', {'ride': ride.id}) }}",
-                    data: question,
+                    data: content,
                     success: addingPublicMessage
                 }); 
             }
             function addingPublicMessage(data) {
                 $("#messages").append(data);
-                document.getElementById('question').value="";
+                document.getElementById('contentT').value="";
             }
         </script>
     {% endjavascripts %}
