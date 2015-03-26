@@ -13,13 +13,6 @@
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
-    <p>
-      {# On affiche tous les messages flash dont le nom est « info » #}
-      {% for message in app.session.flashbag.get('confirm-reservation-ride') %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    </p>
-
 <div class="well">
     <p>
         <div class="container">
@@ -146,6 +139,11 @@
                             confirmButtonClass: "btn-success",
                             confirmButtonText: "Ok",
                             closeOnConfirm: true,
+                        },
+                        function() {
+                            $.ajax({
+                                url: "{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id }) }}",
+                            }); 
                         });
                     } else {
                         swal({
