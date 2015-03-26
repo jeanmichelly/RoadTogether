@@ -10,9 +10,6 @@ use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
-use CV\PlatformBundle\Entity\Profile;
-use CV\PlatformBundle\Entity\PublicMessage;
-use CV\PlatformBundle\Entity\Reservation;
 
 class RideController extends Controller
 {

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use CV\PlatformBundle\Entity\PublicMessage;
-use CV\PlatformBundle\Entity\Reservation;
 use CV\PlatformBundle\Entity\Ride;
 
 class PublicMessageController extends Controller
