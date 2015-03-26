@@ -41,17 +41,17 @@ cv_platform_focus_rides:
 
 cv_platform_reservation_ride:
     path:      /reservation-ride/{id}
-    defaults:  { _controller: CVPlatformBundle:Ride:reservationRide }
+    defaults:  { _controller: CVPlatformBundle:Reservation:reservationRide }
     requirements:
         id: \d+
 
 cv_platform_add_public_message:
     path:      /reservation-ride/add_public_message/{ride}
-    defaults:  { _controller: CVPlatformBundle:Ride:addPublicMessage }
+    defaults:  { _controller: CVPlatformBundle:PublicMessage:addPublicMessage }
 
 cv_platform_confirm_reservation_ride:
     path:      /confirm-reservation-ride/{id}
-    defaults:  { _controller: CVPlatformBundle:Ride:confirmReservationRide }
+    defaults:  { _controller: CVPlatformBundle:Reservation:confirmReservationRide }
     requirements:
         id: \d+
 
