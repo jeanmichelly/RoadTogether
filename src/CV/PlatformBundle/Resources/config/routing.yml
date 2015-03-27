@@ -55,7 +55,6 @@ cv_platform_confirm_reservation_ride:
     requirements:
         id: \d+
 
-
 cv_platform_test:
     path:      /test
     defaults:  { _controller: CVPlatformBundle:Test:index }

@@ -147,33 +147,18 @@ $ride = $this->getDoctrine()
 
   public function deleteAction($id, Request $request)
   {
-    $em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
 
-    // On récupère l'annonce $id
-    $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
+      // On récupère l'annonce $id
+      $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
 
-    if (null === $ride) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-    }
-
-    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
-    $form = $this->createFormBuilder()->getForm();
-
-    if ($form->handleRequest($request)->isValid()) {
-      $em->remove($ride);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+      if (null === $ride) {
+        throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+      }
+        $em->remove($ride);
+        $em->flush();
 
       return $this->redirect($this->generateUrl('cv_platform_home'));
-    }
-
-    // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-    return $this->render('CVPlatformBundle:Ride:delete.html.twig', array(
-      'ride' => $ride,
-      'form'   => $form->createView(),
-    ));
     }
 
     public function ongoingRidesUserAction($page) {

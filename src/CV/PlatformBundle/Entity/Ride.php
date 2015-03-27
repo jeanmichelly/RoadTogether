@@ -22,7 +22,7 @@ class Ride
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;

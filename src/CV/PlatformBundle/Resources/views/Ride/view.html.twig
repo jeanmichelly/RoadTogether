@@ -6,8 +6,9 @@
   Lecture d'une annonce - {{ parent() }}
 {% endblock %}
 
-{% block cvplatform_body %}
 
+{% block cvplatform_body %}
+    <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">
     <p>
       {# On affiche tous les messages flash dont le nom est « info » #}
       {% for message in app.session.flashbag.get('notice') %}
@@ -79,11 +80,36 @@
       <i class="glyphicon glyphicon-edit"></i>
       Modifier l'annonce
     </a>
-    <a href="{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer l'annonce
-    </a>
+    <button class="btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><i class="glyphicon glyphicon-trash"></i> Supprimer l'annonce</button>
   </p>
   </div>
 
+    {% javascripts 'js/jquery.js' %}
+        <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+
+        <script> // Boite de confirmation
+            document.querySelector('.sweet-14').onclick = function(){
+                swal({
+                      title: "Êtes vous sure de vouloir supprimer ?",
+                    text: "Vous ne pourrez plus récupérer l'annonce",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn-danger',
+                    cancelButtonText: 'non',
+                    confirmButtonText: 'Oui'
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
+                        }); 
+                    } else {
+                    
+                    }
+                });
+            };
+
+        </script>
+    {% endjavascripts %}
 {% endblock %}
