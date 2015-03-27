@@ -20,7 +20,7 @@ class RideType extends AbstractType
             ->add('departureDate',     'date')
             ->add('price',             'integer')
             ->add('numberPassenger',   'integer')
-            ->add('details',           'textarea')
+            ->add('details',           'textarea', array('attr' => array('rows' => '5')))
             ->add('enregistrer',       'submit') 
         ;
     }
