@@ -25,7 +25,7 @@ class ReservationController extends Controller
             ->publicMessagesOfRide($ride)
         ;
 
-        return $this->render('CVPlatformBundle:Ride:reservation-ride.html.twig', array(
+        return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
               'ride' => $ride,
               'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
         ));

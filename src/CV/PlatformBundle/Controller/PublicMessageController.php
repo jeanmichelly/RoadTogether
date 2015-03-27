@@ -20,6 +20,6 @@ class PublicMessageController extends Controller
 /*        $em->persist($publicMessage);
         $em->flush();    */        
  
-        return $this->render('CVPlatformBundle:Ride:public-message.html.twig', array('publicMessage' => $publicMessage));
+        return $this->render('CVPlatformBundle:PublicMessage:view.html.twig', array('publicMessage' => $publicMessage));
     }
 }

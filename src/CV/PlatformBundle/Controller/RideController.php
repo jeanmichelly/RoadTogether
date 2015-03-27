@@ -87,7 +87,7 @@ $ride = $this->getDoctrine()
         'read_only' => true
     ));
 
- return $this->render('CVPlatformBundle:Ride:view.html.twig', array(
+ return $this->render('CVPlatformBundle:Ride:my_ride_details.html.twig', array(
       'form' => $form->createView(),
     ));
 
@@ -188,7 +188,7 @@ $ride = $this->getDoctrine()
     }
 
         // On donne toutes les informations nécessaires à la vue
-    return $this->render('CVPlatformBundle:Ride:my-rides.html.twig', array(
+    return $this->render('CVPlatformBundle:Ride:my_rides.html.twig', array(
       'listRides' => $listRides,
       'nbPages'     => $nbPages,
       'page'        => $page,
@@ -215,7 +215,7 @@ public function searchRidesUserAction(Request $request) {
                 )));
         }
 
-        return $this->render('CVPlatformBundle:Ride:search-rides.html.twig', array('form' => $form->createView()));
+        return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
     }
 
     public function focusRidesUserAction($departure, $arrival, $departure_date, $page) {
@@ -237,7 +237,7 @@ public function searchRidesUserAction(Request $request) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
-        return $this->render('CVPlatformBundle:Ride:focus-rides.html.twig', array(
+        return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
               'listRides' => $listRides,
               'nbPages'     => $nbPages,
               'page'        => $page

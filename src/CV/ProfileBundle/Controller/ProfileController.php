@@ -79,12 +79,12 @@ class ProfileController extends Controller
       $request->getSession()->getFlashBag()->add('notice', 'Profil bien modifié.');
 
               // On donne toutes les informations nécessaires à la vue
-    return $this->render('CVProfileBundle:Profile:edit-car.html.twig', array(
+    return $this->render('CVProfileBundle:Profile:edit_car.html.twig', array(
       'cars' => $cars,
             'form' => $form->createView(),
     ));
     }
-     return $this->render('CVProfileBundle:Profile:edit-car.html.twig', array(
+     return $this->render('CVProfileBundle:Profile:edit_car.html.twig', array(
       'cars' => $cars,
       'form' => $form->createView(),
     ));
@@ -113,7 +113,7 @@ class ProfileController extends Controller
 
       return $this->redirect($this->generateUrl('cv_profile_edit_preference', array('id' => $id)));
     }
-     return $this->render('CVProfileBundle:Profile:edit-preference.html.twig', array(
+     return $this->render('CVProfileBundle:Profile:edit_preference.html.twig', array(
       'form' => $form->createView(),
     ));
   }

@@ -1,5 +1,3 @@
-{# src/CV/PlatformBundle/Resources/view/Ride/reservation-ride.html.twig #}
-
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
@@ -16,7 +14,7 @@
 
 <div class="well">
     <p>
-        {% include 'CVPlatformBundle:Ride:ride.html.twig' with {'ride': ride} %}
+        {% include 'CVPlatformBundle:Ride:focus_details.html.twig' with {'ride': ride} %}
     </p></br>
     <p>
         <a href="{{ path('cv_platform_home') }}" class="btn btn-primary btn-outline btn-lg">
@@ -31,7 +29,7 @@
 <div class="well">
     <ol id="messages" class="messages">
         {% for publicMessage in listPublicMessagesOfRide %}
-            {% include 'CVPlatformBundle:Ride:public-message.html.twig' with {'publicMessage': publicMessage} %}
+            {% include 'CVPlatformBundle:PublicMessage:view.html.twig' with {'publicMessage': publicMessage} %}
         {% endfor %}
     </ol>
 

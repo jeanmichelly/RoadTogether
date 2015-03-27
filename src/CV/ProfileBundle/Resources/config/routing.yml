@@ -1,5 +1,5 @@
 cv_profile_edit:
-    path:      /myprofile/edit
+    path:      /my-profile/edit
     defaults:  { _controller: CVProfileBundle:Profile:edit }
 
 cv_profile_edit_car:
