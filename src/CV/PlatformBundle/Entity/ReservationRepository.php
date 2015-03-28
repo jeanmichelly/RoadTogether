@@ -3,6 +3,7 @@
 namespace CV\PlatformBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * ReservationRepository
@@ -12,4 +13,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReservationRepository extends EntityRepository
 {
+	public function myReservations($page, $nbPerPage, $idUser) {
+		
+	    $query = $this->createQueryBuilder('r')
+	      ->join('r.ride', 'ride')
+	      ->addSelect('ride')
+	      ->where('r.user = :user')
+	      ->setParameter('user', $idUser)
+	      ->orderBy('ride.offerPublished', 'DESC')
+	      ->getQuery();
+
+	        $query
+	          ->setFirstResult(($page-1) * $nbPerPage)
+	          ->setMaxResults($nbPerPage);
+
+	    return new Paginator($query, true);
+   	}
 }

@@ -51,4 +51,37 @@ class ReservationController extends Controller
         )));
     }
 
+    public function myReservationsAction($page){
+        if ($page < 1) {
+          throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }           
+
+            // Ici je fixe le nombre d'annonces par page à 3
+        // Mais bien sûr il faudrait utiliser un paramètre, et y accéder via $this->container->getParameter('nb_per_page')
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+            // On récupère notre objet Paginator
+        $listReservations = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('CVPlatformBundle:Reservation')
+          ->myReservations($page, $nbPerPage, $userId)
+        ;
+
+            // On calcule le nombre total de pages grâce au count($listRides) qui retourne le nombre total d'annonces
+          $nbPages = ceil(count($listReservations)/$nbPerPage);
+
+          // Si la page n'existe pas, on retourne une 404
+        if ($page > $nbPages) {
+          throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+            // On donne toutes les informations nécessaires à la vue
+        return $this->render('CVPlatformBundle:Reservation:my_reservations.html.twig', array(
+          'listReservations' => $listReservations,
+          'nbPages'     => $nbPages,
+          'page'        => $page,
+        ));
+    }
+
 }

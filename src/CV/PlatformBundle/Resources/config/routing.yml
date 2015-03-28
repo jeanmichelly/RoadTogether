@@ -30,7 +30,6 @@ cv_platform_my_rides:
     path:      /my-rides/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:ongoingRidesUser, page: 1 }
 
-
 cv_platform_search_rides:
     path:      /search-rides
     defaults:  { _controller: CVPlatformBundle:Ride:searchRidesUser }
@@ -55,15 +54,6 @@ cv_platform_confirm_reservation_ride:
     requirements:
         id: \d+
 
-cv_platform_test:
-    path:      /test
-    defaults:  { _controller: CVPlatformBundle:Test:index }
-
-cv_platform_test_rides_filtered:
-    path:      /test/rides_filtered
-    defaults:  { _controller: CVPlatformBundle:Test:requestRidesFiltered }
-
-cv_platform_test_ongoing_rides_user:
-    path:      /test/ongoing_rides_user
-    defaults:  { _controller: CVPlatformBundle:Test:ongoingRidesUser }
-
+cv_platform_my_reservations:
+    path:      /my-reservations/{page}
+    defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }
