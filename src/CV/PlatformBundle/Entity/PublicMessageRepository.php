@@ -3,6 +3,7 @@
 namespace CV\PlatformBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * PublicMessageRepository
@@ -21,5 +22,42 @@ class PublicMessageRepository extends EntityRepository
 		);
 
       	return $listpublicMessagesOfRide;
+    }
+
+    public function messagesReceived($page, $nbPerPage, $userId){
+		$query = $this->_em->createQuery('
+				SELECT p, r FROM CVPlatformBundle:PublicMessage p
+		        JOIN p.ride r
+				WHERE p.user <> :user
+		        AND EXISTS (
+		        	SELECT p2
+		        	FROM CVPlatformBundle:PublicMessage p2
+		        	WHERE r = p2.ride
+		        	AND p2.user = :user
+		        )
+				ORDER BY p.date DESC')
+			->setParameter('user', $userId);
+
+        $query
+          ->setFirstResult(($page-1) * $nbPerPage)
+          ->setMaxResults($nbPerPage);
+
+	    return new Paginator($query, true);
+    }
+
+	public function messagesSended($page, $nbPerPage, $userId){
+    	$query = $this->createQueryBuilder('p')
+	      ->join('p.ride', 'ride')
+	      ->addSelect('ride')
+	      ->where('p.user = :user')
+	      ->setParameter('user', $userId)
+		  ->orderBy('p.date', 'DESC')
+	      ->getQuery();
+
+	  	$query
+          ->setFirstResult(($page-1) * $nbPerPage)
+          ->setMaxResults($nbPerPage);
+
+	    return new Paginator($query, true);
     }
 }

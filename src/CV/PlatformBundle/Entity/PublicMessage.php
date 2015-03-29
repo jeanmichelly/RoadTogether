@@ -49,7 +49,7 @@ class PublicMessage
 
     public function __construct($content, $ride, $user){
         $this->content = $content;
-        $this->date = date('Y-m-d H:i:s');
+        $this->date = new \Datetime();
         $this->ride = $ride;
         $this->user = $user;
     }

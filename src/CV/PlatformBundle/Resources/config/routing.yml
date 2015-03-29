@@ -57,3 +57,11 @@ cv_platform_confirm_reservation_ride:
 cv_platform_my_reservations:
     path:      /my-reservations/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }
+
+cv_platform_messages_received:
+    path:      /messages-received/{page}
+    defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesReceived, page: 1 }
+
+cv_platform_messages_sended:
+    path:      /messages-sended/{page}
+    defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesSended, page: 1 }

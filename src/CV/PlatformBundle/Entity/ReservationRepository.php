@@ -13,13 +13,12 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
-	public function myReservations($page, $nbPerPage, $idUser) {
-		
+	public function myReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')
 	      ->join('r.ride', 'ride')
 	      ->addSelect('ride')
 	      ->where('r.user = :user')
-	      ->setParameter('user', $idUser)
+	      ->setParameter('user', $userId)
 	      ->orderBy('ride.offerPublished', 'DESC')
 	      ->getQuery();
 
