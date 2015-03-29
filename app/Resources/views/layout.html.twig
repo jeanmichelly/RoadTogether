@@ -32,12 +32,24 @@
           <a class="navbar-brand" href="{{ path('cv_platform_home') }}">Covoiturage</a>
         </div>
     
-      
     
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-4">
           <ul class="nav navbar-nav navbar-right">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+              <li><a href="{{ path('cv_platform_my_reservations') }}">Réservation</a> </li>
+            {% endif %}
 
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Messages <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{{ path('cv_platform_messages_received') }}">Messages reçus</a> </li>
+                  <li><a href="{{ path('cv_platform_messages_sended') }}">Messages laissés</a> </li>
+                </ul>
+              </li>
+            {% endif %}
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Annonce <span class="caret"></span></a>
