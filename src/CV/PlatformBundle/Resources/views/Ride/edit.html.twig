@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block cvplatform_body %}
+  {% stylesheets 'css/jquery.datetimepicker.css' %}
+          <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+  {% endstylesheets %}
 
   <h2>Modifier une annonce</h2>
 
@@ -21,5 +24,18 @@
       Retour à l'annonce
     </a>
   </p>
+
+    {% javascripts 
+        'js/jquery.js'
+        'js/jquery.datetimepicker.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $('#cv_platformbundle_ride_edit_departureDate').datetimepicker({
+            mask:'9999/19/39 29:59',
+            lang:'fr',
+        });
+    </script>
 
 {% endblock %}

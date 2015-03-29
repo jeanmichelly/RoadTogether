@@ -17,7 +17,7 @@ class RideType extends AbstractType
         $builder
             ->add('departure',         'text')
             ->add('arrival',           'text')
-            ->add('departureDate',     'date')
+            ->add('departureDate',     'text')
             ->add('price',             'integer')
             ->add('numberPassenger',   'integer')
             ->add('details',           'textarea', array('attr' => array('rows' => '5')))

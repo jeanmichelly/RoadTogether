@@ -42,9 +42,9 @@ class Ride
     private $arrival;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="departure_date", type="datetime")
+     * @ORM\Column(name="departure_date", type="text")
      */
     private $departureDate;
 

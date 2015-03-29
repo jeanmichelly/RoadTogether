@@ -97,7 +97,7 @@ $ride = $this->getDoctrine()
   {
 
     $ride = new Ride();
-    $ride->setDepartureDate = new \Datetime();
+    // $ride->setDepartureDate = new \Datetime();
     $ride->setUser($this->get('security.context')->getToken()->getUser());
     $form = $this->createForm(new RideType, $ride);
 
