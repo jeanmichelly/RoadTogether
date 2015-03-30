@@ -1,38 +1,27 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Mes réservations - {{ parent() }}
+    Mes réservations - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
+    <h2>Liste de mes réservations</h2>
 
-
-  <h2>Liste de mes réservations</h2>
-
-  {% for reservation in listReservations %}
-
-      <div class="well">
-      <i>Annonce créé le {{ reservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</>
-        <li>Lieu de départ : {{ reservation.ride.departure }}</li>
-        <li>Lieu d'arrivé : {{ reservation.ride.arrival }}</li>
-        <li>Prix : {{ reservation.ride.price }}</li>
-
-    <p>
-    <a href="{{ path('cv_platform_view', {'id': reservation.ride.id   }) }}" 
-         class="btn btn-default">
-         <i class="glyphicon glyphicon-eye-open"></i>
-         Voir détails
-        </a>
-       </p>
+    {% for reservation in listReservations %}
+        <div class="well">
+            <i>Annonce créé le {{ reservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</>
+            <li>Lieu de départ : {{ reservation.ride.departure }}</li>
+            <li>Lieu d'arrivé : {{ reservation.ride.arrival }}</li>
+            <li>Prix : {{ reservation.ride.price }}</li>
+            <p>
+                <a href="{{ path('cv_platform_view', {'id': reservation.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir détails</a>
+            </p>
         </div>
-  {% endfor %}
+    {% endfor %}
 
-  <ul class="pagination">
-  {% for p in range(1, nbPages) %}
-    <li{% if p == page %} class="active"{% endif %}>
-      <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
-    </li>
-  {% endfor %}
-  </ul>
-  
+    <ul class="pagination">
+        {% for p in range(1, nbPages) %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
