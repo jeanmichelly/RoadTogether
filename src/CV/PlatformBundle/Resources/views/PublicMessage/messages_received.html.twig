@@ -1,35 +1,26 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier une annonce - {{ parent() }}
+    Modifier une annonce - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-
-  <h2>Messages reçus</h2>
+    <h2>Messages reçus</h2>
     {% for messageReceived in listMessagesReceived %}
+        <div class="well">
+            <i>Message publié le {{ messageReceived.date|date('d/m/Y à H:i:s') }}</>
+            <li>Utilisateur : {{ messageReceived.user }}</li>
+            <li>Contenu : {{ messageReceived.content }}</li>
 
-    <div class="well">
-      <i>Message publié le {{ messageReceived.date|date('d/m/Y à H:i:s') }}</>
-        <li>Utilisateur : {{ messageReceived.user }}</li>
-        <li>Contenu : {{ messageReceived.content }}</li>
-
-    	<p>
-    		<a href="{{ path('cv_platform_view', {'id': messageReceived.ride.id   }) }}" 
-         class="btn btn-default">
-         <i class="glyphicon glyphicon-eye-open"></i>
-         Voir l'annonce
-        </a>
-       </p>
+        	<p>
+        		<a href="{{ path('cv_platform_view', {'id': messageReceived.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
+            </p>
         </div>
    	{% endfor %}
 
 	<ul class="pagination">
-	  {% for p in range(1, nbPages) %}
-	    <li{% if p == page %} class="active"{% endif %}>
-	      <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
-	    </li>
-	  {% endfor %}
+	    {% for p in range(1, nbPages) %}
+	       <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
+	    {% endfor %}
   	</ul>
-
 {% endblock %}
