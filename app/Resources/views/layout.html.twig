@@ -49,13 +49,13 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Annonce <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('cv_platform_search_rides') }}">Rechercher des annonces</a> </li>
+                                        <li><a href="{{ path('cv_platform_search_rides') }}">Rechercher des annonces</a></li>
                                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
                                             <li><a href="{{ path('cv_platform_add') }}">Ajouter une annonce</a> </li>
                                             <li><a href="{{ path('cv_platform_my_rides') }}">Mes annonces</a> </li>
                                         {% endif %}
                                     </ul>
-                                 </li>
+                                </li>
 
                             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             {% else %}
@@ -71,15 +71,12 @@
                                                     <div class="col-md-5">
                                                         <img src="http://placehold.it/120x120"
                                                             alt="Alternate Text" class="img-responsive" />
-                                                        <p class="text-center small">
-                                                            <a href="#">Changer la photo</a></p>
+                                                        <p class="text-center small"><a href="#">Changer la photo</a></p>
                                                     </div>
                                                     <div class="col-md-7">
                                                         <span>{{app.user.username}}</span>
-                                                        <p class="text-muted small">
-                                                            {{app.user.email}}</p>
-                                                        <div class="divider">
-                                                        </div>
+                                                        <p class="text-muted small">{{app.user.email}}</p>
+                                                        <div class="divider"></div>
                                                         <a href="{{ path('cv_profile_edit') }}" class="btn btn-primary btn-sm active">Voir profil</a>
                                                     </div>
                                                 </div>
@@ -105,20 +102,18 @@
                 </div>
             </nav>
         </div>
-
+    
         <div class="row">
             <div id="menu" class="col-md-3">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     {% block menu_lateral %}    
                     {% endblock %}    
-
             </div>
         </div>
                 {% elseif app.request.attributes.get('_route') != 'fos_user_security_login' %}
                     <h3>Identification</h3>
                     {{ render(controller('CVUserBundle:Security:login')) }}
                 {% endif %}
-        </div>
         <div id="content" class="col-md-9">
             {% block body %}
             {% endblock %}
@@ -130,7 +125,6 @@
     <footer>
         <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
     </footer>
-    </div>
 
     {% block javascripts %}
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

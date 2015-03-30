@@ -44,18 +44,6 @@ class RideController extends Controller
         ));
     }
 
-    public function menuAction($limit) {
-        $listRides = array(
-            array('id' => 2, 'title' => 'Recherche développeur Symfony2'),
-            array('id' => 5, 'title' => 'Mission de webmaster'),
-            array('id' => 9, 'title' => 'Offre de stage webdesigner')
-        );
-
-        return $this->render('CVPlatformBundle:Ride:menu.html.twig', array(
-            'listRides' => $listRides
-        ));
-    }
-
     public function viewAction($id) {
         $ride = $this->getDoctrine()
             ->getManager()

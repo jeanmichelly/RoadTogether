@@ -4,9 +4,6 @@
     Accueil - {{ parent() }}
 {% endblock %}
 
-{% block menu_lateral %}    
-{% endblock %}
-
 {% block cvplatform_body %}
     <p>
         {% for message in app.session.flashbag.get('info') %}
