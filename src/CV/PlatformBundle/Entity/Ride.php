@@ -83,9 +83,8 @@ class Ride
      */
     private $offerPublished;
 
-    public function __construct()
-    {
-      $this->setOfferPublished(new \Datetime());
+    public function __construct() {
+        $this->setOfferPublished(new \Datetime());
     }
 
     /**
@@ -93,8 +92,7 @@ class Ride
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -104,10 +102,8 @@ class Ride
      * @param string $departure
      * @return Ride
      */
-    public function setDeparture($departure)
-    {
+    public function setDeparture($departure) {
         $this->departure = $departure;
-
         return $this;
     }
 
@@ -116,8 +112,7 @@ class Ride
      *
      * @return string 
      */
-    public function getDeparture()
-    {
+    public function getDeparture() {
         return $this->departure;
     }
 
@@ -127,10 +122,8 @@ class Ride
      * @param string $arrival
      * @return Ride
      */
-    public function setArrival($arrival)
-    {
+    public function setArrival($arrival) {
         $this->arrival = $arrival;
-
         return $this;
     }
 
@@ -139,8 +132,7 @@ class Ride
      *
      * @return string 
      */
-    public function getArrival()
-    {
+    public function getArrival() {
         return $this->arrival;
     }
 
@@ -150,10 +142,8 @@ class Ride
      * @param \DateTime $departureDate
      * @return Ride
      */
-    public function setDepartureDate($departureDate)
-    {
+    public function setDepartureDate($departureDate) {
         $this->departureDate = $departureDate;
-
         return $this;
     }
 
@@ -162,8 +152,7 @@ class Ride
      *
      * @return \DateTime 
      */
-    public function getDepartureDate()
-    {
+    public function getDepartureDate() {
         return $this->departureDate;
     }
 
@@ -173,10 +162,8 @@ class Ride
      * @param integer $price
      * @return Ride
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
-
         return $this;
     }
 
@@ -185,8 +172,7 @@ class Ride
      *
      * @return integer 
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -196,10 +182,8 @@ class Ride
      * @param integer $numberPassenger
      * @return Ride
      */
-    public function setNumberPassenger($numberPassenger)
-    {
+    public function setNumberPassenger($numberPassenger) {
         $this->numberPassenger = $numberPassenger;
-
         return $this;
     }
 
@@ -208,8 +192,7 @@ class Ride
      *
      * @return integer 
      */
-    public function getNumberPassenger()
-    {
+    public function getNumberPassenger() {
         return $this->numberPassenger;
     }
 
@@ -219,10 +202,8 @@ class Ride
      * @param string $details
      * @return Ride
      */
-    public function setDetails($details)
-    {
+    public function setDetails($details) {
         $this->details = $details;
-
         return $this;
     }
 
@@ -231,8 +212,7 @@ class Ride
      *
      * @return string 
      */
-    public function getDetails()
-    {
+    public function getDetails() {
         return $this->details;
     }
 
@@ -242,10 +222,8 @@ class Ride
      * @param integer $state
      * @return Ride
      */
-    public function setState($state)
-    {
+    public function setState($state) {
         $this->state = $state;
-
         return $this;
     }
 
@@ -254,8 +232,7 @@ class Ride
      *
      * @return integer 
      */
-    public function getState()
-    {
+    public function getState() {
         return $this->state;
     }
 
@@ -265,10 +242,8 @@ class Ride
      * @param \DateTime $offerPublished
      * @return Ride
      */
-    public function setOfferPublished($offerPublished)
-    {
+    public function setOfferPublished($offerPublished) {
         $this->offerPublished = $offerPublished;
-
         return $this;
     }
 
@@ -277,8 +252,7 @@ class Ride
      *
      * @return \DateTime 
      */
-    public function getOfferPublished()
-    {
+    public function getOfferPublished() {
         return $this->offerPublished;
     }
 
@@ -288,10 +262,8 @@ class Ride
      * @param \CV\UserBundle\Entity\User $user
      * @return Ride
      */
-    public function setUser(\CV\UserBundle\Entity\User $user)
-    {
+    public function setUser(\CV\UserBundle\Entity\User $user) {
         $this->user = $user;
-
         return $this;
     }
 
@@ -300,8 +272,7 @@ class Ride
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 }

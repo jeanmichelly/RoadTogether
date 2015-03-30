@@ -56,8 +56,7 @@ class Payment
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -67,10 +66,8 @@ class Payment
      * @param \DateTime $date
      * @return Payment
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-
         return $this;
     }
 
@@ -79,8 +76,7 @@ class Payment
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -90,10 +86,8 @@ class Payment
      * @param integer $numberSeat
      * @return Payment
      */
-    public function setNumberSeat($numberSeat)
-    {
+    public function setNumberSeat($numberSeat) {
         $this->numberSeat = $numberSeat;
-
         return $this;
     }
 
@@ -102,8 +96,7 @@ class Payment
      *
      * @return integer 
      */
-    public function getNumberSeat()
-    {
+    public function getNumberSeat() {
         return $this->numberSeat;
     }
 
@@ -113,10 +106,8 @@ class Payment
      * @param boolean $type
      * @return Payment
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
-
         return $this;
     }
 
@@ -125,8 +116,7 @@ class Payment
      *
      * @return boolean 
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -136,10 +126,8 @@ class Payment
      * @param integer $amount
      * @return Payment
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->amount = $amount;
-
         return $this;
     }
 
@@ -148,8 +136,7 @@ class Payment
      *
      * @return integer 
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 
@@ -159,10 +146,8 @@ class Payment
      * @param \CV\PlatformBundle\Entity\Ride $ride
      * @return Payment
      */
-    public function setRide(\CV\PlatformBundle\Entity\Ride $ride)
-    {
+    public function setRide(\CV\PlatformBundle\Entity\Ride $ride) {
         $this->ride = $ride;
-
         return $this;
     }
 
@@ -171,8 +156,7 @@ class Payment
      *
      * @return \CV\PlatformBundle\Entity\Ride 
      */
-    public function getRide()
-    {
+    public function getRide() {
         return $this->ride;
     }
 
@@ -182,10 +166,8 @@ class Payment
      * @param \CV\UserBundle\Entity\User $user
      * @return Payment
      */
-    public function setUser(\CV\UserBundle\Entity\User $user)
-    {
+    public function setUser(\CV\UserBundle\Entity\User $user) {
         $this->user = $user;
-
         return $this;
     }
 
@@ -194,8 +176,7 @@ class Payment
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 }

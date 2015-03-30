@@ -36,7 +36,7 @@ class Reservation
   private $user;
   
 
-    public function __construct($ride, $user){
+    public function __construct($ride, $user) {
         $this->ride = $ride;
         $this->user = $user;
         $this->state = 2;
@@ -47,8 +47,7 @@ class Reservation
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -58,10 +57,8 @@ class Reservation
      * @param integer $state
      * @return Reservation
      */
-    public function setState($state)
-    {
+    public function setState($state) {
         $this->state = $state;
-
         return $this;
     }
 
@@ -70,8 +67,7 @@ class Reservation
      *
      * @return integer 
      */
-    public function getState()
-    {
+    public function getState() {
         return $this->state;
     }
 
@@ -81,10 +77,8 @@ class Reservation
      * @param \CV\PlatformBundle\Entity\Ride $ride
      * @return Reservation
      */
-    public function setRide(\CV\PlatformBundle\Entity\Ride $ride)
-    {
+    public function setRide(\CV\PlatformBundle\Entity\Ride $ride) {
         $this->ride = $ride;
-
         return $this;
     }
 
@@ -93,8 +87,7 @@ class Reservation
      *
      * @return \CV\PlatformBundle\Entity\Ride 
      */
-    public function getRide()
-    {
+    public function getRide() {
         return $this->ride;
     }
 
@@ -104,10 +97,8 @@ class Reservation
      * @param \CV\UserBundle\Entity\User $user
      * @return Reservation
      */
-    public function setUser(\CV\UserBundle\Entity\User $user)
-    {
+    public function setUser(\CV\UserBundle\Entity\User $user) {
         $this->user = $user;
-
         return $this;
     }
 
@@ -116,8 +107,7 @@ class Reservation
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 }
