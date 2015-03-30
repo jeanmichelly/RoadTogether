@@ -1,12 +1,12 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Ajouter une annonce - {{ parent() }}
+    Ajouter une annonce - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
 	{% stylesheets 'css/jquery.datetimepicker.css' %}
-	        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
 	{% endstylesheets %}
 
   	{{ include("CVPlatformBundle:Ride:form.html.twig") }}
@@ -24,5 +24,4 @@
             minDate:new Date()
         });
     </script>
-
 {% endblock %}
