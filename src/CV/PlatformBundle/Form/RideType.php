@@ -12,8 +12,7 @@ class RideType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('departure',         'text')
             ->add('arrival',           'text')
@@ -21,15 +20,13 @@ class RideType extends AbstractType
             ->add('price',             'integer')
             ->add('numberPassenger',   'integer')
             ->add('details',           'textarea', array('attr' => array('rows' => '5')))
-            ->add('enregistrer',       'submit') 
-        ;
+            ->add('enregistrer',       'submit');
     }
     
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'CV\PlatformBundle\Entity\Ride'
         ));
@@ -38,8 +35,7 @@ class RideType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'cv_platformbundle_ride';
     }
 }

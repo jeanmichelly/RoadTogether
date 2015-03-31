@@ -1,33 +1,29 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Accueil - {{ parent() }}
+    Accueil - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-
     <p>
-      {# On affiche tous les messages flash dont le nom est « info » #}
-      {% for message in app.session.flashbag.get('info') %}
-        <p>{{ message }}</p>
-      {% endfor %}
+        {% for message in app.session.flashbag.get('info') %}
+            <p>{{ message }}</p>
+        {% endfor %}
     </p>
 
+    <h2>Liste des annonces</h2>
 
-  <h2>Liste des annonces</h2>
-
-  <ul>
-    {% for ride in listRides %}
-      <li>
-        <a href="{{ path('cv_platform_view', {'id': ride.id}) }}">
-          {{ ride.title }}
-        </a>
-        par {{ ride.author }},
-        le {{ ride.date|date('d/m/Y') }}
-      </li>
-    {% else %}
-      <li>Pas (encore !) d'annonces</li>
-    {% endfor %}
-  </ul>
-
+    <ul>
+        {% for ride in listRides %}
+            <li>
+                <a href="{{ path('cv_platform_view', {'id': ride.id}) }}">
+                    {{ ride.title }}
+                </a>
+                par {{ ride.author }},
+                le {{ ride.date|date('d/m/Y') }}
+            </li>
+        {% else %}
+            <li>Pas (encore !) d'annonces</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

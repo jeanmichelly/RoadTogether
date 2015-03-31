@@ -26,18 +26,18 @@ class ReservationController extends Controller
         ;
 
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
-              'ride' => $ride,
-              'listPublicMessagesOfRide' => $listPublicMessagesOfRide,
+              'ride'                        => $ride,
+              'listPublicMessagesOfRide'    => $listPublicMessagesOfRide,
         ));
     }
     
-    public function confirmAction($id, Request $request){
+    public function confirmAction($id, Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
 
         if (null === $ride) {
-          throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
      
         $reservation = new Reservation($ride, $this->get('security.context')->getToken()->getUser());
@@ -51,9 +51,9 @@ class ReservationController extends Controller
         )));
     }
 
-    public function myReservationsAction($page){
+    public function myReservationsAction($page) {
         if ($page < 1) {
-          throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }           
 
         $nbPerPage = 5;
@@ -61,22 +61,21 @@ class ReservationController extends Controller
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
         $listReservations = $this->getDoctrine()
-          ->getManager()
-          ->getRepository('CVPlatformBundle:Reservation')
-          ->myReservations($page, $nbPerPage, $userId)
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Reservation')
+            ->myReservations($page, $nbPerPage, $userId)
         ;
 
-          $nbPages = ceil(count($listReservations)/$nbPerPage);
+        $nbPages = ceil(count($listReservations)/$nbPerPage);
 
         if ($page > $nbPages) {
-          throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
         return $this->render('CVPlatformBundle:Reservation:my_reservations.html.twig', array(
-          'listReservations' => $listReservations,
-          'nbPages'     => $nbPages,
-          'page'        => $page,
+            'listReservations'  => $listReservations,
+            'nbPages'           => $nbPages,
+            'page'              => $page,
         ));
     }
-
 }

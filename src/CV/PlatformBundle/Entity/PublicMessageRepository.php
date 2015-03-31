@@ -24,7 +24,7 @@ class PublicMessageRepository extends EntityRepository
       	return $listpublicMessagesOfRide;
     }
 
-    public function messagesReceived($page, $nbPerPage, $userId){
+    public function messagesReceived($page, $nbPerPage, $userId) {
 		$query = $this->_em->createQuery('
 				SELECT p, r FROM CVPlatformBundle:PublicMessage p
 		        JOIN p.ride r
@@ -39,24 +39,24 @@ class PublicMessageRepository extends EntityRepository
 			->setParameter('user', $userId);
 
         $query
-          ->setFirstResult(($page-1) * $nbPerPage)
-          ->setMaxResults($nbPerPage);
+          	->setFirstResult(($page-1) * $nbPerPage)
+          	->setMaxResults($nbPerPage);
 
 	    return new Paginator($query, true);
     }
 
-	public function messagesSended($page, $nbPerPage, $userId){
+	public function messagesSended($page, $nbPerPage, $userId) {
     	$query = $this->createQueryBuilder('p')
-	      ->join('p.ride', 'ride')
-	      ->addSelect('ride')
-	      ->where('p.user = :user')
-	      ->setParameter('user', $userId)
-		  ->orderBy('p.date', 'DESC')
-	      ->getQuery();
+	      	->join('p.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('p.user = :user')
+	      	->setParameter('user', $userId)
+		  	->orderBy('p.date', 'DESC')
+	      	->getQuery();
 
 	  	$query
-          ->setFirstResult(($page-1) * $nbPerPage)
-          ->setMaxResults($nbPerPage);
+          	->setFirstResult(($page-1) * $nbPerPage)
+          	->setMaxResults($nbPerPage);
 
 	    return new Paginator($query, true);
     }

@@ -1,107 +1,56 @@
 
 <div class="container">
-  <div class="row">
-      <div class="col-md-6">
-        <div class="well well-sm">
- {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well well-sm">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_errors(form) }}
+                    <fieldset>
+                        <legend class="text-center">Mon annonce</legend>
+                        <div class="form-group">
+                            {{ form_label(form.departure, "Lieu de départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.departure) }}
+                            <div class="col-md-9">{{ form_widget(form.departure, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.arrival, "Lieu d'arrivé", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.arrival) }}
 
-    {# Les erreurs générales du formulaire. #}
-    {{ form_errors(form) }}
-          <fieldset>
-            <legend class="text-center">Mon annonce</legend>
+                            <div class="col-md-9">{{ form_widget(form.arrival, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.departureDate) }}
 
-
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.departure, "Lieu de départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.departure) }}
-
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.departure, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.arrival, "Lieu d'arrivé", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.arrival) }}
-
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.arrival, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.departureDate) }}
-
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.departureDate) }}
-      </div>
-    </div>
+                            <div class="col-md-9">{{ form_widget(form.departureDate) }}</div>
+                        </div>
     
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.price, "Prix du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="form-group">
+                            {{ form_label(form.price, "Prix du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.price) }}
 
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.price) }}
+                            <div class="col-md-9">{{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
 
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
+                        <div class="form-group">
+                            {{ form_label(form.numberPassenger, "Nombre de passagers", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.numberPassenger) }}
 
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.numberPassenger, "Nombre de passagers", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            <div class="col-md-9">{{ form_widget(form.numberPassenger, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
 
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.numberPassenger) }}
+                        <div class="form-group">
+                            {{ form_label(form.details, "Description du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            {{ form_errors(form.details) }}
 
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.numberPassenger, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
-
-        <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.details, "Description du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.details) }}
-
-      <div class="col-md-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.details, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
+                            <div class="col-md-9">{{ form_widget(form.details, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
     
- {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
-          </fieldset>
-
-
-  {# Génération automatique des champs pas encore écrits.
-     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-     et tous les champs cachés (type « hidden »). #}
-  {{ form_rest(form) }}
-  
-  {# Fermeture de la balise <form> du formulaire HTML #}
-  {{ form_end(form) }}
+                        {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </fieldset>
+                    {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 </div>

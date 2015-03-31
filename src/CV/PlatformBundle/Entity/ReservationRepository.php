@@ -15,17 +15,16 @@ class ReservationRepository extends EntityRepository
 {
 	public function myReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')
-	      ->join('r.ride', 'ride')
-	      ->addSelect('ride')
-	      ->where('r.user = :user')
-	      ->setParameter('user', $userId)
-	      ->orderBy('ride.offerPublished', 'DESC')
-	      ->getQuery();
+	      	->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      	->setParameter('user', $userId)
+	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->getQuery();
 
-	        $query
-	          ->setFirstResult(($page-1) * $nbPerPage)
-	          ->setMaxResults($nbPerPage);
-
+        $query
+          	->setFirstResult(($page-1) * $nbPerPage)
+          	->setMaxResults($nbPerPage);
 	    return new Paginator($query, true);
    	}
 }

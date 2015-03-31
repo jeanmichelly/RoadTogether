@@ -13,197 +13,148 @@ use CV\PlatformBundle\Form\RideViewType;
 
 class RideController extends Controller
 {
-  public function indexAction($page)
-    {
+    public function indexAction($page) {
+        if ($page < 1) {
+            throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+        }
 
-    // On ne sait pas combien de pages il y a
-    // Mais on sait qu'une page doit être supérieure ou égale à 1
-    if ($page < 1) {
-      // On déclenche une exception NotFoundHttpException, cela va afficher
-      // une page d'erreur 404 (qu'on pourra personnaliser plus tard d'ailleurs)
-      throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+        $listRides = array(
+          array(
+            'title'   => 'Recherche développpeur Symfony2',
+            'id'      => 1,
+            'author'  => 'Alexandre',
+            'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
+            'date'    => new \Datetime()),
+          array(
+            'title'   => 'Mission de webmaster',
+            'id'      => 2,
+            'author'  => 'Hugo',
+            'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
+            'date'    => new \Datetime()),
+          array(
+            'title'   => 'Offre de stage webdesigner',
+            'id'      => 3,
+            'author'  => 'Mathieu',
+            'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
+            'date'    => new \Datetime())
+        );
+
+        return $this->render('CVPlatformBundle:Ride:index.html.twig', array(
+            'listRides' => $listRides
+        ));
     }
 
-    // Ici, on récupérera la liste des annonces, puis on la passera au template
+    public function viewAction($id) {
+        $ride = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->find($id);
 
-    // Mais pour l'instant, on ne fait qu'appeler le template
-    // return $this->render('CVPlatformBundle:Ride:index.html.twig');
-    
-    // Notre liste d'annonce en dur
-    $listRides = array(
-      array(
-        'title'   => 'Recherche développpeur Symfony2',
-        'id'      => 1,
-        'author'  => 'Alexandre',
-        'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
-        'date'    => new \Datetime()),
-      array(
-        'title'   => 'Mission de webmaster',
-        'id'      => 2,
-        'author'  => 'Hugo',
-        'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-        'date'    => new \Datetime()),
-      array(
-        'title'   => 'Offre de stage webdesigner',
-        'id'      => 3,
-        'author'  => 'Mathieu',
-        'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-        'date'    => new \Datetime())
-    );
+        $form = $this->createForm(new RideViewType, $ride,array(
+            'read_only' => true
+        ));
 
-    // Et modifiez le 2nd argument pour injecter notre liste
-    return $this->render('CVPlatformBundle:Ride:index.html.twig', array(
-      'listRides' => $listRides
-    ));
-  }
-
- public function menuAction($limit)
-  {
-    // On fixe en dur une liste ici, bien entendu par la suite
-    // on la récupérera depuis la BDD !
-    $listRides = array(
-      array('id' => 2, 'title' => 'Recherche développeur Symfony2'),
-      array('id' => 5, 'title' => 'Mission de webmaster'),
-      array('id' => 9, 'title' => 'Offre de stage webdesigner')
-    );
-
-    return $this->render('CVPlatformBundle:Ride:menu.html.twig', array(
-      // Tout l'intérêt est ici : le contrôleur passe
-      // les variables nécessaires au template !
-      'listRides' => $listRides
-    ));
-  }
-
-  public function viewAction($id)
-  {
-
-$ride = $this->getDoctrine()
-  ->getManager()
-  ->getRepository('CVPlatformBundle:Ride')
-  ->find($id)
-;
-
-  $form = $this->createForm(new RideViewType, $ride,array(
-        'read_only' => true
-    ));
-
- return $this->render('CVPlatformBundle:Ride:my_ride_details.html.twig', array(
-      'form' => $form->createView(),
-    ));
-
-  }
-
-  public function addAction(Request $request)
-  {
-
-    $ride = new Ride();
-    // $ride->setDepartureDate = new \Datetime();
-    $ride->setUser($this->get('security.context')->getToken()->getUser());
-    $form = $this->createForm(new RideType, $ride);
-
-    if ($form->handleRequest($request)->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($ride);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-
-      return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
+        return $this->render('CVPlatformBundle:Ride:my_ride_details.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
-    return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
-      'form' => $form->createView(),
-    ));
-  }
+    public function addAction(Request $request) {
+        $ride = new Ride();
+        // $ride->setDepartureDate = new \Datetime();
+        $ride->setUser($this->get('security.context')->getToken()->getUser());
+        $form = $this->createForm(new RideType, $ride);
 
-  public function editAction($id, Request $request)
-  {
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ride);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+
+            return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
+        }
+
+        return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function editAction($id, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
-    // On récupère l'annonce $id
-    $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
+        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
 
-    if (null === $ride) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        if (null === $ride) {
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+
+        $form = $this->createForm(new RideEditType, $ride);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+
+            return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
+        }
+
+        return $this->render('CVPlatformBundle:Ride:edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
- $form = $this->createForm(new RideEditType, $ride);
+    public function deleteAction($id, Request $request) {
+        $em = $this->getDoctrine()->getManager();
 
+        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
 
-    if ($form->handleRequest($request)->isValid()) {
-      // Inutile de persister ici, Doctrine connait déjà notre annonce
-      $em->flush();
+        if (null === $ride) {
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
 
-      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
-
-      return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
-    }
-
- return $this->render('CVPlatformBundle:Ride:edit.html.twig', array(
-      'form' => $form->createView(),
-    ));
-  }
-
-  public function deleteAction($id, Request $request)
-  {
-      $em = $this->getDoctrine()->getManager();
-
-      // On récupère l'annonce $id
-      $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
-
-      if (null === $ride) {
-        throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-      }
         $em->remove($ride);
         $em->flush();
 
-      return $this->redirect($this->generateUrl('cv_platform_home'));
+        return $this->redirect($this->generateUrl('cv_platform_home'));
     }
 
     public function ongoingRidesUserAction($page) {
 
-    if ($page < 1) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $listRides = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->requestOngoingRidesUser($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listRides)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Ride:my_rides.html.twig', array(
+            'listRides'     => $listRides,
+            'nbPages'       => $nbPages,
+            'page'          => $page,
+        ));
     }
 
-        // Ici je fixe le nombre d'annonces par page à 3
-    // Mais bien sûr il faudrait utiliser un paramètre, et y accéder via $this->container->getParameter('nb_per_page')
-    $nbPerPage = 5;
-
-    $userId = $this->get('security.context')->getToken()->getUser()->getId();
-        // On récupère notre objet Paginator
-    $listRides = $this->getDoctrine()
-      ->getManager()
-      ->getRepository('CVPlatformBundle:Ride')
-      ->requestOngoingRidesUser($page, $nbPerPage, $userId)
-    ;
-
-        // On calcule le nombre total de pages grâce au count($listRides) qui retourne le nombre total d'annonces
-      $nbPages = ceil(count($listRides)/$nbPerPage);
-
-      // Si la page n'existe pas, on retourne une 404
-    if ($page > $nbPages) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }
-
-        // On donne toutes les informations nécessaires à la vue
-    return $this->render('CVPlatformBundle:Ride:my_rides.html.twig', array(
-      'listRides' => $listRides,
-      'nbPages'     => $nbPages,
-      'page'        => $page,
-    ));
-
-    }
-
-public function searchRidesUserAction(Request $request) {
+    public function searchRidesUserAction(Request $request) {
         $form = $this->get('form.factory')->createBuilder('form')
-            ->add('departure',        'text', array('data' => 'Marolle sur seine'))
-            ->add('arrival',          'text', array('data' => 'Troyes'))
-            ->add('departure_date',   'text', array('data' => '2015/03/02'))
-            ->add('rechercher', 'submit')
-            ->getForm()
-        ;
+            ->add('departure',          'text',     array('data' => 'Marolle sur seine'))
+            ->add('arrival',            'text',     array('data' => 'Troyes'))
+            ->add('departure_date',     'text',     array('data' => '2015/03/02'))
+            ->add('rechercher',         'submit')
+            ->getForm();
+
 
         if ($form->handleRequest($request)->isValid()) {
             $departureDateToUrl = strtr($form->get('departure_date')->getData(), '/', '-');
@@ -226,9 +177,9 @@ public function searchRidesUserAction(Request $request) {
         $nbPerPage = 5;
 
         $listRides = $this->getDoctrine()
-          ->getManager()
-          ->getRepository('CVPlatformBundle:Ride')
-          ->focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage)
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage)
         ;
 
         $nbPages = ceil(count($listRides)/$nbPerPage);
@@ -238,10 +189,9 @@ public function searchRidesUserAction(Request $request) {
         }
 
         return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
-              'listRides' => $listRides,
+              'listRides'   => $listRides,
               'nbPages'     => $nbPages,
               'page'        => $page
         ));
     }
-
 }

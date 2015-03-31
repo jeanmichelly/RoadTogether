@@ -73,8 +73,7 @@ class Rating
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -84,10 +83,8 @@ class Rating
      * @param integer $function
      * @return Rating
      */
-    public function setFunction($function)
-    {
+    public function setFunction($function) {
         $this->function = $function;
-
         return $this;
     }
 
@@ -96,8 +93,7 @@ class Rating
      *
      * @return integer 
      */
-    public function getFunction()
-    {
+    public function getFunction() {
         return $this->function;
     }
 
@@ -107,10 +103,8 @@ class Rating
      * @param integer $evaluation
      * @return Rating
      */
-    public function setEvaluation($evaluation)
-    {
+    public function setEvaluation($evaluation) {
         $this->evaluation = $evaluation;
-
         return $this;
     }
 
@@ -119,8 +113,7 @@ class Rating
      *
      * @return integer 
      */
-    public function getEvaluation()
-    {
+    public function getEvaluation() {
         return $this->evaluation;
     }
 
@@ -130,10 +123,8 @@ class Rating
      * @param string $description
      * @return Rating
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
-
         return $this;
     }
 
@@ -142,8 +133,7 @@ class Rating
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -153,10 +143,8 @@ class Rating
      * @param integer $driving
      * @return Rating
      */
-    public function setDriving($driving)
-    {
+    public function setDriving($driving) {
         $this->driving = $driving;
-
         return $this;
     }
 
@@ -165,8 +153,7 @@ class Rating
      *
      * @return integer 
      */
-    public function getDriving()
-    {
+    public function getDriving() {
         return $this->driving;
     }
 
@@ -176,10 +163,8 @@ class Rating
      * @param \DateTime $date
      * @return Rating
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-
         return $this;
     }
 
@@ -188,8 +173,7 @@ class Rating
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -199,10 +183,8 @@ class Rating
      * @param \CV\UserBundle\Entity\User $user
      * @return Rating
      */
-    public function setUser(\CV\UserBundle\Entity\User $user)
-    {
+    public function setUser(\CV\UserBundle\Entity\User $user) {
         $this->user = $user;
-
         return $this;
     }
 
@@ -211,8 +193,7 @@ class Rating
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -222,10 +203,8 @@ class Rating
      * @param \CV\UserBundle\Entity\User $relateduser
      * @return Rating
      */
-    public function setRelateduser(\CV\UserBundle\Entity\User $relateduser)
-    {
+    public function setRelateduser(\CV\UserBundle\Entity\User $relateduser) {
         $this->relateduser = $relateduser;
-
         return $this;
     }
 
@@ -234,8 +213,7 @@ class Rating
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getRelateduser()
-    {
+    public function getRelateduser() {
         return $this->relateduser;
     }
 }

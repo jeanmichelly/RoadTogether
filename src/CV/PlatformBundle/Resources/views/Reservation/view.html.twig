@@ -1,7 +1,7 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Lecture d'une annonce - {{ parent() }}
+    Lecture d'une annonce - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
@@ -12,37 +12,31 @@
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
-<div class="well">
-    <p>
-        {% include 'CVPlatformBundle:Ride:focus_details.html.twig' with {'ride': ride} %}
-    </p></br>
-    <p>
-        <a href="{{ path('cv_platform_home') }}" class="btn btn-primary btn-outline btn-lg">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-            Retour à la liste
-        </a>
-        <button class="btn btn-lg btn-warning sweet-13" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Warning']);"><i class="glyphicon glyphicon-hand-up"></i> Réserver</button>
-    </p>
-</div>
-
-<!-- Emplacement de l'afficheur -->
-<div class="well">
-    <ol id="messages" class="messages">
-        {% for publicMessage in listPublicMessagesOfRide %}
-            {% include 'CVPlatformBundle:PublicMessage:view.html.twig' with {'publicMessage': publicMessage} %}
-        {% endfor %}
-    </ol>
-
-    <p class="boutons">
-      <a href="#" class="voir_tous">Tous les messages ({{ listPublicMessagesOfRide|length }})</a> 
-      <a href="#" class="voir_recent">5 seulement</a>
-      <a href="#" class="replier_tous">Tout replier</a>
-    </p>
     <div class="well">
-        <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
-        <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
+        <p>{% include 'CVPlatformBundle:Ride:focus_details.html.twig' with {'ride': ride} %}</p></br>
+        <p>
+            <a href="{{ path('cv_platform_home') }}" class="btn btn-primary btn-outline btn-lg"><i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste</a>
+            <button class="btn btn-lg btn-warning sweet-13" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Warning']);"><i class="glyphicon glyphicon-hand-up"></i> Réserver</button>
+        </p>
     </div>
-</div>
+
+    <div class="well">
+        <ol id="messages" class="messages">
+            {% for publicMessage in listPublicMessagesOfRide %}
+                {% include 'CVPlatformBundle:PublicMessage:view.html.twig' with {'publicMessage': publicMessage} %}
+            {% endfor %}
+        </ol>
+
+        <p class="boutons">
+            <a href="#" class="voir_tous">Tous les messages ({{ listPublicMessagesOfRide|length }})</a> 
+            <a href="#" class="voir_recent">5 seulement</a>
+            <a href="#" class="replier_tous">Tout replier</a>
+        </p>
+        <div class="well">
+            <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+            <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
+        </div>
+    </div>
     {% javascripts 'js/jquery.js' %}
         <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
         <script type="text/javascript" src="{{ asset_url }}"></script>

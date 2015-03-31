@@ -47,7 +47,7 @@ class PublicMessage
      */
     private $user;
 
-    public function __construct($content, $ride, $user){
+    public function __construct($content, $ride, $user) {
         $this->content = $content;
         $this->date = new \Datetime();
         $this->ride = $ride;
@@ -59,8 +59,7 @@ class PublicMessage
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -70,10 +69,8 @@ class PublicMessage
      * @param string $content
      * @return PublicMessage
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
-
         return $this;
     }
 
@@ -82,8 +79,7 @@ class PublicMessage
      *
      * @return string 
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -93,10 +89,8 @@ class PublicMessage
      * @param \DateTime $date
      * @return PublicMessage
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-
         return $this;
     }
 
@@ -105,8 +99,7 @@ class PublicMessage
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -116,10 +109,8 @@ class PublicMessage
      * @param \CV\PlatformBundle\Entity\Ride $ride
      * @return PublicMessage
      */
-    public function setRide(\CV\PlatformBundle\Entity\Ride $ride)
-    {
+    public function setRide(\CV\PlatformBundle\Entity\Ride $ride) {
         $this->ride = $ride;
-
         return $this;
     }
 
@@ -128,8 +119,7 @@ class PublicMessage
      *
      * @return \CV\PlatformBundle\Entity\Ride 
      */
-    public function getRide()
-    {
+    public function getRide() {
         return $this->ride;
     }
 
@@ -139,10 +129,8 @@ class PublicMessage
      * @param \CV\UserBundle\Entity\User $user
      * @return PublicMessage
      */
-    public function setUser(\CV\UserBundle\Entity\User $user)
-    {
+    public function setUser(\CV\UserBundle\Entity\User $user) {
         $this->user = $user;
-
         return $this;
     }
 
@@ -151,8 +139,7 @@ class PublicMessage
      *
      * @return \CV\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 }

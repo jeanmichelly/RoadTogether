@@ -1,29 +1,22 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier une annonce - {{ parent() }}
+    Modifier une annonce - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-  {% stylesheets 'css/jquery.datetimepicker.css' %}
-          <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-  {% endstylesheets %}
+    {% stylesheets 'css/jquery.datetimepicker.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
 
-  <h2>Modifier une annonce</h2>
-
+    <h2>Modifier une annonce</h2>
     {{ include("CVPlatformBundle:Ride:form.html.twig") }}
 
-  <p>
-    Vous éditez une annonce déjà existante, merci de ne pas changer
-    l'esprit générale de l'annonce déjà publiée.
-  </p>
+    <p>Vous éditez une annonce déjà existante, merci de ne pas changer l'esprit générale de l'annonce déjà publiée.</p>
 
-  <p>
-    <a href="{{ path('cv_platform_view', {'id': form.vars.value.id   }) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'annonce
-    </a>
-  </p>
+    <p>
+        <a href="{{ path('cv_platform_view', {'id': form.vars.value.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour à l'annonce</a>
+    </p>
 
     {% javascripts 
         'js/jquery.js'
@@ -38,5 +31,4 @@
             minDate:new Date()
         });
     </script>
-
 {% endblock %}
