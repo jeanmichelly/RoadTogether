@@ -17,7 +17,7 @@ class ProfileType extends AbstractType
         $builder
             ->add('name',               'text')
             ->add('firstName',          'text')
-            ->add('age',                'integer')
+            ->add('age',                'integer', array('attr' => array('min' => '10', 'max' => '100')))
             ->add('biography',          'textarea')
             ->add('picture',            'text')
             ->add('birthday',           'date')
