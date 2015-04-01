@@ -18,19 +18,16 @@
 
 <body>
     <div class="container">
-        <div class="container">
+
              <nav class="navbar navbar-default">
-                <div class="container">
+  
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
                         <a class="navbar-brand" href="{{ path('cv_platform_home') }}">Covoiturage</a>
                     </div>
+
+
                     <div class="collapse navbar-collapse" id="navbar-collapse-4">
+
                         <ul class="nav navbar-nav navbar-right">
                             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <li><a href="{{ path('cv_platform_my_reservations') }}">Réservation</a> </li>
@@ -81,11 +78,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="navbar-footer">
                                                 <div class="navbar-footer-content">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <a href="#" class="btn btn-default btn-sm">Changer le mot de passe</a>
+                                                           <a href="{{ path('fos_user_change_password') }}" class="btn btn-default btn-sm">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-sm pull-right">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
@@ -93,38 +91,42 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </li>
                                     </ul>
                                 </li>
                             {% endif %}
                         </ul>           
                     </div>
-                </div>
+            
             </nav>
-        </div>
+      
     
         <div class="row">
             <div id="menu" class="col-md-3">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     {% block menu_lateral %}    
                     {% endblock %}    
-            </div>
-        </div>
+    
                 {% elseif app.request.attributes.get('_route') != 'fos_user_security_login' %}
                     <h3>Identification</h3>
                     {{ render(controller('CVUserBundle:Security:login')) }}
                 {% endif %}
+               </div>  
+               
         <div id="content" class="col-md-9">
             {% block body %}
             {% endblock %}
         </div>
-    </div>
+      </div>
 
+ 
     <hr>
 
     <footer>
         <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
     </footer>
+       </div>
 
     {% block javascripts %}
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
