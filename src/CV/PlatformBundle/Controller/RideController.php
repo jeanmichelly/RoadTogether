@@ -44,11 +44,7 @@ class RideController extends Controller
         ));
     }
 
-    public function viewAction($id) {
-        $ride = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->find($id);
+    public function viewAction(Ride $ride) {
 
         $form = $this->createForm(new RideViewType, $ride,array(
             'read_only' => true
@@ -61,7 +57,6 @@ class RideController extends Controller
 
     public function addAction(Request $request) {
         $ride = new Ride();
-        // $ride->setDepartureDate = new \Datetime();
         $ride->setUser($this->get('security.context')->getToken()->getUser());
         $form = $this->createForm(new RideType, $ride);
 
@@ -80,19 +75,13 @@ class RideController extends Controller
         ));
     }
 
-    public function editAction($id, Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
-
-        if (null === $ride) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
+    public function editAction(Ride $ride, Request $request) {
 
         $form = $this->createForm(new RideEditType, $ride);
 
         if ($form->handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
 
@@ -104,15 +93,9 @@ class RideController extends Controller
         ));
     }
 
-    public function deleteAction($id, Request $request) {
+    public function deleteAction(Ride $ride, Request $request) {
+        
         $em = $this->getDoctrine()->getManager();
-
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
-
-        if (null === $ride) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
-
         $em->remove($ride);
         $em->flush();
 

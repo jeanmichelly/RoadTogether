@@ -13,7 +13,7 @@
             <li>Utilisateur : {{ messageSended.user }}</li>
             <li>Contenu : {{ messageSended.content }}</li>
     	    <p>
-    		    <a href="{{ path('cv_platform_view', {'id': messageSended.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
+    		    <a href="{{ path('cv_platform_reservation_ride', {'id': messageSended.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
             </p>
         </div>
    	{% endfor %}

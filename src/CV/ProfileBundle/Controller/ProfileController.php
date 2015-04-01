@@ -15,12 +15,10 @@ class ProfileController extends Controller
   {
 
     $userId = $this->get('security.context')->getToken()->getUser()->getId();
-        // On récupère notre objet Paginator
 
     $em = $this->getDoctrine()->getManager();
     $profile = $em->getRepository('CVProfileBundle:Profile')
-                  ->requestProfileUser($userId)
-    ;
+                  ->requestProfileUser($userId);
 
     if (null === $profile) {
       throw new NotFoundHttpException("Le profil n'existe pas.");
@@ -30,9 +28,8 @@ class ProfileController extends Controller
 
 
     if ($form->handleRequest($request)->isValid()) {
-      // Inutile de persister ici, Doctrine connait déjà notre annonce
-      $em->flush();
 
+      $em->flush();
       $request->getSession()->getFlashBag()->add('notice', 'Profil bien modifié');
 
       return $this->redirect($this->generateUrl('cv_profile_edit', array('id' => $profile->getId())));

@@ -12,18 +12,12 @@ use CV\PlatformBundle\Entity\Reservation;
 
 class ReservationController extends Controller
 {
-    public function addAction($id) {
-        $ride = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->find($id)
-        ;
+    public function addAction(Ride $ride) {
         
         $listPublicMessagesOfRide = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PublicMessage')
-            ->publicMessagesOfRide($ride)
-        ;
+            ->publicMessagesOfRide($ride);
 
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
               'ride'                        => $ride,
@@ -31,14 +25,7 @@ class ReservationController extends Controller
         ));
     }
     
-    public function confirmAction($id, Request $request) {
-        $em = $this->getDoctrine()->getManager();
-
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($id);
-
-        if (null === $ride) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
+    public function confirmAction(Ride $ride, Request $request) {
      
         $reservation = new Reservation($ride, $this->get('security.context')->getToken()->getUser());
         
@@ -57,14 +44,12 @@ class ReservationController extends Controller
         }           
 
         $nbPerPage = 5;
-
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
         $listReservations = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Reservation')
-            ->myReservations($page, $nbPerPage, $userId)
-        ;
+            ->myReservations($page, $nbPerPage, $userId);
 
         $nbPages = ceil(count($listReservations)/$nbPerPage);
 

@@ -47,19 +47,18 @@ class CarController extends Controller
 
   }
 
-    public function editAction($id, Request $request) {
+    public function editAction(Car $car, Request $request) {
 
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
 
-        $car = $em->getRepository('CVProfileBundle:Car')->find($id);
-
-        if (null === $car) {
-            throw new NotFoundHttpException("La voiture d'id ".$id." n'existe pas.");
-        }
+        if($car->getProfile()->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
 
         $form = $this->createForm(new CarEditType, $car);
 
         if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Voiture bien modifiée');
 
@@ -71,31 +70,21 @@ class CarController extends Controller
         ));
     }
 
-    public function deleteAction($id, Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function deleteAction(Car $car, Request $request) {
 
-        $car = $em->getRepository('CVProfileBundle:Car')->find($id);
-
-        if (null === $car) {
-            throw new NotFoundHttpException("La voiture d'id ".$id." n'existe pas.");
-        }
-
-
- // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
     $form = $this->createFormBuilder()->getForm();
 
     if ($form->handleRequest($request)->isValid()) {
+
+      $em = $this->getDoctrine()->getManager();
       $em->remove($car);
       $em->flush();
 
      $request->getSession()->getFlashBag()->add('notice', 'La voiture a bien été supprimée');
 
-
       return $this->redirect($this->generateUrl('cv_profile_my_cars'));
     }
 
-    // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
     return $this->render('CVProfileBundle:Car:delete.html.twig', array(
       'car' => $car,
       'form'   => $form->createView()
@@ -103,11 +92,7 @@ class CarController extends Controller
     }
 
 
-      public function viewAction($id) {
-        $car = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVProfileBundle:Car')
-            ->find($id);
+      public function viewAction(Car $car) {
 
         $form = $this->createForm(new CarViewType, $car,array(
             'read_only' => true
@@ -117,7 +102,6 @@ class CarController extends Controller
             'form' => $form->createView(),
         ));
     }
-
 
       public function myCarsAction($page) {
 

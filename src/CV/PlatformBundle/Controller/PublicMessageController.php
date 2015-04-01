@@ -11,13 +11,11 @@ use CV\PlatformBundle\Entity\Ride;
 
 class PublicMessageController extends Controller
 {
-    public function addAction($ride) {
+    public function addAction(Ride $ride) {
+
         $content = $this->container->get('request')->get('content');
         $em = $this->getDoctrine()->getManager();
-
-        $ride = $em->getRepository('CVPlatformBundle:Ride')->find($ride);
         $publicMessage = new PublicMessage($content, $ride, $this->get('security.context')->getToken()->getUser());
-        
         $em->persist($publicMessage);
         $em->flush();            
  

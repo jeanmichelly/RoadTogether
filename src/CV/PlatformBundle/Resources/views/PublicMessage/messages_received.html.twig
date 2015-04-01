@@ -13,7 +13,7 @@
             <li>Contenu : {{ messageReceived.content }}</li>
 
         	<p>
-        		<a href="{{ path('cv_platform_view', {'id': messageReceived.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
+        		<a href="{{ path('cv_platform_reservation_ride', {'id': messageReceived.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
             </p>
         </div>
    	{% endfor %}
