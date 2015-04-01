@@ -4,6 +4,10 @@
     Modifier une annonce - {{ parent() }}
 {% endblock %}
 
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:PublicMessage:menu.html.twig") }}  
+{% endblock %}
+
 {% block cvplatform_body %}
     <h2>Messages reçus</h2>
     {% for messageReceived in listMessagesReceived %}

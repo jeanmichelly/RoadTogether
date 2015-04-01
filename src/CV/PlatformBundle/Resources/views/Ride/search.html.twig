@@ -4,6 +4,10 @@
     Rechercher une annonce - {{ parent() }}
 {% endblock %}
 
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:Ride:menu.html.twig") }}  
+{% endblock %}
+
 {% block cvplatform_body %}
     {% stylesheets 'css/jquery.datetimepicker.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
