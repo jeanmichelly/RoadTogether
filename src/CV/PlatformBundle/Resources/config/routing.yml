@@ -1,6 +1,6 @@
 cv_platform_home:
-    path:      /{page}
-    defaults:  { _controller: CVPlatformBundle:Platform:index, page: 1 }
+    path:      /
+    defaults:  { _controller: CVPlatformBundle:Platform:index }
     requirements:
         page: \d*
     

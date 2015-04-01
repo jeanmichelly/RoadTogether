@@ -8,34 +8,25 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlatformController extends Controller
 {
-    public function indexAction($page) {
-        if ($page < 1) {
-            throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+    public function indexAction(Request $request) {
+        $form = $this->get('form.factory')->createBuilder('form')
+            ->add('departure',          'text',     array('data' => 'Marolle sur seine'))
+            ->add('arrival',            'text',     array('data' => 'Troyes'))
+            ->add('departure_date',     'text',     array('data' => '2015/03/02'))
+            ->add('rechercher',         'submit')
+            ->getForm();
+
+
+        if ($form->handleRequest($request)->isValid()) {
+            $departureDateToUrl = strtr($form->get('departure_date')->getData(), '/', '-');
+            return $this->redirect($this->generateUrl('cv_platform_focus_rides', 
+                array(
+                    'departure' => $form->get('departure')->getData(),
+                    'arrival' => $form->get('arrival')->getData(),
+                    'departure_date' => $departureDateToUrl,
+     
+                )));
         }
-
-        $listRides = array(
-          array(
-            'title'   => 'Recherche développpeur Symfony2',
-            'id'      => 1,
-            'author'  => 'Alexandre',
-            'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
-            'date'    => new \Datetime()),
-          array(
-            'title'   => 'Mission de webmaster',
-            'id'      => 2,
-            'author'  => 'Hugo',
-            'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-            'date'    => new \Datetime()),
-          array(
-            'title'   => 'Offre de stage webdesigner',
-            'id'      => 3,
-            'author'  => 'Mathieu',
-            'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-            'date'    => new \Datetime())
-        );
-
-        return $this->render('CVPlatformBundle:Ride:index.html.twig', array(
-            'listRides' => $listRides
-        ));
+        return $this->render('CVPlatformBundle::index.html.twig', array('form' => $form->createView()));
     }
 }
