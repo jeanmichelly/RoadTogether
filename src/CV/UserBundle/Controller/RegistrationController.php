@@ -60,17 +60,14 @@ class RegistrationController extends BaseController
 
         /*****************************************/
             $profile = new Profile();
-            $car = new Car();
             $preference = new Preference();
 
             $profile->setUser($user);
-            $car->setProfile($profile);
             $preference->setProfile($profile);
 
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($profile);
-            $em->persist($car);
             $em->persist($preference);
 
             $em->flush();

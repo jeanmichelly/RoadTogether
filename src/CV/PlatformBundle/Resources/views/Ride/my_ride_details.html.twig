@@ -14,9 +14,6 @@
 
     <i>Annonce créé le {{ form.vars.value.offerPublished|date('d/m/Y') }}</i>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
                 <div class="well well-sm">
                     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                         {{ form_errors(form) }}
@@ -67,9 +64,6 @@
                         {{ form_rest(form) }}
                     {{ form_end(form) }}
                 </div>
-            </div>
-        </div>
-    </div>
     <p>
         <a href="{{ path('cv_platform_home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste</a>

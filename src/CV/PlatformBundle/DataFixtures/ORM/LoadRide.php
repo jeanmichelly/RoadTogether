@@ -14,7 +14,7 @@ class LoadRide extends AbstractFixture implements OrderedFixtureInterface {
         $rideRoundTrip->setUser($this->getReference('mario032'));
         $rideRoundTrip->setDeparture("Marolle sur seine");
         $rideRoundTrip->setArrival("Troyes");
-        $rideRoundTrip->setDepartureDate(new \DateTime('2-3-2015'));
+        $rideRoundTrip->setDepartureDate('2015-03-02');
         $rideRoundTrip->setPrice(10);
         $rideRoundTrip->setNumberPassenger(3);
         $rideRoundTrip->setDetails("Pour le confort de tous, le dépôt s'effectuera à la gare de Troyes ou devant l'UTT");
@@ -27,7 +27,7 @@ class LoadRide extends AbstractFixture implements OrderedFixtureInterface {
         $rideTripRound->setUser($this->getReference('mario032'));
         $rideTripRound->setDeparture("Troyes");
         $rideTripRound->setArrival("Marolle sur seine");
-        $rideTripRound->setDepartureDate(new \DateTime('5-3-2015'));
+        $rideTripRound->setDepartureDate('2015-03-05');
         $rideTripRound->setPrice(10);
         $rideTripRound->setNumberPassenger(3);
         $rideTripRound->setDetails("Pour le confort de tous, le dépôt s'effectuera à la gare de Marolles");

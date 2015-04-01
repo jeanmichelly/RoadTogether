@@ -2,14 +2,34 @@ cv_profile_edit:
     path:      /my-profile/edit
     defaults:  { _controller: CVProfileBundle:Profile:edit }
 
-cv_profile_edit_car:
-    path:      /car/edit/{id}
-    defaults:  { _controller: CVProfileBundle:Profile:editCar }
+cv_profile_view_car:
+    path:      /car/{id}
+    defaults:  { _controller: CVProfileBundle:Car:view }
     requirements:
         id: \d+
 
-cv_profile_edit_preference:
-    path:      /preference/edit/{id}
-    defaults:  { _controller: CVProfileBundle:Profile:editPreference }
+cv_profile_edit_car:
+    path:      /car/edit/{id}
+    defaults:  { _controller: CVProfileBundle:Car:edit }
     requirements:
         id: \d+
+
+cv_profile_delete_car:
+    path:      /car/delete/{id}
+    defaults:  { _controller: CVProfileBundle:Car:delete }
+    requirements:
+        id: \d+
+
+cv_profile_add_car:
+    path:      /car/add
+    defaults:  { _controller: CVProfileBundle:Car:add }
+
+cv_profile_my_cars:
+    path:      /car/my-cars/{page}
+    defaults:  { _controller: CVProfileBundle:Car:myCars, page: 1 }
+    requirements:
+        page: \d*
+
+cv_profile_edit_preference:
+    path:      /preference/edit
+    defaults:  { _controller: CVProfileBundle:Preference:edit}

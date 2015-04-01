@@ -29,6 +29,8 @@ cv_platform_delete:
 cv_platform_my_rides:
     path:      /my-rides/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:ongoingRidesUser, page: 1 }
+    requirements:
+        page: \d*
 
 cv_platform_search_rides:
     path:      /search-rides
@@ -37,6 +39,8 @@ cv_platform_search_rides:
 cv_platform_focus_rides:
     path:      /focus-rides/{departure}/{arrival}/{departure_date}/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:focusRidesUser, page: 1 }
+    requirements:
+        page: \d*
 
 cv_platform_reservation_ride:
     path:      /reservation-ride/{id}
@@ -57,11 +61,17 @@ cv_platform_confirm_reservation_ride:
 cv_platform_my_reservations:
     path:      /my-reservations/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }
+    requirements:
+        page: \d*
 
 cv_platform_messages_received:
     path:      /messages-received/{page}
     defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesReceived, page: 1 }
+    requirements:
+        page: \d*
 
 cv_platform_messages_sended:
     path:      /messages-sended/{page}
     defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesSended, page: 1 }
+    requirements:
+        page: \d*

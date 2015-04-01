@@ -14,7 +14,7 @@ class Car
 {
 
   /**
-   * @ORM\ManyToOne(targetEntity="CV\ProfileBundle\Entity\Profile", cascade={"remove"})
+   * @ORM\ManyToOne(targetEntity="CV\ProfileBundle\Entity\Profile")
    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
   private $profile;
@@ -29,44 +29,44 @@ class Car
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="mark", type="smallint", nullable=true)
+     * @ORM\Column(name="mark", type="string", length=20)
      */
     private $mark;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="model", type="smallint", nullable=true)
+     * @ORM\Column(name="model", type="string", length=20)
      */
     private $model;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="comfort", type="smallint", nullable=true)
+     * @ORM\Column(name="comfort", type="string", length=20)
      */
     private $comfort;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="number_place", type="smallint", nullable=true)
+     * @ORM\Column(name="numberPlace", type="string", length=20)
      */
     private $numberPlace;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="color", type="smallint", nullable=true)
+     * @ORM\Column(name="color", type="string", length=20)
      */
     private $color;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="category", type="smallint", nullable=true)
+     * @ORM\Column(name="category", type="string", length=20)
      */
     private $category;
 
@@ -76,7 +76,6 @@ class Car
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
     private $picture;
-
 
     /**
      * Get id
@@ -91,7 +90,7 @@ class Car
     /**
      * Set mark
      *
-     * @param integer $mark
+     * @param string $mark
      * @return Car
      */
     public function setMark($mark)
@@ -104,7 +103,7 @@ class Car
     /**
      * Get mark
      *
-     * @return integer 
+     * @return string 
      */
     public function getMark()
     {
@@ -114,7 +113,7 @@ class Car
     /**
      * Set model
      *
-     * @param integer $model
+     * @param string $model
      * @return Car
      */
     public function setModel($model)
@@ -127,7 +126,7 @@ class Car
     /**
      * Get model
      *
-     * @return integer 
+     * @return string 
      */
     public function getModel()
     {
@@ -137,7 +136,7 @@ class Car
     /**
      * Set comfort
      *
-     * @param integer $comfort
+     * @param string $comfort
      * @return Car
      */
     public function setComfort($comfort)
@@ -150,7 +149,7 @@ class Car
     /**
      * Get comfort
      *
-     * @return integer 
+     * @return string 
      */
     public function getComfort()
     {
@@ -160,7 +159,7 @@ class Car
     /**
      * Set numberPlace
      *
-     * @param integer $numberPlace
+     * @param string $numberPlace
      * @return Car
      */
     public function setNumberPlace($numberPlace)
@@ -173,7 +172,7 @@ class Car
     /**
      * Get numberPlace
      *
-     * @return integer 
+     * @return string 
      */
     public function getNumberPlace()
     {
@@ -183,7 +182,7 @@ class Car
     /**
      * Set color
      *
-     * @param integer $color
+     * @param string $color
      * @return Car
      */
     public function setColor($color)
@@ -196,7 +195,7 @@ class Car
     /**
      * Get color
      *
-     * @return integer 
+     * @return string 
      */
     public function getColor()
     {
@@ -206,7 +205,7 @@ class Car
     /**
      * Set category
      *
-     * @param integer $category
+     * @param string $category
      * @return Car
      */
     public function setCategory($category)
@@ -219,7 +218,7 @@ class Car
     /**
      * Get category
      *
-     * @return integer 
+     * @return string 
      */
     public function getCategory()
     {

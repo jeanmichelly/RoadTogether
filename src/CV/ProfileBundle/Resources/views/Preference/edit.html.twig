@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block menu_lateral %}    
-    {{ include("CVProfileBundle:Profile:menu.html.twig") }}
+    {{ include("CVProfileBundle:.:menu.html.twig") }}
 {% endblock %}
 
 {% block cvplatform_body %}
+    <h2>Mes préférences</h2>
+
+    <p>
+        {% for message in app.session.flashbag.get('notice') %}
+
+        <p class="alert alert-success">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
     <div class="well">
         {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
             {# Les erreurs générales du formulaire. #}

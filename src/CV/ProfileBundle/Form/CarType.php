@@ -14,14 +14,80 @@ class CarType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $choiceMark = array(
+            'Renault' => 'Renault',
+            'Peugeot' => 'Peugeot',
+        );
+
+        $choiceNumberPlace = array(
+            '0' => '2',
+            '1' => '3',
+            '2' => '4',
+            '3' => '5',
+        );
+
+        $choiceComfort = array(
+            'Basique' => 'Basique',
+            'Normal' => 'Normal',
+            'Confort' => 'Confort',
+            'Luxe' => 'Luxe',
+        );
+
+        $choiceColor = array(
+            'Noir' => 'Noir',
+            'Bleu' => 'Bleu',
+            'Vert' => 'Vert',
+            'Rouge' => 'Rouge',
+        );
+
+        $choiceCategory = array(
+            'Véhicule de tourisme' => 'Véhicule de tourisme',
+            'Berline' => 'Berline',
+            'Cabriolet' => 'Cabriolet',
+            'Break' => 'Break',
+            'Monospace' => 'Monospace',
+        );
+
         $builder
-            ->add('mark',                'integer')
-            ->add('model',               'integer')
-            ->add('comfort',             'integer')
-            ->add('numberPlace',         'integer')
-            ->add('color',               'integer')
-            ->add('category',            'integer')
+            ->add('mark', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez une marque -',
+              'empty_data'  => -1,
+              'choices' => $choiceMark))
+
+            ->add('model',               'text')
+
+            ->add('comfort', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez le confort -',
+              'empty_data'  => -1,
+              'choices' => $choiceComfort))
+
+            ->add('numberPlace', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez le nombre de places -     (incluant le conducteur)',
+              'empty_data'  => -1,
+              'choices' => $choiceNumberPlace))
+
+            ->add('color', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez la couleur -',
+              'empty_data'  => -1,
+              'choices' => $choiceColor))
+
+            ->add('category', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez la catégorie -',
+              'empty_data'  => -1,
+              'choices' => $choiceCategory))
             ->add('picture',             'text')
+            ->add('enregistrer',       'submit');
     ;
     }
     

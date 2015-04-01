@@ -1,7 +1,4 @@
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
             <div class="well well-sm">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                     {{ form_errors(form) }}
@@ -22,7 +19,7 @@
                             {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
                             {{ form_errors(form.departureDate) }}
 
-                            <div class="col-md-9">{{ form_widget(form.departureDate) }}</div>
+                            <div class="col-md-9">{{ form_widget(form.departureDate, {'attr': {'class': 'form-control'}}) }}</div>
                         </div>
     
                         <div class="form-group">
@@ -51,6 +48,3 @@
                     {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
-        </div>
-    </div>
-</div>

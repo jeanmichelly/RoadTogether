@@ -3,6 +3,7 @@
 namespace CV\ProfileBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * CarRepository
@@ -12,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CarRepository extends EntityRepository {
 
-   	public function requestCarUser($idProfile) {
+   	public function requestCarUser($page, $nbPerPage, $idProfile) {
 		
     $query = $this->createQueryBuilder('c')
       ->leftJoin('c.profile', 'profile')
@@ -21,7 +22,10 @@ class CarRepository extends EntityRepository {
       ->setParameter('profile', $idProfile)
       ->getQuery();
 
-    return $query->getResult();
-   	}
+    $query
+      ->setFirstResult(($page-1) * $nbPerPage)
+      ->setMaxResults($nbPerPage);
 
+        return new Paginator($query, true);
+   	}
 }

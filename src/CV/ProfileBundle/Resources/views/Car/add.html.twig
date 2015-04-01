@@ -1,0 +1,20 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+     Ajout d'une voiture - {{ parent() }}
+{% endblock %}
+
+{% block menu_lateral %}    
+    {{ include("CVProfileBundle::menu.html.twig") }}
+{% endblock %}
+
+{% block cvplatform_body %}
+<h2>Ajouter une voiture</h2>
+
+
+{{ include("CVProfileBundle:Car:form.html.twig") }}
+
+{% endblock %}
+
+
+ 
