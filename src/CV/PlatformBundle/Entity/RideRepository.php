@@ -20,7 +20,43 @@ class RideRepository extends EntityRepository {
 	    return $listRides;
    	}
 
-   	public function requestOngoingRidesUser($page, $nbPerPage, $idUser) {
+    public function upcomingRides($page, $nbPerPage, $idUser) {
+        $query = $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'user')
+            ->addSelect('user')
+            ->where('r.user = :user')
+                ->setParameter('user', $idUser)
+            ->andWhere('r.departureDate > :departureDate')
+                ->setParameter('departureDate', date('Y-m-d H:i:s'))
+            ->orderBy('r.offerPublished', 'DESC')
+            ->getQuery();
+
+        $query
+            ->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($query, true);
+    }
+
+    public function pastRides($page, $nbPerPage, $idUser) {
+        $query = $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'user')
+            ->addSelect('user')
+            ->where('r.user = :user')
+                ->setParameter('user', $idUser)
+            ->andWhere('r.departureDate < :departureDate')
+                ->setParameter('departureDate', date('Y-m-d H:i:s'))
+            ->orderBy('r.offerPublished', 'DESC')
+            ->getQuery();
+
+        $query
+            ->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($query, true);
+    }
+
+   	public function myRides($page, $nbPerPage, $idUser) {
         $query = $this->createQueryBuilder('r')
             ->leftJoin('r.user', 'user')
             ->addSelect('user')

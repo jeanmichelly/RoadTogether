@@ -102,8 +102,61 @@ class RideController extends Controller
         return $this->redirect($this->generateUrl('cv_platform_home'));
     }
 
-    public function ongoingRidesUserAction($page) {
+    public function upcomingRidesAction($page) {
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
 
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $listUpcomingRides = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->upcomingRides($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listUpcomingRides)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Ride:upcoming.html.twig', array(
+            'listUpcomingRides'     => $listUpcomingRides,
+            'nbPages'       => $nbPages,
+            'page'          => $page,
+        ));
+    }
+
+    public function pastRidesAction($page) {
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $listPastRides = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->pastRides($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listPastRides)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Ride:past.html.twig', array(
+            'listPastRides'     => $listPastRides,
+            'nbPages'       => $nbPages,
+            'page'          => $page,
+        ));
+    }
+
+    public function myRidesAction($page) {
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -115,7 +168,7 @@ class RideController extends Controller
         $listRides = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Ride')
-            ->requestOngoingRidesUser($page, $nbPerPage, $userId);
+            ->myRides($page, $nbPerPage, $userId);
 
         $nbPages = ceil(count($listRides)/$nbPerPage);
 

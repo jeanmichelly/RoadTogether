@@ -26,9 +26,21 @@ cv_platform_delete:
     requirements:
         id: \d+
 
+cv_platform_upcoming_rides:
+    path:      /upcoming-rides/{page}
+    defaults:  { _controller: CVPlatformBundle:Ride:upcomingRides, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_past_rides:
+    path:      /past-rides/{page}
+    defaults:  { _controller: CVPlatformBundle:Ride:pastRides, page: 1 }
+    requirements:
+        page: \d*
+
 cv_platform_my_rides:
     path:      /my-rides/{page}
-    defaults:  { _controller: CVPlatformBundle:Ride:ongoingRidesUser, page: 1 }
+    defaults:  { _controller: CVPlatformBundle:Ride:myRides, page: 1 }
     requirements:
         page: \d*
 

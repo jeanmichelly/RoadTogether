@@ -1,0 +1,32 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes trajets passés - {{ parent() }}
+{% endblock %}
+
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:Ride:menu.html.twig") }}  
+{% endblock %}
+
+{% block cvplatform_body %}
+    <h2>Liste de mes trajets passés</h2>
+
+    {% for pastRides in listPastRides %}
+        <div class="well">
+            <i>Annonce créé le {{ pastRides.offerPublished|date('d/m/Y à H:i:s') }}<i/>
+            <li>Lieu de départ : {{ pastRides.departure }}</li>
+            <li>Lieu d'arrivé : {{ pastRides.arrival }}</li>
+            <li>Prix : {{ pastRides.price }}</li>
+
+            <p>
+                <a href="{{ path('cv_platform_view', {'id': pastRides.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir détails</a>
+            </p>
+        </div>
+    {% endfor %}
+
+    <ul class="pagination">
+        {% for p in range(1, nbPages) %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
