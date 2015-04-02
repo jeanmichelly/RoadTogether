@@ -64,6 +64,12 @@ cv_platform_current_reservations:
     requirements:
         page: \d*
 
+cv_platform_past_reservations:
+    path:      /past-reservations/{page}
+    defaults:  { _controller: CVPlatformBundle:Reservation:pastReservations, page: 1 }
+    requirements:
+        page: \d*
+
 cv_platform_my_reservations:
     path:      /my-reservations/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }

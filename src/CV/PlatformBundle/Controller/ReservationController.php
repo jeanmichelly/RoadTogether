@@ -64,6 +64,32 @@ class ReservationController extends Controller
         ));
     }
 
+    public function pastReservationsAction($page) {
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }           
+
+        $nbPerPage = 5;
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $listPastReservations = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Reservation')
+            ->pastReservations($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listPastReservations)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Reservation:past.html.twig', array(
+            'listPastReservations'  => $listPastReservations,
+            'nbPages'           => $nbPages,
+            'page'              => $page,
+        ));
+    }
+
     public function myReservationsAction($page) {
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
