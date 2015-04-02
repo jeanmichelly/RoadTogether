@@ -3,6 +3,7 @@
 namespace CV\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Profile
@@ -84,6 +85,11 @@ class Profile
      */
     private $level;
 
+    /**
+    * @ORM\OneToOne(targetEntity="CV\PlatformBundle\Entity\Image", cascade={"persist"})
+    * @Assert\Valid
+    */
+    private $image;
 
     /**
      * Get id
@@ -300,5 +306,29 @@ class Profile
     public function getUser()
     {
         return $this->user;
+    }
+
+
+    /**
+     * Set image
+     *
+     * @param \CV\PlatformBundle\Entity\Image $image
+     * @return Profile
+     */
+    public function setImage(\CV\PlatformBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \CV\PlatformBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

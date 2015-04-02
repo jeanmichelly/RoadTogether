@@ -5,6 +5,7 @@ namespace CV\ProfileBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use CV\PlatformBundle\Form\ImageType;
 
 class ProfileType extends AbstractType
 {
@@ -19,9 +20,9 @@ class ProfileType extends AbstractType
             ->add('firstName',          'text')
             ->add('age',                'integer', array('attr' => array('min' => '10', 'max' => '100')))
             ->add('biography',          'textarea')
-            ->add('picture',            'text')
             ->add('birthday',           'date')
             ->add('phone',              'text')
+            ->add('image',      new ImageType()) 
             ->add('enregistrer',        'submit') 
         ;
     }

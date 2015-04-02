@@ -38,4 +38,20 @@ class ProfileController extends Controller
       'form' => $form->createView(),
     ));
   }
+    public function pictureAction()
+  {
+    $userId = $this->get('security.context')->getToken()->getUser()->getId();
+
+    $em = $this->getDoctrine()->getManager();
+    $profile = $em->getRepository('CVProfileBundle:Profile')
+                  ->requestProfileUser($userId);
+
+    if (null === $profile) {
+      throw new NotFoundHttpException("Le profil n'existe pas.");
+    }         
+ return $this->render('CVProfileBundle::picture.html.twig', array(
+      'profile' => $profile));
+
+  }
+
 }
