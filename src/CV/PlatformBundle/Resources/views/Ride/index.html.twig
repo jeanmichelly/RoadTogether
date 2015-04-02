@@ -1,0 +1,37 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Accueil</h1>
+    <hr>
+
+    {% block cvplatform_body %}
+        {% stylesheets 'css/jquery.datetimepicker.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        <h2>Recherche des annonces</h2>
+        {{ form(form) }}
+
+        {% javascripts 
+            'js/jquery.js'
+            'js/jquery.datetimepicker.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            $('#form_departure_date').datetimepicker({
+                mask:'9999/19/39',
+                format:'Y/m/d',    
+                timepicker:false,
+                formatDate:'Y/m/d',
+                lang:'fr',
+                minDate:new Date()
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
+
+

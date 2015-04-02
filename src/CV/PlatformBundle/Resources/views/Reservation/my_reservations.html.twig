@@ -4,6 +4,10 @@
     Mes réservations - {{ parent() }}
 {% endblock %}
 
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:Reservation:menu.html.twig") }}  
+{% endblock %}
+
 {% block cvplatform_body %}
     <h2>Liste de mes réservations</h2>
 
