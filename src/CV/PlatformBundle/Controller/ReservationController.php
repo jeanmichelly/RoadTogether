@@ -33,9 +33,7 @@ class ReservationController extends Controller
         $em->persist($reservation);
         $em->flush();            
 
-        return $this->redirect($this->generateUrl('cv_platform_reservation_ride', array(
-            'id' => $ride->getId(),
-        )));
+        return $this->redirect($this->generateUrl('cv_platform_my_reservations'));
     }
 
     public function currentReservationsAction($page) {

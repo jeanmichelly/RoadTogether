@@ -32,7 +32,7 @@
             <a href="#" class="voir_recent">5 seulement</a>
             <a href="#" class="replier_tous">Tout replier</a>
         </p>
-        <div class="well">
+        <div id="well" class="well">
             <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
             <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
         </div>
@@ -107,6 +107,9 @@
                         function() {
                             $.ajax({
                                 url: "{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id }) }}",
+                                success: function(data) {
+                                    window.location.replace("{{ path('cv_platform_my_reservations') }}");
+                                }
                             }); 
                         });
                     } else {

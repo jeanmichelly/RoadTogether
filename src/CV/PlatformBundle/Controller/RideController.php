@@ -99,7 +99,7 @@ class RideController extends Controller
         $em->remove($ride);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('cv_platform_home'));
+        return $this->redirect($this->generateUrl('cv_platform_my_rides'));
     }
 
     public function upcomingRidesAction($page) {
@@ -185,9 +185,9 @@ class RideController extends Controller
 
     public function searchRidesUserAction(Request $request) {
         $form = $this->get('form.factory')->createBuilder('form')
-            ->add('departure',          'text',     array('data' => 'Marolle sur seine'))
-            ->add('arrival',            'text',     array('data' => 'Troyes'))
-            ->add('departure_date',     'text',     array('data' => '2015/03/02'))
+            ->add('departure',          'text',     array('data' => 'Paris'))
+            ->add('arrival',            'text',     array('data' => 'Marseille'))
+            ->add('departure_date',     'text',     array('data' => '2015/05/01'))
             ->add('rechercher',         'submit')
             ->getForm();
 

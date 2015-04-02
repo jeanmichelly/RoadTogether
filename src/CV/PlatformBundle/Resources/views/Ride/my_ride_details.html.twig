@@ -90,6 +90,9 @@
                     if (isConfirm) {
                         $.ajax({
                             url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
+                            success: function(data) {
+                                window.location.replace("{{ path('cv_platform_my_rides') }}");
+                            }
                         }); 
                     } else {
                     
