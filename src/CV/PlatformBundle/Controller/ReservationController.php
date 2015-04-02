@@ -19,9 +19,15 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:PublicMessage')
             ->publicMessagesOfRide($ride);
 
+        $isFull = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->isFull($ride);
+
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
               'ride'                        => $ride,
               'listPublicMessagesOfRide'    => $listPublicMessagesOfRide,
+              'isFull'                      => $isFull,
         ));
     }
     

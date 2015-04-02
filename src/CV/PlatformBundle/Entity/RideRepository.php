@@ -89,4 +89,14 @@ class RideRepository extends EntityRepository {
 
         return new Paginator($query, true);
     }
+
+    public function isFull($ride) {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(re.id) FROM CVPlatformBundle:Reservation re
+                JOIN re.ride ri
+                WHERE re.ride = :ride')
+            ->setParameter('ride', $ride);
+
+        return ($ride->getNumberPassenger() == $query->getSingleScalarResult()) ? true:false;
+    }
 }
