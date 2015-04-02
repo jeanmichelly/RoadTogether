@@ -13,12 +13,30 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
+
+	public function currentReservations($page, $nbPerPage, $userId) {	
+	    $query = $this->createQueryBuilder('r')
+	      	->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      		->setParameter('user', $userId)
+	      	->andWhere('ride.departureDate > :departureDate')
+	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
+	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->getQuery();
+
+        $query
+          	->setFirstResult(($page-1) * $nbPerPage)
+          	->setMaxResults($nbPerPage);
+	    return new Paginator($query, true);
+   	}
+
 	public function myReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
-	      	->setParameter('user', $userId)
+	      		->setParameter('user', $userId)
 	      	->orderBy('ride.offerPublished', 'DESC')
 	      	->getQuery();
 

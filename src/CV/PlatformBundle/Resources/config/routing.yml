@@ -58,6 +58,12 @@ cv_platform_confirm_reservation_ride:
     requirements:
         id: \d+
 
+cv_platform_current_reservations:
+    path:      /current-reservations/{page}
+    defaults:  { _controller: CVPlatformBundle:Reservation:currentReservations, page: 1 }
+    requirements:
+        page: \d*
+
 cv_platform_my_reservations:
     path:      /my-reservations/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }

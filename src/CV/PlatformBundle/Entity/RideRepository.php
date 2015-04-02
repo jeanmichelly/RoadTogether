@@ -25,7 +25,7 @@ class RideRepository extends EntityRepository {
             ->leftJoin('r.user', 'user')
             ->addSelect('user')
             ->where('r.user = :user')
-            ->setParameter('user', $idUser)
+                ->setParameter('user', $idUser)
             ->orderBy('r.offerPublished', 'DESC')
             ->getQuery();
 

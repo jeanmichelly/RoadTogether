@@ -50,7 +50,7 @@ class PublicMessageRepository extends EntityRepository
 	      	->join('p.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('p.user = :user')
-	      	->setParameter('user', $userId)
+	      		->setParameter('user', $userId)
 		  	->orderBy('p.date', 'DESC')
 	      	->getQuery();
 
