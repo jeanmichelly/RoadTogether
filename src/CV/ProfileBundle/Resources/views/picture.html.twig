@@ -1,12 +1,11 @@
 
 {% if profile.image != null %}
-<img 
-  src="{{ asset(profile.image.getWebPath()) }}"
-  alt="{{ profile.image.alt }}"
-/> 
+	<img 
+	  src="{{ asset(profile.image.getWebPath()) }}"
+	  alt="{{ profile.image.alt }}"
+	/> 
 {%else %}
-<img src="http://placehold.it/120x120"
-                                                    alt="Alternate Text" class="img-responsive" />
+	<img src="http://placehold.it/120x120" alt="Alternate Text" class="img-responsive" />
 {% endif %}
   
 

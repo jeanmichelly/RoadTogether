@@ -36,10 +36,9 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li>
                             <a href=" {{ path('cv_platform_ratings') }}" class="btn btn-default btn-lg btn-link" style="font-size:20px;"><span class="glyphicon glyphicon-bell"></span></a>
-                            {% if numberNotify != 0 %}
-                                <span class="badge badge-notify">
-                                        {{ numberNotify }}
-                                </span>
+
+                            {% if app.session.get('numberNotify') != 0 %}
+                                <span class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
                             {% endif %}
                         </li>
                         <li><a href="{{ path('cv_platform_my_reservations') }}">Réservations</a> </li>

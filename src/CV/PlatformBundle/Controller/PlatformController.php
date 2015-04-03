@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PlatformController extends Controller
 {
     public function indexAction(Request $request) {
+        $session = $request->getSession();
+
         $form = $this->get('form.factory')->createBuilder('form')
             ->add('departure',          'text',     array('data' => 'Paris'))
             ->add('arrival',            'text',     array('data' => 'Marseille'))
@@ -34,9 +36,8 @@ class PlatformController extends Controller
                 ->updateStates($this->get('security.context')->getToken()->getUser());
         }
 
-        return $this->render('CVPlatformBundle::index.html.twig', array(
-            'form' => $form->createView(),
-            'numberNotify' => $numberNotify,
-        ));
+        $session->set('numberNotify', $numberNotify);
+
+        return $this->render('CVPlatformBundle::index.html.twig', array('form' => $form->createView()));
     }
 }
