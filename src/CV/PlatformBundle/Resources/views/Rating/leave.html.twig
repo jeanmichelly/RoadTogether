@@ -9,5 +9,15 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-   
+    <h2>Avis</h2>
+
+	<table id="mytable" class="table table-bordred table-striped">
+		<tbody>
+			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+		</tbody>
+	</table>
 {% endblock %}
