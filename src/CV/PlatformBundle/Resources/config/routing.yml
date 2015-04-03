@@ -3,13 +3,13 @@ cv_platform_home:
     defaults:  { _controller: CVPlatformBundle:Platform:index }
     requirements:
         page: \d*
-    
+
 cv_platform_view:
     path:      /ride/{id}
     defaults:  { _controller: CVPlatformBundle:Ride:view }
     requirements:
         id: \d+
-    
+
 cv_platform_add:
     path:      /add
     defaults:  { _controller: CVPlatformBundle:Ride:add }
@@ -99,3 +99,7 @@ cv_platform_messages_sended:
     defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesSended, page: 1 }
     requirements:
         page: \d*
+
+cv_platform_ratings:
+    path:      /ratings
+    defaults:  { _controller: CVPlatformBundle:Rating:leave }

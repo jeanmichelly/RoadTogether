@@ -39,7 +39,7 @@ class Reservation
     public function __construct($ride, $user) {
         $this->ride = $ride;
         $this->user = $user;
-        $this->state = 2;
+        $this->state = 0;
     }
 
     /**

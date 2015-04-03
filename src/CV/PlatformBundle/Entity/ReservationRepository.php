@@ -13,6 +13,46 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
+   	public function updateStates($userId){
+/*		$qb = $this->createQueryBuilder('r');
+		$query = $qb->update('CVPlatformBundle:Reservation', 'r')
+			->set('r.state', 1)
+			->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      		->setParameter('user', $userId)
+	      	->andWhere('r.state = 0')
+	      	->andWhere('ride.departureDate < :departureDate')
+	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
+	      	->getQuery();
+
+	    $query->execute();
+*/
+	  	$query = $this->createQueryBuilder('r')
+	      	->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      		->setParameter('user', $userId)
+	      	->getQuery();
+
+	  	$now = date('Y-m-d H:i:s');
+
+	  	$countNotify = 0;
+
+        foreach ($query->getResult() as $reservation) {
+            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
+                $reservation->setState(1);
+            }
+            if ( $reservation->getState() == 1 ) {
+            	$countNotify++;
+            }
+        }
+
+        $this->_em->flush();
+
+        return $countNotify;
+   	}
+
 	public function currentReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
