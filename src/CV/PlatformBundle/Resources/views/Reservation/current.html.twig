@@ -11,6 +11,17 @@
 {% block cvplatform_body %}
     <h2>Liste de mes réservations en cours</h2>
 
+
+{% if listCurrentReservations|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
+
+        <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    {% else %}
+
     {% for currentReservation in listCurrentReservations %}
         <div class="well">
             <i>Annonce créé le {{ currentReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</>
@@ -28,4 +39,5 @@
             <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
         {% endfor %}
     </ul>
+    {% endif %}    
 {% endblock %}

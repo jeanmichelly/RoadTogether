@@ -10,6 +10,18 @@
 
 {% block cvplatform_body %}
     <h2>Messages laissés</h2>
+
+{% if listMessagesSended|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
+
+        <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    {% else %}
+
+
     {% for messageSended in listMessagesSended %}
 
         <div class="well">
@@ -27,4 +39,5 @@
 	       <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_messages_sended', {'page': p}) }}">{{ p }}</a></li>
 	    {% endfor %}
   	</ul>
+   {% endif %}   
 {% endblock %}

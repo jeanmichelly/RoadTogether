@@ -11,6 +11,17 @@
 {% block cvplatform_body %}
     <h2>Liste de mes réservations passées</h2>
 
+{% if listPastReservations|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
+
+        <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    {% else %}
+
+
     {% for pastReservation in listPastReservations %}
         <div class="well">
             <i>Annonce créé le {{ pastReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</>
@@ -25,7 +36,8 @@
 
     <ul class="pagination">
         {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_past_reservations', {'page': p}) }}">{{ p }}</a></li>
         {% endfor %}
     </ul>
+  {% endif %} 
 {% endblock %}

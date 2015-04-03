@@ -103,11 +103,7 @@ class CarController extends Controller
         ));
     }
 
-      public function myCarsAction($page) {
-
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
+      public function myCarsAction($page, Request $request) {
 
         $nbPerPage = 5;
 
@@ -120,11 +116,17 @@ class CarController extends Controller
             ->getRepository('CVProfileBundle:Car')
             ->requestCarUser($page, $nbPerPage, $profileUser->getId());
 
-        $nbPages = ceil(count($cars)/$nbPerPage);
+          if(count($cars) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de voitures');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
+            'cars'     => $cars,
+        ));
         }
+
+
+        $nbPages = ceil(count($cars)/$nbPerPage);
 
         return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
             'cars'     => $cars,

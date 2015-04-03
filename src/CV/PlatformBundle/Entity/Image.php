@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Table(name="cv_image")
  * @ORM\Entity(repositoryClass="CV\PlatformBundle\Entity\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
@@ -49,7 +50,7 @@ class Image
 
     if (null !== $this->url) {
 
-      $this->tempFilename = $this->url;
+        $this->tempFilename = $this->url;
 
       $this->url = null;
       $this->alt = null;

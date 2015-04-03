@@ -61,13 +61,14 @@ class RideController extends Controller
         $form = $this->createForm(new RideType, $ride);
 
         if ($form->handleRequest($request)->isValid()) {
+            $ride->setDepartureDate(strtr($ride->getDepartureDate(), '/', '-'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($ride);
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
 
-            return $this->redirect($this->generateUrl('cv_platform_view', array('id' => $ride->getId())));
+            return $this->redirect($this->generateUrl('cv_platform_upcoming_rides'));
         }
 
         return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
@@ -102,7 +103,7 @@ class RideController extends Controller
         return $this->redirect($this->generateUrl('cv_platform_my_rides'));
     }
 
-    public function upcomingRidesAction($page) {
+    public function upcomingRidesAction($page, Request $request) {
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -116,11 +117,17 @@ class RideController extends Controller
             ->getRepository('CVPlatformBundle:Ride')
             ->upcomingRides($page, $nbPerPage, $userId);
 
-        $nbPages = ceil(count($listUpcomingRides)/$nbPerPage);
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+             if(count($listUpcomingRides) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de trajets à venir');
+
+
+        return $this->render('CVPlatformBundle:Ride:upcoming.html.twig', array(
+            'listUpcomingRides'     => $listUpcomingRides,
+        ));
         }
+
+        $nbPages = ceil(count($listUpcomingRides)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Ride:upcoming.html.twig', array(
             'listUpcomingRides'     => $listUpcomingRides,
@@ -129,10 +136,8 @@ class RideController extends Controller
         ));
     }
 
-    public function pastRidesAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
+    public function pastRidesAction($page, Request $request) {
+
 
         $nbPerPage = 5;
 
@@ -143,11 +148,16 @@ class RideController extends Controller
             ->getRepository('CVPlatformBundle:Ride')
             ->pastRides($page, $nbPerPage, $userId);
 
-        $nbPages = ceil(count($listPastRides)/$nbPerPage);
+        if(count($listPastRides) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de trajets passés');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:Ride:past.html.twig', array(
+            'listPastRides'     => $listPastRides,
+        ));
         }
+
+        $nbPages = ceil(count($listPastRides)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Ride:past.html.twig', array(
             'listPastRides'     => $listPastRides,

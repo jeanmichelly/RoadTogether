@@ -10,6 +10,18 @@
 
 {% block cvplatform_body %}
     <h2>Messages reçus</h2>
+
+{% if listMessagesReceived|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
+
+        <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    {% else %}
+
+
     {% for messageReceived in listMessagesReceived %}
         <div class="well">
             <i>Message publié le {{ messageReceived.date|date('d/m/Y à H:i:s') }}</>
@@ -27,4 +39,6 @@
 	       <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_messages_received', {'page': p}) }}">{{ p }}</a></li>
 	    {% endfor %}
   	</ul>
+
+  {% endif %}
 {% endblock %}

@@ -22,10 +22,7 @@ class PublicMessageController extends Controller
         return $this->render('CVPlatformBundle:PublicMessage:view.html.twig', array('publicMessage' => $publicMessage));
     }
 
-    public function messagesReceivedAction($page) {
-    	if ($page < 1) {
-          	throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }           
+    public function messagesReceivedAction($page, Request $request) {
 
         $nbPerPage = 5;
 
@@ -37,11 +34,16 @@ class PublicMessageController extends Controller
             ->messagesReceived($page, $nbPerPage, $userId)
         ;
 
-        $nbPages = ceil(count($listMessagesReceived)/$nbPerPage);
+        if(count($listMessagesReceived) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages reçus');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:PublicMessage:messages_received.html.twig', array(
+            'listMessagesReceived'     => $listMessagesReceived,
+        ));
         }
+
+        $nbPages = ceil(count($listMessagesReceived)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:PublicMessage:messages_received.html.twig', array(
             'listMessagesReceived'    => $listMessagesReceived,
@@ -50,11 +52,8 @@ class PublicMessageController extends Controller
         ));
     }
 
-    public function messagesSendedAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }           
-
+    public function messagesSendedAction($page, Request $request) {
+      
         $nbPerPage = 5;
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -65,11 +64,16 @@ class PublicMessageController extends Controller
             ->messagesSended($page, $nbPerPage, $userId)
         ;
 
-        $nbPages = ceil(count($listMessagesSended)/$nbPerPage);
+        if(count($listMessagesSended) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages laissés');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:PublicMessage:messages_sended.html.twig', array(
+            'listMessagesSended'     => $listMessagesSended,
+        ));
         }
+
+        $nbPages = ceil(count($listMessagesSended)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:PublicMessage:messages_sended.html.twig', array(
             'listMessagesSended'    => $listMessagesSended,

@@ -42,10 +42,7 @@ class ReservationController extends Controller
         return $this->redirect($this->generateUrl('cv_platform_my_reservations'));
     }
 
-    public function currentReservationsAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }           
+    public function currentReservationsAction($page, Request $request) {
 
         $nbPerPage = 5;
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -55,11 +52,16 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:Reservation')
             ->currentReservations($page, $nbPerPage, $userId);
 
-        $nbPages = ceil(count($listCurrentReservations)/$nbPerPage);
+          if(count($listCurrentReservations) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore réservations en cours');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
+            'listCurrentReservations'     => $listCurrentReservations,
+        ));
         }
+
+        $nbPages = ceil(count($listCurrentReservations)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
             'listCurrentReservations'  => $listCurrentReservations,
@@ -68,11 +70,8 @@ class ReservationController extends Controller
         ));
     }
 
-    public function pastReservationsAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }           
-
+    public function pastReservationsAction($page, Request $request) {
+        
         $nbPerPage = 5;
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
@@ -81,11 +80,16 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:Reservation')
             ->pastReservations($page, $nbPerPage, $userId);
 
-        $nbPages = ceil(count($listPastReservations)/$nbPerPage);
+        if(count($listPastReservations) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore réservations passées');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:Reservation:past.html.twig', array(
+            'listPastReservations'     => $listPastReservations,
+        ));
         }
+
+        $nbPages = ceil(count($listPastReservations)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Reservation:past.html.twig', array(
             'listPastReservations'  => $listPastReservations,

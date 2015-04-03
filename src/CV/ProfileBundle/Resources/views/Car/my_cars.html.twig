@@ -18,6 +18,18 @@
         {% endfor %}
     </p>
 
+
+{% if cars|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
+
+        <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    {% else %}
+
+
     {% for car in cars %}
         <div class="well">
 
@@ -36,4 +48,5 @@
             <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_profile_my_cars', {'page': p}) }}">{{ p }}</a></li>
         {% endfor %}
     </ul>
+  {% endif %}     
 {% endblock %}
