@@ -12,43 +12,30 @@
         {% stylesheets 'css/jquery.datetimepicker.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
-      
-             <div class="well well-sm">
-                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                    {{ form_errors(form) }}
-                    <fieldset>
-                        <legend class="text-center">Trouvez votre covoiturage</legend>
-                        <div class="form-group">
-                            {{ form_label(form.departure, "Lieu de départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.departure) }}
-                            <div class="col-md-9">{{ form_widget(form.departure, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.arrival, "Lieu d'arrivé", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.arrival) }}
+        </br>
 
-                            <div class="col-md-9">{{ form_widget(form.arrival, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.departure_date, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.departure_date) }}
-
-                            <div class="col-md-9">{{ form_widget(form.departure_date, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-    
-                        {{ form_widget(form.rechercher, {'attr': {'class': 'btn btn-primary'}}) }}
-                    </fieldset>
-                    {{ form_rest(form) }}
-                {{ form_end(form) }}
-            </div>
-
+        <div class="well well-sm">
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <fieldset>
+                    <legend class="text-center"><h2>Trouver votre covoiturage</h2></legend>
+                    <div class="input-group">
+                        <div class="input-group-addon"><img src="{{ asset('icon/departure.png') }}"></img></div>
+                        {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:160px', 'placeholder': 'De' }}) }}
+                        <div class="input-group-addon"><img src="{{ asset('icon/arrival.png') }}"></img></div>
+                        {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:160px', 'placeholder': 'A' }}) }}
+                        
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
+                        {{ form_widget(form.departure_date, {'attr': {'class': 'form-control', 'style': 'width:160px'}}) }}
+                    </div></br>
+                    <center>{{ form_widget(form.rechercher, {'attr': {'class': 'btn btn-primary'}}) }}</center>
+                </fieldset>
+                {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
         <hr>
-       
-        <h2>Vous avez une voiture?</h2>
-        <a href="{{ path('cv_platform_add') }}">
-            <strong>Publiez une annonce</strong>
-        </a>
 
+        <a href="{{ path('cv_platform_add') }}" class="btn btn-primary">Publier une annonce</a> 
 
         {% javascripts 
             'js/jquery.js'
@@ -68,5 +55,3 @@
         </script>
     {% endblock %}
 {% endblock %}
-
-
