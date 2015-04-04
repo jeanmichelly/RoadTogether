@@ -13,21 +13,26 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
-   	public function updateStates($userId){
-/*		$qb = $this->createQueryBuilder('r');
-		$query = $qb->update('CVPlatformBundle:Reservation', 'r')
-			->set('r.state', 1)
-			->join('r.ride', 'ride')
+	public function updateStates() {
+	  	$query = $this->createQueryBuilder('r')
+	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('r.state = 0')
-	      	->andWhere('ride.departureDate < :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
 	      	->getQuery();
 
-	    $query->execute();
-*/
+	  	$now = date('Y-m-d H:i:s');
+
+        foreach ($query->getResult() as $reservation) {
+            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
+                $reservation->setState(1);
+            }
+        }
+
+        $this->_em->flush();
+	}
+
+   	public function numberNotify($userId){
 	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
@@ -54,38 +59,70 @@ class ReservationRepository extends EntityRepository
    	}
 
 	public function currentReservations($page, $nbPerPage, $userId) {	
-	    $query = $this->createQueryBuilder('r')
+	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate > :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
-	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->getQuery();
+
+	  	$now = date('Y-m-d H:i:s');
+
+        foreach ($query->getResult() as $reservation) {
+            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
+                $reservation->setState(1);
+            }
+        }
+
+        $this->_em->flush();
+
+	  	$query = $this->createQueryBuilder('r')
+	      	->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      		->setParameter('user', $userId)
+	      	->andWhere('r.state = 0')
 	      	->getQuery();
 
         $query
           	->setFirstResult(($page-1) * $nbPerPage)
           	->setMaxResults($nbPerPage);
+
 	    return new Paginator($query, true);
    	}
 
    	public function pastReservations($page, $nbPerPage, $userId) {	
-	    $query = $this->createQueryBuilder('r')
+	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate < :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
-	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->getQuery();
+
+	  	$now = date('Y-m-d H:i:s');
+
+        foreach ($query->getResult() as $reservation) {
+            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
+                $reservation->setState(1);
+            }
+        }
+
+        $this->_em->flush();
+
+	  	$query = $this->createQueryBuilder('r')
+	      	->join('r.ride', 'ride')
+	      	->addSelect('ride')
+	      	->where('r.user = :user')
+	      		->setParameter('user', $userId)
+	      	->andWhere('r.state = 1')
 	      	->getQuery();
 
         $query
           	->setFirstResult(($page-1) * $nbPerPage)
           	->setMaxResults($nbPerPage);
+
 	    return new Paginator($query, true);
-   	}
+	}
 
 	public function myReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')

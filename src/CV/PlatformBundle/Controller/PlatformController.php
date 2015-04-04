@@ -33,7 +33,7 @@ class PlatformController extends Controller
 
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Reservation')
-                ->updateStates($this->get('security.context')->getToken()->getUser());
+                ->numberNotify($this->get('security.context')->getToken()->getUser());
         }
 
         $session->set('numberNotify', $numberNotify);
