@@ -33,7 +33,7 @@ class RatingController extends Controller
 
 		$nbPages = ceil(count($listPastReservationsToNotify)/$nbPerPage);
 
-        return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
+        return $this->render('CVPlatformBundle:Rating:notifications.html.twig', array(
         	'listPastReservationsToNotify' 	=> $listPastReservationsToNotify,
        		'nbPages'           			=> $nbPages,
 			'page'              			=> $page,
@@ -95,7 +95,7 @@ class RatingController extends Controller
     }
 
     public function leaveAction(Request $request) {    
-        return $this->redirect($this->generateUrl('cv_platform_leave_rating'));
+        return $this->render('CVPlatformBundle:Rating:leave.html.twig');
     }
 
     public function deleteNotificationAction(Request $request) {    
