@@ -72,6 +72,12 @@ class CarController extends Controller
 
     public function deleteAction(Car $car, Request $request) {
 
+      $user = $this->get('security.context')->getToken()->getUser();
+
+      if($car->getProfile()->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
+
     $form = $this->createFormBuilder()->getForm();
 
     if ($form->handleRequest($request)->isValid()) {

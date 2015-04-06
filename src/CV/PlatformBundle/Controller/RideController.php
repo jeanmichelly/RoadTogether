@@ -47,6 +47,12 @@ class RideController extends Controller
 
     public function viewAction(Ride $ride) {
 
+              $user = $this->get('security.context')->getToken()->getUser();
+
+      if($ride->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
+
         $form = $this->createForm(new RideViewType, $ride,array(
             'read_only' => true
         ));
@@ -79,6 +85,12 @@ class RideController extends Controller
 
     public function editAction(Ride $ride, Request $request) {
 
+    $user = $this->get('security.context')->getToken()->getUser();
+
+      if($ride->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
+
         $form = $this->createForm(new RideEditType, $ride);
 
         if ($form->handleRequest($request)->isValid()) {
@@ -96,6 +108,13 @@ class RideController extends Controller
     }
 
     public function deleteAction(Ride $ride, Request $request) {
+
+
+     $user = $this->get('security.context')->getToken()->getUser();
+
+      if($ride->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
         
         $em = $this->getDoctrine()->getManager();
         $em->remove($ride);
