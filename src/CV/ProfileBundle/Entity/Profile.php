@@ -33,6 +33,22 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=20, nullable=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le nom doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le nom doit avoir au maximum {{ limit }} caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9 ]+$/",
+     *     match=true,
+     *     message="Les caractères spéciaux sont interdits"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le nom ne peut pas contenir de nombre"
+     * )
      */
     private $name;
 
@@ -40,6 +56,22 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=20, nullable=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le prénom doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le prénom doit avoir au maximum {{ limit }} caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9 ]+$/",
+     *     match=true,
+     *     message="Les caractères spéciaux sont interdits"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le prénom ne peut pas contenir de nombre"
+     * )
      */
     private $firstName;
 
@@ -47,6 +79,12 @@ class Profile
      * @var integer
      *
      * @ORM\Column(name="age", type="smallint", nullable=true)
+     * @Assert\Range(
+     *      min = 10,
+     *      max = 100,
+     *      minMessage = "L'âge doit être au minimum de {{ limit }}",
+     *      maxMessage = "L'âge doit être au maximum de {{ limit }}"
+     * )
      */
     private $age;
 
@@ -54,15 +92,9 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="biography", type="text", nullable=true)
+     * @Assert\Regex("/^\w+/")
      */
     private $biography;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="picture", type="string", length=255, nullable=true)
-     */
-    private $picture;
 
     /**
      * @var \DateTime
@@ -75,6 +107,12 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=20, nullable=true)
+    * @Assert\Length(
+     *      min = 10,
+     *      max = 20,
+     *      minMessage = "Le numéro de téléphone doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le numéro de téléphone doit avoir au maximum {{ limit }} caractères"
+     * )
      */
     private $phone;
 

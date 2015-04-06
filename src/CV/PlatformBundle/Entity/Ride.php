@@ -3,6 +3,7 @@
 namespace CV\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ride
@@ -31,6 +32,22 @@ class Ride
      * @var string
      *
      * @ORM\Column(name="departure", type="string", length=25)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le lieu de départ doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le lieu de départ doit avoir au maximum {{ limit }} caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9 ]+$/",
+     *     match=true,
+     *     message="Les caractères spéciaux sont interdits"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le lieu de départ ne peut pas contenir de nombre"
+     * )
      */
     private $departure;
 
@@ -38,6 +55,22 @@ class Ride
      * @var string
      *
      * @ORM\Column(name="arrival", type="string", length=25)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le lieu d'arrivé doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le lieu d'arrivé doit avoir au maximum {{ limit }} caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9 ]+$/",
+     *     match=true,
+     *     message="Les caractères spéciaux sont interdits"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le lieu de départ ne peut pas contenir de nombre"
+     * )
      */
     private $arrival;
 
@@ -52,6 +85,12 @@ class Ride
      * @var integer
      *
      * @ORM\Column(name="price", type="smallint")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 1000,
+     *      minMessage = "Le prix doit être au minimum de {{ limit }} €",
+     *      maxMessage = "Le prix doit être au maximum de {{ limit }} €"
+     * )
      */
     private $price;
 
@@ -59,6 +98,12 @@ class Ride
      * @var integer
      *
      * @ORM\Column(name="number_passenger", type="smallint")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 4,
+     *      minMessage = "Le nombre de passagers doit être au minimum de {{ limit }}",
+     *      maxMessage = "Le nombre de passagers doit être au maximum de {{ limit }}"
+     * )
      */
     private $numberPassenger;
 
@@ -66,6 +111,7 @@ class Ride
      * @var string
      *
      * @ORM\Column(name="details", type="text")
+     * @Assert\Regex("/^\w+/")
      */
     private $details;
 

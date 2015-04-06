@@ -10,6 +10,7 @@ use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
+use CV\PlatformBundle\Form\RideSearchType;
 
 class RideController extends Controller
 {
@@ -100,7 +101,7 @@ class RideController extends Controller
         $em->remove($ride);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('cv_platform_my_rides'));
+        return $this->redirect($this->generateUrl('cv_platform_upcoming_rides'));
     }
 
     public function upcomingRidesAction($page, Request $request) {
@@ -194,45 +195,46 @@ class RideController extends Controller
     }
 
     public function searchRidesUserAction(Request $request) {
-        $form = $this->get('form.factory')->createBuilder('form')
-            ->add('departure',          'text',     array('data' => 'Paris'))
-            ->add('arrival',            'text',     array('data' => 'Marseille'))
-            ->add('departure_date',     'text',     array('data' => '2015/05/01'))
-            ->add('rechercher',         'submit')
-            ->getForm();
 
+        $ride = new Ride();
+        $form = $this->createForm(new RideSearchType, $ride);
 
         if ($form->handleRequest($request)->isValid()) {
-            $departureDateToUrl = strtr($form->get('departure_date')->getData(), '/', '-');
+
+            $form = $form->getData();
+            $departureDateToUrl = strtr($form->getDepartureDate(), '/', '-');
+            $form->setDepartureDate($departureDateToUrl);
+
             return $this->redirect($this->generateUrl('cv_platform_focus_rides', 
-                array(
-                    'departure' => $form->get('departure')->getData(),
-                    'arrival' => $form->get('arrival')->getData(),
-                    'departure_date' => $departureDateToUrl,
+               array(
+                    'departure' => $form->getDeparture(),
+                    'arrival' => $form->getArrival(),
+                    'departureDate' => $form->getDepartureDate(),
                 )));
         }
-
         return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
     }
 
-    public function focusRidesUserAction($departure, $arrival, $departure_date, $page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
+    public function focusRidesUserAction($departure, $arrival, $departureDate, $page, Request $request) {
 
         $nbPerPage = 5;
 
         $listRides = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Ride')
-            ->focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage)
+            ->focusRidesUser($departure, $arrival, $departureDate, $page, $nbPerPage)
         ;
 
-        $nbPages = ceil(count($listRides)/$nbPerPage);
+        if(count($listRides) == 0){
+            $request->getSession()->getFlashBag()->add('info', 'Il n\'existe pas de trajets correspondant à votre recherche');
 
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+        return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
+            'listRides'     => $listRides,
+        ));
         }
+
+        $nbPages = ceil(count($listRides)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
               'listRides'   => $listRides,

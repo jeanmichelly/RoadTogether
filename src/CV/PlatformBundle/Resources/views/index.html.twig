@@ -26,7 +26,7 @@
                         {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:160px', 'placeholder': 'A' }}) }}
                         
                         <div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
-                        {{ form_widget(form.departure_date, {'attr': {'class': 'form-control', 'style': 'width:160px'}}) }}
+                        {{ form_widget(form.departureDate, {'attr': {'class': 'form-control', 'style': 'width:160px'}}) }}
                     </div></br>
                     <center>{{ form_widget(form.rechercher, {'attr': {'class': 'btn btn-primary'}}) }}</center>
                 </fieldset>
@@ -44,7 +44,7 @@
         {% endjavascripts %}
 
         <script>
-            $('#form_departure_date').datetimepicker({
+            $('#cv_platformbundle_ride_search_departureDate').datetimepicker({
                 mask:'9999/19/39',
                 format:'Y/m/d',    
                 timepicker:false,

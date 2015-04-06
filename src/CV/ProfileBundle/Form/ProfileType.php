@@ -22,7 +22,7 @@ class ProfileType extends AbstractType
             ->add('biography',          'textarea')
             ->add('birthday',           'date')
             ->add('phone',              'text')
-            ->add('image',      new ImageType()) 
+            ->add('image',      new ImageType(), array("required" => false)) 
             ->add('enregistrer',        'submit') 
         ;
     }

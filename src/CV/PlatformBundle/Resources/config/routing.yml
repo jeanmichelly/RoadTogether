@@ -49,7 +49,7 @@ cv_platform_search_rides:
     defaults:  { _controller: CVPlatformBundle:Ride:searchRidesUser }
 
 cv_platform_focus_rides:
-    path:      /focus-rides/{departure}/{arrival}/{departure_date}/{page}
+    path:      /focus-rides/{departure}/{arrival}/{departureDate}/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:focusRidesUser, page: 1 }
     requirements:
         page: \d*

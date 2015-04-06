@@ -27,44 +27,51 @@
                         </div>
                         <div class="form-group">
                             {{ form_label(form.name, "Nom", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.name) }}
                             <div class="col-md-9">{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.name) }}</div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.firstName, "Prénom", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.firstName) }}
 
                             <div class="col-md-9">{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.firstName) }}</div>
                         </div>
                          <div class="form-group">
-                            {{ form_label(form.age, "Age", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.age) }}
+                            {{ form_label(form.age, "Âge", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
 
                             <div class="col-md-9">{{ form_widget(form.age, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.age) }}</div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.biography, "Biographie", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.biography) }}
 
                             <div class="col-md-9">{{ form_widget(form.biography, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.biography) }}</div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.phone, "Téléphone", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.phone) }}
 
                             <div class="col-md-9">{{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.phone) }}</div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.birthday, "Date de naissance", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.birthday) }}
 
                             <div class="col-md-9">{{ form_widget(form.birthday) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.birthday) }}</div>
                         </div>
 
                         <div class="form-group">
                             {{ form_label(form.image.file, "Photo", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.image.file) }}
                             <div class="col-md-9">{{ form_widget(form.image.file, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.image.file) }}</div>
                         </div>
 
                         {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
