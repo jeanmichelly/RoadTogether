@@ -100,6 +100,12 @@ class CarController extends Controller
 
       public function viewAction(Car $car) {
 
+         $user = $this->get('security.context')->getToken()->getUser();
+
+      if($car->getProfile()->getUser() != $user){
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+    }
+
         $form = $this->createForm(new CarViewType, $car,array(
             'read_only' => true
         ));
