@@ -3,6 +3,7 @@
 namespace CV\PlatformBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * RatingRepository
@@ -12,4 +13,31 @@ use Doctrine\ORM\EntityRepository;
  */
 class RatingRepository extends EntityRepository
 {
+	public function ratingsReceived($page, $nbPerPage, $userId) {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.relateduser = :user')
+                ->setParameter('user', $userId)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery();
+
+        $query
+            ->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($query, true);
+	}	
+
+	public function ratingsSended($page, $nbPerPage, $userId) {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.user = :user')
+                ->setParameter('user', $userId)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery();
+
+        $query
+            ->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($query, true);
+	}	
 }

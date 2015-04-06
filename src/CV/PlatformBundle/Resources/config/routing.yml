@@ -100,11 +100,27 @@ cv_platform_messages_sended:
     requirements:
         page: \d*
 
-cv_platform_ratings:
-    path:      /ratings/{page}
-    defaults:  { _controller: CVPlatformBundle:Rating:leave, page: 1 }
+cv_platform_ratings_notifications:
+    path:      /ratings-notifications/{page}
+    defaults:  { _controller: CVPlatformBundle:Rating:notifications, page: 1 }
     requirements:
         page: \d*
+
+cv_platform_ratings_received:
+    path:      /ratings-received/{page}
+    defaults:  { _controller: CVPlatformBundle:Rating:received, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_ratings_sended:
+    path:      /ratings-sended/{page}
+    defaults:  { _controller: CVPlatformBundle:Rating:sended, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_leave_rating:
+    path:      /leave-rating
+    defaults:  { _controller: CVPlatformBundle:Rating:leave }
 
 cv_platform_delete_rating_notification:
     path:      /delete-rating-notification

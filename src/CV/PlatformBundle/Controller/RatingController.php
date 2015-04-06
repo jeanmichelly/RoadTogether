@@ -13,7 +13,7 @@ use CV\PlatformBundle\Entity\PublicMessage;
 
 class RatingController extends Controller
 {
-    public function leaveAction($page, Request $request) {
+    public function notificationsAction($page, Request $request) {
 		if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }           
@@ -40,6 +40,64 @@ class RatingController extends Controller
         ));
     }
 
+    public function receivedAction($page) {
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $listRatingsReceived = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->ratingsReceived($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listRatingsReceived)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Rating:received.html.twig', array(
+            'listRatingsReceived'   => $listRatingsReceived,
+            'nbPages'               => $nbPages,
+            'page'                  => $page,
+        ));
+    }
+
+    public function sendedAction($page) {
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        $nbPerPage = 5;
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $listRatingsSended = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->ratingsSended($page, $nbPerPage, $userId);
+
+        $nbPages = ceil(count($listRatingsSended)/$nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        return $this->render('CVPlatformBundle:Rating:sended.html.twig', array(
+            'listRatingsSended'   => $listRatingsSended,
+            'nbPages'               => $nbPages,
+            'page'                  => $page,
+        ));
+    }
+
+    public function leaveAction(Request $request) {    
+        return $this->redirect($this->generateUrl('cv_platform_leave_rating'));
+    }
+
     public function deleteNotificationAction(Request $request) {    
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         $resId = $this->container->get('request')->get('resId');
@@ -47,6 +105,6 @@ class RatingController extends Controller
             ->getManager()
             ->getRepository('CVPlatformBundle:Reservation')
             ->updateState($userId, $resId);
-        return $this->redirect($this->generateUrl('cv_platform_ratings'));
+        return $this->redirect($this->generateUrl('cv_platform_ratings_notifications'));
     }
 }

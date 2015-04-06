@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-plus"></span><a href="#"> Laisser un avis</a>  
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-plus"></span><a href="{{ path('cv_platform_ratings_notifications') }}"> Laisser un avis</a>  
                 </h4>
             </div>
         </div>
@@ -12,7 +12,7 @@
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
                         <span class="glyphicon glyphicon-eye-open"></span>
-                        <a href="#"> Avis reçus</a>   
+                        <a href="{{ path('cv_platform_ratings_received') }}"> Avis reçus</a>   
                 </h4>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
                         <span class="glyphicon glyphicon-eye-open"></span>
-                        <a href="#"> Avis laissés</a>   
+                        <a href="{{ path('cv_platform_ratings_sended') }}"> Avis laissés</a>   
                 </h4>
             </div>
         </div>
