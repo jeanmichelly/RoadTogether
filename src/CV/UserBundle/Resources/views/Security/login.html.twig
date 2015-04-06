@@ -3,35 +3,25 @@
 {% block body %}
   {# S'il y a une erreur, on l'affiche dans un joli cadre #}
   {% if error %}
-    <div class="alert alert-error">{{ error }}</div>
+    <p class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</p> 
   {% endif %}
-  {# Le formulaire, avec URL de soumission vers la route "login_check" comme on l'a vu
-     Ici, j'ai repris le contenu du login.html.twig de FOSUserBundle #}
-  {# En fait on pourrait trÃ¨s bien inclure la vue "login_content" plutÃ´t que de tout rÃ©Ã©crire,
-     Mais ici, la prÃ©sentation diffÃ¨re suivant que le formulaire est affichÃ© seul dans sa page,
-     ou intÃ©grÃ© dans le menu (plus Ã©troit) #}
-  <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <div class="control-group">
-      <label for="username" class="control-label">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-      <div class="controls">
-        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-      </div>
+  <!--Pulling Awesome Font -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<h3>Identification</h3>
+<ul class="nav nav-pills nav-stacked">
+    <div class="form-login"> 
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <input type="text" id="username" class="form-control input-sm chat-input" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/></br>
+            <input type="password" id="password"   class="form-control input-sm chat-input" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"     /></br>
+            <div class="wrapper">
+                <span class="group-btn">     
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-md">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }} <i class="fa fa-sign-in"></i></button>
+                </span>
+            </div>
+        </form>
     </div>
-    <div class="control-group">
-      <label for="password" class="control-label">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-      <div class="controls">
-        <input type="password" id="password" name="_password" required="required" />
-      </div>
-    </div>
-    <div class="control-group">
-      <div class="controls">
-        <label for="remember_me" class="checkbox">
-          <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-          {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-        </label>
-        <button type="submit" id="_submit" name="_submit" class="btn">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
-      </div>
-    </div>
-  </form>
+</ul>
+
 {% endblock %}
