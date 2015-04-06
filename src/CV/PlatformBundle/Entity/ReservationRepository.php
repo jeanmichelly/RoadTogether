@@ -32,7 +32,19 @@ class ReservationRepository extends EntityRepository
         $this->_em->flush();
 	}
 
-   	public function numberNotify($userId){
+	public function updateState($userId, $resId) {
+       	$query = $this->createQueryBuilder('r')
+	      	->update()
+            ->set('r.state', 2)
+            ->where('r.user = :user')
+            ->andWhere('r.id = :res')
+            	->setParameter('user', $userId)
+            	->setParameter('res', $resId)
+	      	->getQuery();
+       	$query->execute();
+  	}
+
+   	public function numberNotify($userId) {
         $query = $this->_em->createQuery('
                 SELECT COUNT(re.id) FROM CVPlatformBundle:Reservation re
                 JOIN re.ride ri

@@ -18,7 +18,7 @@ class PlatformController extends Controller
             ->add('rechercher',         'submit')
             ->getForm();
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ( $form->handleRequest($request)->isValid() ) {
             $departureDateToUrl = strtr($form->get('departure_date')->getData(), '/', '-');
             return $this->redirect($this->generateUrl('cv_platform_focus_rides', 
                 array(
@@ -38,7 +38,7 @@ class PlatformController extends Controller
 
         $numberNotify = 0;
 
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
             $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Reservation')
                 ->numberNotify($userId);
         }

@@ -13,11 +13,31 @@
 
 	<table id="mytable" class="table table-bordred table-striped">
 		<tbody>
-			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
-			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
-			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
-			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
-			{% include 'CVPlatformBundle:Rating:notification.html.twig' %}
+			{% for pastReservationToNotify in listPastReservationsToNotify %}
+				{% include 'CVPlatformBundle:Rating:notification.html.twig' with {'pastReservationToNotify': pastReservationToNotify} %}
+    		{% endfor %}
 		</tbody>
 	</table>
+
+	<ul class="pagination">
+        {% for p in range(1, nbPages) %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
+    {% javascripts 'js/jquery.js' %}
+   		<script type="text/javascript" src="{{ asset_url }}"></script>
+     	<script>
+			$( ".delete_notification" ).click(function() {
+			    var resId = this.id;
+                var param = "resId="+resId;
+                $.ajax({
+                    url: "{{ path('cv_platform_delete_rating_notification') }}",
+                    data: param,
+                    success: function(data) {
+						$('#res_'+resId).remove();            
+                    }
+                }); 
+			});
+		</script>	
+	{% endjavascripts %}
 {% endblock %}

@@ -68,9 +68,9 @@ class ReservationController extends Controller
         }
 
         return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
-            'listCurrentReservations'  => $listCurrentReservations,
-            'nbPages'           => $nbPages,
-            'page'              => $page,
+            'listCurrentReservations'   => $listCurrentReservations,
+            'nbPages'                   => $nbPages,
+            'page'                      => $page,
         ));
     }
 
@@ -78,7 +78,6 @@ class ReservationController extends Controller
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }           
-
         $nbPerPage = 5;
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
