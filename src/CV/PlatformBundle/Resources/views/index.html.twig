@@ -21,9 +21,9 @@
                     <legend class="text-center"><h2>Trouver votre covoiturage</h2></legend>
                     <div class="input-group">
                         <div class="input-group-addon"><img src="{{ asset('icon/departure.png') }}"></img></div>
-                        {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:160px', 'placeholder': 'De' }}) }}
+                        {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:250px', 'placeholder': 'De' }}) }}
                         <div class="input-group-addon"><img src="{{ asset('icon/arrival.png') }}"></img></div>
-                        {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:160px', 'placeholder': 'A' }}) }}
+                        {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:250px', 'placeholder': 'A' }}) }}
                         
                         <div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
                         {{ form_widget(form.departureDate, {'attr': {'class': 'form-control', 'style': 'width:160px'}}) }}
@@ -39,7 +39,11 @@
 
         {% javascripts 
             'js/jquery.js'
-            'js/jquery.datetimepicker.js' %}
+            'js/jquery.datetimepicker.js'
+            'js/autocompletion_index.js' %}
+
+         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 

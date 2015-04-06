@@ -34,19 +34,9 @@ class Ride
      * @ORM\Column(name="departure", type="string", length=25)
      * @Assert\Length(
      *      min = 2,
-     *      max = 25,
+     *      max = 100,
      *      minMessage = "Le lieu de départ doit avoir au minimum {{ limit }} caractères",
      *      maxMessage = "Le lieu de départ doit avoir au maximum {{ limit }} caractères"
-     * )
-     * @Assert\Regex(
-     *     pattern="/^[a-zA-Z0-9 ]+$/",
-     *     match=true,
-     *     message="Les caractères spéciaux sont interdits"
-     * )
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Le lieu de départ ne peut pas contenir de nombre"
      * )
      */
     private $departure;
@@ -57,19 +47,9 @@ class Ride
      * @ORM\Column(name="arrival", type="string", length=25)
      * @Assert\Length(
      *      min = 2,
-     *      max = 25,
+     *      max = 100,
      *      minMessage = "Le lieu d'arrivé doit avoir au minimum {{ limit }} caractères",
      *      maxMessage = "Le lieu d'arrivé doit avoir au maximum {{ limit }} caractères"
-     * )
-     * @Assert\Regex(
-     *     pattern="/^[a-zA-Z0-9 ]+$/",
-     *     match=true,
-     *     message="Les caractères spéciaux sont interdits"
-     * )
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Le lieu de départ ne peut pas contenir de nombre"
      * )
      */
     private $arrival;
