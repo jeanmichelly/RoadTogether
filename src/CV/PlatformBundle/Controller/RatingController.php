@@ -10,6 +10,7 @@ use CV\PlatformBundle\Entity\Reservation;
 use CV\PlatformBundle\Entity\Rating;
 use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Entity\PublicMessage;
+use CV\PlatformBundle\Form\RatingType;
 
 class RatingController extends Controller
 {
@@ -94,8 +95,23 @@ class RatingController extends Controller
         ));
     }
 
-    public function leaveAction(Request $request) {    
-        return $this->render('CVPlatformBundle:Rating:leave.html.twig');
+    public function leaveAction(Request $request) {
+        dump($this->container->get('request'));
+        $reservation = $this->container->get('request')->get('content');
+
+        $rating = new Rating();
+        $form = $this->createForm(new RatingType, $rating);
+
+        if ($form->handleRequest($request)->isValid()) {
+           $request->getSession()->getFlashBag()->add('notice', 'Avis bien publié.');
+
+            return $this->redirect($this->generateUrl('cv_platform_ratings_sended'));
+        }
+
+        return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
+            'form' => $form->createView(),
+            'reservation' => $reservation,
+        ));
     }
 
     public function deleteNotificationAction(Request $request) {    

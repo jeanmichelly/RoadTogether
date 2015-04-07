@@ -1,5 +1,5 @@
 <tr id="res_{{pastReservationToNotify.id}}">
 	<td class="col-md-8">{{ pastReservationToNotify.ride.departureDate }}  : Le voyage {{ pastReservationToNotify.ride.departure }} -> {{ pastReservationToNotify.ride.arrival }} a été effectué. Vous pouvez laisser un avis à {{ pastReservationToNotify.ride.user }}</td>
-	<td><button class="leave_rating btn btn-primary">Laisser un avis</button></td>
+	<td><button id="l_{{pastReservationToNotify.id}}" class="leave_rating btn btn-primary">Laisser un avis</button></td>
 	<td><a id="{{pastReservationToNotify.id}}" class="delete_notification"><img src="{{ asset('icon/delete.png') }}"></img></a></td>
 </tr> 
