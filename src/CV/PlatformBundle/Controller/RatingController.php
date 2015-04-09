@@ -95,15 +95,22 @@ class RatingController extends Controller
         ));
     }
 
-    public function leaveAction(Request $request) {
-        dump($this->container->get('request'));
-        $reservation = $this->container->get('request')->get('content');
-
+    public function leaveAction(Reservation $reservation, Request $request) {
         $rating = new Rating();
         $form = $this->createForm(new RatingType, $rating);
 
         if ($form->handleRequest($request)->isValid()) {
-           $request->getSession()->getFlashBag()->add('notice', 'Avis bien publié.');
+            $em = $this->getDoctrine()->getManager();
+            $relateduser = $em->getRepository('CVUserBundle:User')->find($reservation->getRide()->getUser());
+            $request->getSession()->getFlashBag()->add('info', 'Avis bien publié.');
+        
+            $rating->setDate(new \Datetime());
+            $rating->setUser($reservation->getUser());
+            $rating->setRelateduser($relateduser);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($rating);
+            $em->flush();
 
             return $this->redirect($this->generateUrl('cv_platform_ratings_sended'));
         }

@@ -38,17 +38,6 @@
                     }
                 }); 
 			});
-
-            $( ".leave_rating" ).click(function() {
-                var content = 'content='+this.id.replace("l_", "");
-                $.ajax({
-                    url: "{{ path('cv_platform_leave_rating') }}",
-                    data: content,
-                    success: function(data) {
-                        window.location.replace("{{ path('cv_platform_leave_rating') }}");
-                    }
-                }); 
-            });
 		</script>	
 	{% endjavascripts %}
 {% endblock %}

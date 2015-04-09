@@ -119,8 +119,10 @@ cv_platform_ratings_sended:
         page: \d*
 
 cv_platform_leave_rating:
-    path:      /leave-rating
+    path:      /leave-rating/{id}
     defaults:  { _controller: CVPlatformBundle:Rating:leave }
+    requirements:
+        id: \d+
 
 cv_platform_delete_rating_notification:
     path:      /delete-rating-notification

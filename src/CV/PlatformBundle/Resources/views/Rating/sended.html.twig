@@ -9,6 +9,11 @@
 {% endblock %}
 
 {% block cvplatform_body %}
+    <p>
+        {% for message in app.session.flashbag.get('info') %}
+            <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
     <h2>Avis laissés</h2>
 
     {% for ratingSended in listRatingsSended %}
