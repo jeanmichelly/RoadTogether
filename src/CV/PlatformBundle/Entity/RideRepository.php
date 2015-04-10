@@ -5,8 +5,8 @@ namespace CV\PlatformBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
-
-class RideRepository extends EntityRepository {
+class RideRepository extends EntityRepository 
+{
    	public function requestRidesFiltered($departure, $arrival) {
 		$listRides = $this->findBy(
   			array('departure' => $departure,

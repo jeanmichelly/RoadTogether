@@ -14,9 +14,11 @@
 	{% endstylesheets %}
 
   	{{ include("CVPlatformBundle:Ride:form.html.twig") }}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
     {% javascripts 
-        'js/jquery.js'
         'js/jquery.datetimepicker.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

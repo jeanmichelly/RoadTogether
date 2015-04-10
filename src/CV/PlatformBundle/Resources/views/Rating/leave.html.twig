@@ -34,11 +34,12 @@
                 {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
-    {% javascripts 
-    	'js/jquery.js' 
-    	'@CVPlatformBundle/Resources/public/js/rating.js'%}
-   		<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
 {% endblock %}
+
 {% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@CVPlatformBundle/Resources/public/js/rating.js'%}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

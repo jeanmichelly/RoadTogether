@@ -18,24 +18,24 @@
         <hr>
 
         <a href="{{ path('cv_platform_add') }}">Publier une annonce</a> 
-
-        {% javascripts 
-            'js/jquery.js'
-            'js/jquery.datetimepicker.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-        <script>
-            $('#form_departure_date').datetimepicker({
-                mask:'9999/19/39',
-                format:'Y/m/d',    
-                timepicker:false,
-                formatDate:'Y/m/d',
-                lang:'fr',
-                minDate:new Date()
-            });
-        </script>
     {% endblock %}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        'js/jquery.datetimepicker.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
+    <script>
+        $('#form_departure_date').datetimepicker({
+            mask:'9999/19/39',
+            format:'Y/m/d',    
+            timepicker:false,
+            formatDate:'Y/m/d',
+            lang:'fr',
+            minDate:new Date()
+        });
+    </script>
+{% endblock %}

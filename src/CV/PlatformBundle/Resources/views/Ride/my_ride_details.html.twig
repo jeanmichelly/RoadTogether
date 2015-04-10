@@ -70,35 +70,33 @@
         <a href="{{ path('cv_platform_edit', {'id': form.vars.value.id }) }}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i>Modifier l'annonce</a>
         <button class="btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><i class="glyphicon glyphicon-trash"></i> Supprimer l'annonce</button>
     </p>
+{% endblock %}
 
-    {% javascripts 'js/jquery.js' %}
-        <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+{% block javascripts %}
+    {{ parent() }} 
+    <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
 
-        <script> // Boite de confirmation
-            document.querySelector('.sweet-14').onclick = function(){
-                swal({
-                      title: "Êtes vous sure de vouloir supprimer ?",
-                    text: "Vous ne pourrez plus récupérer l'annonce",
-                    type: "error",
-                    showCancelButton: true,
-                    confirmButtonClass: 'btn-danger',
-                    cancelButtonText: 'non',
-                    confirmButtonText: 'Oui'
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
-                            success: function(data) {
-                                window.location.replace("{{ path('cv_platform_my_rides') }}");
-                            }
-                        }); 
-                    } else {
-                    
-                    }
-                });
-            };
-        </script>
-    {% endjavascripts %}
+    <script> // Boite de confirmation
+        document.querySelector('.sweet-14').onclick = function(){
+            swal({
+                  title: "Êtes vous sure de vouloir supprimer ?",
+                text: "Vous ne pourrez plus récupérer l'annonce",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: 'btn-danger',
+                cancelButtonText: 'non',
+                confirmButtonText: 'Oui'
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
+                        success: function(data) {
+                            window.location.replace("{{ path('cv_platform_my_rides') }}");
+                        }
+                    }); 
+                }
+            });
+        };
+    </script>
 {% endblock %}

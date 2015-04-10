@@ -41,21 +41,22 @@
                     {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts 
+            'js/jquery.datetimepicker.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
 
-    {% javascripts 
-        'js/jquery.js'
-        'js/jquery.datetimepicker.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    <script>
-        $('#form_departure_date').datetimepicker({
-            mask:'9999/19/39',
-            format:'Y/m/d',    
-            timepicker:false,
-            formatDate:'Y/m/d',
-            lang:'fr',
-            minDate:new Date()
-        });
-    </script>
+        <script>
+            $('#form_departure_date').datetimepicker({
+                mask:'9999/19/39',
+                format:'Y/m/d',    
+                timepicker:false,
+                formatDate:'Y/m/d',
+                lang:'fr',
+                minDate:new Date()
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
