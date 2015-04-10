@@ -108,6 +108,8 @@ class RatingController extends Controller
             $rating->setUser($reservation->getUser());
             $rating->setRelateduser($relateduser);
 
+            $reservation->setState(2);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($rating);
             $em->flush();

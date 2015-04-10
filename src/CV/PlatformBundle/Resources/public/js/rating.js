@@ -109,7 +109,7 @@ $( document ).ready(function() {
 	});
 	
 	$('#stars-existing').on('starrr:change', function(e, value){
-		$('#count-existing').html(value);
+		$('#cv_platformbundle_rating_evaluation').val(value);
 	});
 });
 
