@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Table(name="cv_image")
  * @ORM\Entity(repositoryClass="CV\PlatformBundle\Entity\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */

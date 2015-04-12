@@ -19,14 +19,13 @@ class ReservationRepository extends EntityRepository
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
+	      	->andWhere('r.state = 0')
+	      	->andWhere('ride.departureDate < :now')
+	      		->setParameter('now', date('Y-m-d H:i:s'))
 	      	->getQuery();
 
-	  	$now = date('Y-m-d H:i:s');
-
         foreach ($query->getResult() as $reservation) {
-            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
-                $reservation->setState(1);
-            }
+          	$reservation->setState(1);
         }
 
         $this->_em->flush();
@@ -43,18 +42,6 @@ class ReservationRepository extends EntityRepository
 	      	->getQuery();
        	$query->execute();
   	}
-
-   	public function numberNotify($userId) {
-        $query = $this->_em->createQuery('
-                SELECT COUNT(re.id) FROM CVPlatformBundle:Reservation re
-                JOIN re.ride ri
-                WHERE re.ride = ri
-                AND re.state = 1
-                AND re.user = :user')
-        	->setParameter('user', $userId);
-
-        return $query->getSingleScalarResult();
-   	}
 
 	public function currentReservations($page, $nbPerPage, $userId) {	
 	  	$query = $this->createQueryBuilder('r')

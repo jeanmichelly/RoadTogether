@@ -24,6 +24,11 @@ class RatingController extends Controller
        	
         $this->getDoctrine()
             ->getManager()
+            ->getRepository('CVPlatformBundle:Notification')
+            ->update($userId);
+        
+        $this->getDoctrine()
+            ->getManager()
             ->getRepository('CVPlatformBundle:Reservation')
             ->updateStates($userId);
 
