@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
+    {{ include("CVPlatformBundle:Notification:menu.html.twig") }}  
 {% endblock %}
 
 {% block cvplatform_body %}
@@ -14,7 +14,7 @@
 	<table id="mytable" class="table table-bordred table-striped">
 		<tbody>
 			{% for pastReservationToNotify in listPastReservationsToNotify %}
-				{% include 'CVPlatformBundle:Rating:notification.html.twig' with {'pastReservationToNotify': pastReservationToNotify} %}
+				{% include 'CVPlatformBundle:Notification:view.html.twig' with {'pastReservationToNotify': pastReservationToNotify} %}
     		{% endfor %}
 		</tbody>
 	</table>

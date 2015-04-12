@@ -30,7 +30,7 @@ class NotificationRepository extends EntityRepository
 			->setParameter('now', date('Y-m-d H:i:s'));
 
 		foreach ($query->getResult() as $reservation) {
-          	$notification = new Notification($reservation->getUser(), $reservation->getRide()->getUser());
+          	$notification = new Notification($reservation->getUser(), $reservation->getRide()->getUser(), $reservation);
             $this->_em->persist($notification);
             $this->_em->flush();
         }

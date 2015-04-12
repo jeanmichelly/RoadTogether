@@ -39,10 +39,9 @@ class Notification
      */
     private $reservation;
 
-    public function __construct($user, $relateduser, $reservation) {
+    public function __construct($user, $relateduser) {
         $this->user = $user;
         $this->relateduser = $relateduser;
-        $this->reservation = $reservation;
     }
 
     /**
@@ -99,28 +98,5 @@ class Notification
     public function getRelateduser()
     {
         return $this->relateduser;
-    }
-
-    /**
-     * Set reservation
-     *
-     * @param \CV\PlatformBundle\Entity\Reservation $reservation
-     * @return Notification
-     */
-    public function setReservation(\CV\PlatformBundle\Entity\Reservation $reservation)
-    {
-        $this->reservation = $reservation;
-    
-        return $this;
-    }
-
-    /**
-     * Get reservation
-     *
-     * @return \CV\PlatformBundle\Entity\Reservation 
-     */
-    public function getReservation()
-    {
-        return $this->reservation;
     }
 }
