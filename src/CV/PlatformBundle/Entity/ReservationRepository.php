@@ -31,18 +31,6 @@ class ReservationRepository extends EntityRepository
         $this->_em->flush();
 	}
 
-/*	public function updateState($userId, $resId) {
-       	$query = $this->createQueryBuilder('r')
-	      	->update()
-            ->set('r.state', 2)
-            ->where('r.user = :user')
-            ->andWhere('r.id = :res')
-            	->setParameter('user', $userId)
-            	->setParameter('res', $resId)
-	      	->getQuery();
-       	$query->execute();
-  	}*/
-
 	public function currentReservations($page, $nbPerPage, $userId) {	
 	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')

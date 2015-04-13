@@ -125,14 +125,4 @@ class RatingController extends Controller
             'notification' => $notification,
         ));
     }
-
-    public function deleteNotificationAction(Request $request) {    
-        $userId = $this->get('security.context')->getToken()->getUser()->getId();
-        $resId = $this->container->get('request')->get('resId');
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateState($userId, $resId);
-        return $this->redirect($this->generateUrl('cv_platform_ratings_notifications'));
-    }
 }
