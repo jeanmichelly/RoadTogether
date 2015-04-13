@@ -1,5 +1,5 @@
-<tr id="res_{{pastReservationToNotify.id}}">
-	<td class="col-md-8">{{ pastReservationToNotify.ride.departureDate }}  : Le voyage {{ pastReservationToNotify.ride.departure }} -> {{ pastReservationToNotify.ride.arrival }} a été effectué. Vous pouvez laisser un avis à {{ pastReservationToNotify.ride.user }}</td>
-	<td><a href="{{ path('cv_platform_leave_rating', {'id': pastReservationToNotify.id }) }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Laisser un avis</a></td>
-	<td><a id="{{pastReservationToNotify.id}}" class="delete_notification"><img src="{{ asset('icon/delete.png') }}"></img></a></td>
+<tr id="notif_{{notification.id}}">
+	<td class="col-md-8">{{ notification.reservation.ride.departureDate }}  : Le voyage {{ notification.reservation.ride.departure }} -> {{ notification.reservation.ride.arrival }} a été effectué. Vous pouvez laisser un avis à {{ notification.reservation.ride.user }}</td>
+	<td><a href="{{ path('cv_platform_leave_rating', {'id': notification.id }) }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Laisser un avis</a></td>
+	<td><a id="{{notification.id}}" class="delete"><img src="{{ asset('icon/delete.png') }}"></img></a></td>
 </tr> 

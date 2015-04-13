@@ -29,27 +29,29 @@ class NotificationController extends Controller
             ->getRepository('CVPlatformBundle:Reservation')
             ->updateStates($userId);
 
-		$listPastReservationsToNotify = $this->getDoctrine()
+		$listNotifications = $this->getDoctrine()
             ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->pastReservations($page, $nbPerPage, $userId);
+            ->getRepository('CVPlatformBundle:Notification')
+            ->myNotifications($page, $nbPerPage, $userId);
 
-		$nbPages = ceil(count($listPastReservationsToNotify)/$nbPerPage);
+		$nbPages = ceil(count($listNotifications)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Notification:my_notifications.html.twig', array(
-        	'listPastReservationsToNotify' 	=> $listPastReservationsToNotify,
-       		'nbPages'           			=> $nbPages,
-			'page'              			=> $page,
+        	'listNotifications'      => $listNotifications,
+       		'nbPages'                => $nbPages,
+			'page'                   => $page,
         ));
     }
 
-    public function deleteNotificationAction(Request $request) {    
+    public function deleteAction(Request $request) {    
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
-        $resId = $this->container->get('request')->get('resId');
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateState($userId, $resId);
-        return $this->redirect($this->generateUrl('cv_platform_ratings_notifications'));
+        $notifId = $this->container->get('request')->get('notifId');
+
+        $em = $this->getDoctrine()->getManager();
+        $notification = $em->getRepository('CVPlatformBundle:Notification')->find($notifId);
+        $notification->setState(1);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('cv_platform_my_notifications'));
     }
 }

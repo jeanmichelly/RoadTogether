@@ -10,6 +10,7 @@ use CV\PlatformBundle\Entity\Reservation;
 use CV\PlatformBundle\Entity\Rating;
 use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Entity\PublicMessage;
+use CV\PlatformBundle\Entity\Notification;
 use CV\PlatformBundle\Form\RatingType;
 
 class RatingController extends Controller
@@ -100,23 +101,20 @@ class RatingController extends Controller
         ));
     }
 
-    public function leaveAction(Reservation $reservation, Request $request) {
+    public function leaveAction(Notification $notification, Request $request) {
         $rating = new Rating();
         $form = $this->createForm(new RatingType, $rating);
 
         if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $relateduser = $em->getRepository('CVUserBundle:User')->find($reservation->getRide()->getUser());
             $request->getSession()->getFlashBag()->add('info', 'Avis bien publié.');
         
             $rating->setDate(new \Datetime());
-            $rating->setUser($reservation->getUser());
-            $rating->setRelateduser($relateduser);
-
-            $reservation->setState(2);
+            $rating->setUser($notification->getUser());
+            $rating->setRelateduser($notification->getRelateduser());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($rating);
+            $em->remove($notification);
             $em->flush();
 
             return $this->redirect($this->generateUrl('cv_platform_ratings_sended'));
@@ -124,7 +122,7 @@ class RatingController extends Controller
 
         return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
             'form' => $form->createView(),
-            'reservation' => $reservation,
+            'notification' => $notification,
         ));
     }
 

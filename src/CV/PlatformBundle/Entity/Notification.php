@@ -22,27 +22,33 @@ class Notification
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\CV\UserBundle\Entity\User",inversedBy="notifications", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="\CV\UserBundle\Entity\User",inversedBy="notifications", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
 
     /**
-    * @ORM\ManyToOne(targetEntity="\CV\UserBundle\Entity\User", cascade={"persist", "remove"})
-    * @ORM\JoinColumn(name="related_user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+    * @ORM\ManyToOne(targetEntity="\CV\UserBundle\Entity\User", cascade={"persist"})
+    * @ORM\JoinColumn(name="related_user_id", referencedColumnName="id", nullable=false)
     */
     protected $relateduser;
 
     /**
-     * @ORM\OneToOne(targetEntity="CV\PlatformBundle\Entity\Reservation", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="CV\PlatformBundle\Entity\Reservation", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;
+
+    /**
+     * @ORM\Column(name="state", type="smallint")
+     */
+    private $state;
 
     public function __construct($user, $relateduser, $reservation) {
         $this->user = $user;
         $this->relateduser = $relateduser;
         $this->reservation = $reservation;
+        $this->state = 0;
     }
 
     /**
@@ -122,5 +128,28 @@ class Notification
     public function getReservation()
     {
         return $this->reservation;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     * @return Notification
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer 
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }

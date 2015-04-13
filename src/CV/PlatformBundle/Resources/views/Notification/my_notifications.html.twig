@@ -13,8 +13,8 @@
 
 	<table id="mytable" class="table table-bordred table-striped">
 		<tbody>
-			{% for pastReservationToNotify in listPastReservationsToNotify %}
-				{% include 'CVPlatformBundle:Notification:view.html.twig' with {'pastReservationToNotify': pastReservationToNotify} %}
+			{% for notification in listNotifications %}
+				{% include 'CVPlatformBundle:Notification:view.html.twig' with {'notification': notification} %}
     		{% endfor %}
 		</tbody>
 	</table>
@@ -29,14 +29,14 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $( ".delete_notification" ).click(function() {
-            var resId = this.id;
-            var param = "resId="+resId;
+        $( ".delete" ).click(function() {
+            var notifId = this.id;
+            var param = "notifId="+notifId;
             $.ajax({
-                url: "{{ path('cv_platform_delete_rating_notification') }}",
+                url: "{{ path('cv_platform_delete_notification') }}",
                 data: param,
                 success: function(data) {
-                    $('#res_'+resId).remove();            
+                    $('#notif_'+notifId).remove();       
                 }
             }); 
         });

@@ -3,6 +3,7 @@
 namespace CV\PlatformBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * NotificationRepository
@@ -40,8 +41,25 @@ class NotificationRepository extends EntityRepository
         $query = $this->_em->createQuery('
                 SELECT COUNT(n.id) 
                 FROM CVPlatformBundle:Notification n
-                WHERE n.user = :user')
+                WHERE n.user = :user
+                AND n.state = 0')
         	->setParameter('user', $userId);
         return $query->getSingleScalarResult();
    	}
+
+   	public function myNotifications($page, $nbPerPage, $userId) {	
+        $query = $this->createQueryBuilder('n')
+            ->leftJoin('n.user', 'user')
+            ->addSelect('user')
+            ->where('n.user = :user')
+                ->setParameter('user', $userId)
+            ->andWhere('n.state = 0')
+            ->getQuery();
+
+        $query
+            ->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($query, true);
+	}
 }
