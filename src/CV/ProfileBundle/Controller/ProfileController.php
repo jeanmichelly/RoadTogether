@@ -10,7 +10,6 @@ use CV\ProfileBundle\Form\ProfileType;
 
 class ProfileController extends Controller
 {
-
     public function viewAction(Request $request) {
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -20,8 +19,14 @@ class ProfileController extends Controller
                         ->getRepository('CVProfileBundle:Profile')
                         ->requestProfileUser($userId);
 
+        $listRatingsReceived = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->ratingsReceivedWithoutPaginator($userId);
+
         return $this->render('CVProfileBundle::view.html.twig', array(
-        'profile' => $profile,
+            'profile'               => $profile,
+            'listRatingsReceived'   => $listRatingsReceived,
         ));
     }
 

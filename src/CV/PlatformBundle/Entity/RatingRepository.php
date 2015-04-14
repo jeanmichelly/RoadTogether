@@ -25,7 +25,17 @@ class RatingRepository extends EntityRepository
             ->setMaxResults($nbPerPage);
 
         return new Paginator($query, true);
-	}	
+	}
+
+    public function ratingsReceivedWithoutPaginator($userId) {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.relateduser = :user')
+                ->setParameter('user', $userId)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery();
+
+        return $query->getResult();
+    }   	
 
 	public function ratingsSended($page, $nbPerPage, $userId) {
         $query = $this->createQueryBuilder('r')

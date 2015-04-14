@@ -6,7 +6,9 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-    {% stylesheets '@CVProfileBundle/Resources/public/css/block_left.css' %}
+    {% stylesheets 
+    	'@CVProfileBundle/Resources/public/css/block_left.css' 
+    	'@CVPlatformBundle/Resources/public/css/ratings.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 {% endblock %}
@@ -46,5 +48,17 @@
 	            </blockquote>
 	        </div>
 	    </div>
+	</div>
+
+	<div class="container" style="padding:60px;">
+  		<div class="row">
+			<div class="col-md-8">
+				<section class="comment-list">
+					{% for ratingReceived in listRatingsReceived %}
+						{% include 'CVPlatformBundle:Rating:view.html.twig' with {'ratingReceived': ratingReceived} %}
+    				{% endfor %}
+				</section>
+			</div>
+		</div>
 	</div>
 {% endblock %}
