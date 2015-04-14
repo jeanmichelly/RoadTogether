@@ -11,6 +11,20 @@ use CV\ProfileBundle\Form\ProfileType;
 class ProfileController extends Controller
 {
 
+    public function viewAction(Request $request) {
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $profile = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('CVProfileBundle:Profile')
+                        ->requestProfileUser($userId);
+
+        return $this->render('CVProfileBundle::view.html.twig', array(
+        'profile' => $profile,
+        ));
+    }
+
     public function editAction(Request $request) {
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();

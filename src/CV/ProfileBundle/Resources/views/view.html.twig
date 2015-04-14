@@ -1,0 +1,50 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Votre profil - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    {% stylesheets '@CVProfileBundle/Resources/public/css/block_left.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block menu_lateral %}  
+	<div id="body" class="container">
+	    <div class="plan">
+	        <div class="data_profile">
+	            <h4>Activité</h4>
+	            <i class="glyphicon glyphicon-time"></i> Dernière connexion : {{ profile.user.lastLogin | date('d/m/Y') }}</br>
+	            <i class="glyphicon glyphicon-calendar"></i> Date d'inscription : {{ profile.user.dateRegistration | date('d/m/Y') }}
+	        </div>
+	      	<ul class="data_profile">
+	        	<li class="plan-feature">
+		            <h4>Voiture</h4>
+		         
+	        	</li>
+	      	</ul>
+	    </div>
+	</div>
+{% endblock %}
+
+{% block cvplatform_body %}
+	<div class="container" style="padding-top:20px;">
+	    <div class="row">
+	        <div class="col-sm-2 col-md-2">
+	            <img src="http://img15.hostingpics.net/pics/731336sasa.png"
+	            alt="" class="img-rounded img-responsive" />
+	        </div>
+	        <div class="col-sm-4 col-md-4">
+	            <blockquote>
+	                <p>{{ profile.user.username }}</p>
+					<p> 
+						<i class="glyphicon glyphicon-envelope"></i> {{ profile.user.email }}<br /> 
+<!-- 						<i class="glyphicon glyphicon-gift"></i> {{ profile.birthday | date('d/m/Y') }}
+ -->	            	</p>
+	            </blockquote>
+	        </div>
+	    </div>
+	</div>
+{% endblock %}

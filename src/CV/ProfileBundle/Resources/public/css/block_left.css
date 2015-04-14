@@ -1,0 +1,28 @@
+#body {
+	padding-top:20px;
+	width:300px;
+}
+ 
+.plan:hover {
+  	box-shadow: 0 0 12px 3px #b0b2ab;
+}
+ 
+.plan {
+  	background-color: #f3f3f3;
+ 	box-shadow: 0 0 6px 2px #b0b2ab;
+ 	width: 100%;
+  	padding: 2px;
+}
+
+ul {
+  	list-style: none;
+}
+ 
+li.plan-feature {
+	width: 185px;
+  	border-top: 1px solid #c5c8c0;
+}
+
+.data_profile {
+    padding: 10px;
+}

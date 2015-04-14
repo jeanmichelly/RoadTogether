@@ -1,3 +1,7 @@
+cv_profile_view:
+    path:      /my-profile
+    defaults:  { _controller: CVProfileBundle:Profile:view }
+
 cv_profile_edit:
     path:      /my-profile/edit
     defaults:  { _controller: CVProfileBundle:Profile:edit }
