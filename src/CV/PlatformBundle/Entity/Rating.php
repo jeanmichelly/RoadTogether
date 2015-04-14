@@ -24,7 +24,7 @@ class Rating
     /**
      * @var integer
      *
-     * @ORM\Column(name="function", type="smallint")
+     * @ORM\Column(name="function", type="smallint", nullable=true)
      */
     private $function;
 
@@ -45,7 +45,7 @@ class Rating
     /**
      * @var integer
      *
-     * @ORM\Column(name="driving", type="smallint")
+     * @ORM\Column(name="driving", type="smallint", nullable=true)
      */
     private $driving;
 

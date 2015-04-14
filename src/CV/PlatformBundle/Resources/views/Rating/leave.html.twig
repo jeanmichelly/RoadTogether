@@ -9,5 +9,37 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-   
+    <h2>Laisser un avis</h2>
+        <div class="well well-sm">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                <fieldset>
+                    <legend class="text-center">Laisser un avis à {{ notification.relatedUser }}</legend>
+                    <div class="form-group">
+                        <b><span class="col-md-4 col-md-offset-1">Evaluer ce covoiturage</span></b>
+<!--                    {{ form_errors(form.evaluation) }}
+-->                     <div class="col-md-7">{{ form_widget(form.evaluation, {'attr': {'class': 'form-control', 'value': 4, 'style': 'display: none'}}) }}    
+
+                            <div id="stars-existing" class="starrr" data-rating='4'></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+<!--                             {{ form_errors(form.description) }}
+-->                     <div class="col-md-7 col-md-offset-1">{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+
+                    {{ form_widget(form.publier, {'attr': {'class': 'btn btn-primary'}}) }}
+                </fieldset>
+                {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@CVPlatformBundle/Resources/public/js/rating.js'%}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

@@ -100,6 +100,30 @@ cv_platform_messages_sended:
     requirements:
         page: \d*
 
-cv_platform_ratings:
-    path:      /ratings
+cv_platform_my_notifications:
+    path:      /my-notifications/{page}
+    defaults:  { _controller: CVPlatformBundle:Notification:myNotifications, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_ratings_received:
+    path:      /ratings-received/{page}
+    defaults:  { _controller: CVPlatformBundle:Rating:received, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_ratings_sended:
+    path:      /ratings-sended/{page}
+    defaults:  { _controller: CVPlatformBundle:Rating:sended, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_leave_rating:
+    path:      /leave-rating/{id}
     defaults:  { _controller: CVPlatformBundle:Rating:leave }
+    requirements:
+        id: \d+
+
+cv_platform_delete_notification:
+    path:      /delete-notification
+    defaults:  { _controller: CVPlatformBundle:Notification:delete }

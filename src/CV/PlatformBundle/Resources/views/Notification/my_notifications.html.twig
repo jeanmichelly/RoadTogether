@@ -1,0 +1,44 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Laisser un avis - {{ parent() }}
+{% endblock %}
+
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:Notification:menu.html.twig") }}  
+{% endblock %}
+
+{% block cvplatform_body %}
+    <h2>Avis</h2>
+
+	<table id="mytable" class="table table-bordred table-striped">
+		<tbody>
+			{% for notification in listNotifications %}
+				{% include 'CVPlatformBundle:Notification:view.html.twig' with {'notification': notification} %}
+    		{% endfor %}
+		</tbody>
+	</table>
+
+	<ul class="pagination">
+        {% for p in range(1, nbPages) %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $( ".delete" ).click(function() {
+            var notifId = this.id;
+            var param = "notifId="+notifId;
+            $.ajax({
+                url: "{{ path('cv_platform_delete_notification') }}",
+                data: param,
+                success: function(data) {
+                    $('#notif_'+notifId).remove();       
+                }
+            }); 
+        });
+    </script>   
+{% endblock %}

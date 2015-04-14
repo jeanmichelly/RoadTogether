@@ -11,26 +11,22 @@
 {% block cvplatform_body %}
 	{% stylesheets 'css/jquery.datetimepicker.css' %}
 	    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-
-
-        <style type="text/css">
-    #map{width:300px;height:300px;margin:auto;}
-  </style>
 	{% endstylesheets %}
-
+	<style type="text/css">
+    		#map{width:300px;height:300px;margin:auto;}
+  	</style>
 
   	{{ include("CVPlatformBundle:Ride:form.html.twig") }}
+{% endblock %}
 
-       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     {% javascripts 
-        'js/jquery.js'
         'js/jquery.datetimepicker.js' 
-        'js/autocompletion.js' 
-        'js/functions.js' %}
-
-  
-
-
+	    'js/autocompletion.js'
+	    'js/functions.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
@@ -40,7 +36,5 @@
             lang:'fr',
             minDate:new Date()
         });
-
-
     </script>
 {% endblock %}

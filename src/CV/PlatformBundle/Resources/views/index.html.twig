@@ -36,26 +36,26 @@
         <hr>
 
         <a href="{{ path('cv_platform_add') }}" class="btn btn-primary">Publier une annonce</a> 
-
-        {% javascripts 
-            'js/jquery.js'
-            'js/jquery.datetimepicker.js'
-            'js/autocompletion_index.js' %}
-
-         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-        <script>
-            $('#cv_platformbundle_ride_search_departureDate').datetimepicker({
-                mask:'9999/19/39',
-                format:'Y/m/d',    
-                timepicker:false,
-                formatDate:'Y/m/d',
-                lang:'fr',
-                minDate:new Date()
-            });
-        </script>
     {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    {% javascripts 
+        'js/jquery.datetimepicker.js'
+	   'js/autocompletion_index.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $('#cv_platformbundle_ride_search_departureDate').datetimepicker({
+            mask:'9999/19/39',
+            format:'Y/m/d',    
+            timepicker:false,
+            formatDate:'Y/m/d',
+            lang:'fr',
+            minDate:new Date()
+        });
+    </script>
 {% endblock %}

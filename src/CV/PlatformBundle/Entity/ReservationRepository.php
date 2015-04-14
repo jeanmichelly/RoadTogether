@@ -13,45 +13,23 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
-   	public function updateStates($userId){
-/*		$qb = $this->createQueryBuilder('r');
-		$query = $qb->update('CVPlatformBundle:Reservation', 'r')
-			->set('r.state', 1)
-			->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      		->setParameter('user', $userId)
-	      	->andWhere('r.state = 0')
-	      	->andWhere('ride.departureDate < :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
-	      	->getQuery();
-
-	    $query->execute();
-*/
+	public function updateStates($userId) {
 	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
+	      	->andWhere('r.state = 0')
+	      	->andWhere('ride.departureDate < :now')
+	      		->setParameter('now', date('Y-m-d H:i:s'))
 	      	->getQuery();
 
-	  	$now = date('Y-m-d H:i:s');
-
-	  	$countNotify = 0;
-
         foreach ($query->getResult() as $reservation) {
-            if ( $reservation->getRide()->getDepartureDate() < $now && $reservation->getState() == 0 ) {
-                $reservation->setState(1);
-            }
-            if ( $reservation->getState() == 1 ) {
-            	$countNotify++;
-            }
+          	$reservation->setState(1);
         }
 
         $this->_em->flush();
-
-        return $countNotify;
-   	}
+	}
 
 	public function currentReservations($page, $nbPerPage, $userId) {	
 	    $query = $this->createQueryBuilder('r')
@@ -59,14 +37,13 @@ class ReservationRepository extends EntityRepository
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate > :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
-	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->andWhere('r.state = 0')
 	      	->getQuery();
 
         $query
           	->setFirstResult(($page-1) * $nbPerPage)
           	->setMaxResults($nbPerPage);
+
 	    return new Paginator($query, true);
    	}
 
@@ -76,14 +53,13 @@ class ReservationRepository extends EntityRepository
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate < :departureDate')
-	      		->setParameter('departureDate', date('Y-m-d H:i:s'))
-	      	->orderBy('ride.offerPublished', 'DESC')
+	      	->andWhere('r.state = 1')
 	      	->getQuery();
 
         $query
           	->setFirstResult(($page-1) * $nbPerPage)
           	->setMaxResults($nbPerPage);
+
 	    return new Paginator($query, true);
    	}
 

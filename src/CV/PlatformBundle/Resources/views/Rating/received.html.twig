@@ -1,0 +1,27 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Avis reçus - {{ parent() }}
+{% endblock %}
+
+{% block menu_lateral %}  
+    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
+{% endblock %}
+
+{% block cvplatform_body %}
+    <h2>Avis reçus</h2>
+
+    {% for ratingReceived in listRatingsReceived %}
+        <div class="well">
+            <i>Avis reçu le {{ ratingReceived.date|date('d/m/Y') }}, par {{ ratingReceived.user.username }}<i/>
+            <li>Evaluation : {{ ratingReceived.evaluation }}</li>
+            <li>Description : {{ ratingReceived.description }}</li>
+        </div>
+    {% endfor %}
+
+    <ul class="pagination">
+        {% for p in range(1, nbPages) %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

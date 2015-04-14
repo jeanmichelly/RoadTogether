@@ -42,6 +42,11 @@ class User extends BaseUser
     private $ratings; 
 
     /**
+    * @ORM\OneToMany(targetEntity="\CV\PlatformBundle\Entity\Notification", mappedBy="user", cascade={"persist", "remove"})
+    */
+    private $notifications; 
+
+    /**
      * Get id
      *
      * @return integer 
@@ -138,5 +143,38 @@ class User extends BaseUser
     public function getDateRegistration()
     {
         return $this->dateRegistration;
+    }
+
+    /**
+     * Add notifications
+     *
+     * @param \CV\PlatformBundle\Entity\Notification $notifications
+     * @return User
+     */
+    public function addNotification(\CV\PlatformBundle\Entity\Notification $notifications)
+    {
+        $this->notifications[] = $notifications;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notifications
+     *
+     * @param \CV\PlatformBundle\Entity\Notification $notifications
+     */
+    public function removeNotification(\CV\PlatformBundle\Entity\Notification $notifications)
+    {
+        $this->notifications->removeElement($notifications);
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }

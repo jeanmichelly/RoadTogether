@@ -100,7 +100,7 @@ class Ride
      *
      * @ORM\Column(name="state", type="smallint")
      */
-    private $state = 1;
+    private $state;
 
     /**
      * @var \DateTime
@@ -110,7 +110,8 @@ class Ride
     private $offerPublished;
 
     public function __construct() {
-        $this->setOfferPublished(new \Datetime());
+        $this->state = 0;
+        $this->offerPublished = new \Datetime();
     }
 
     /**

@@ -36,11 +36,23 @@ class PlatformController extends Controller
           }
         }
 
+        $userId = $this->get('security.context')->getToken()->getUser();
+
+        $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Notification')
+            ->update($userId);
+
+        $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Reservation')
+            ->updateStates($userId);
+
         $numberNotify = 0;
 
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Reservation')
-                ->updateStates($this->get('security.context')->getToken()->getUser());
+        if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
+            $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Notification')
+                ->numberOfUser($userId);
         }
         $session->set('numberNotify', $numberNotify);
 

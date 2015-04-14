@@ -9,11 +9,12 @@
   <title>{% block title %}CV Plateforme{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        {% stylesheets 'css/nav_account_manager.css' %}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
     {% endblock %}
-    {% stylesheets 'css/nav_account_manager.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+
     <style>
         .badge-notify{
             background:red;
@@ -35,10 +36,10 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li>
-                            <a href=" {{ path('cv_platform_ratings') }}" class="btn btn-default btn-lg btn-link" style="font-size:20px;"><span class="glyphicon glyphicon-bell"></span></a>
+                            <a href=" {{ path('cv_platform_my_notifications') }}" class="btn btn-default btn-lg btn-link" style="font-size:20px;"><span class="glyphicon glyphicon-bell"></span></a>
 
                             {% if app.session.get('numberNotify') != 0 %}
-                                <span class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
+                                <span id="numberNotify" class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
                             {% endif %}
                         </li>
                         <li><a href="{{ path('cv_platform_current_reservations') }}">Réservations</a> </li>
@@ -115,11 +116,12 @@
             <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
         </footer>
     </div>
-
     {% block javascripts %}
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        {% javascripts 'js/jquery.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     {% endblock %}
-
 </body>
 </html>
