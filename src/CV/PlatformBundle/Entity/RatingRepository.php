@@ -50,4 +50,24 @@ class RatingRepository extends EntityRepository
 
         return new Paginator($query, true);
 	}	
+
+    public function totalEvaluation($userId) {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(r) 
+                FROM CVPlatformBundle:Rating r
+                WHERE r.relateduser = :userId')
+            ->setParameter('userId', $userId);
+        return $query->getSingleScalarResult();
+    }   
+
+    public function countEvaluation($userId, $evaluation) {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(r) 
+                FROM CVPlatformBundle:Rating r
+                WHERE r.relateduser = :userId
+                AND r.evaluation = :evaluation')
+            ->setParameter('userId', $userId)
+            ->setParameter('evaluation', $evaluation);
+        return $query->getSingleScalarResult();
+    }   
 }

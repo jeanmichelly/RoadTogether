@@ -24,9 +24,48 @@ class ProfileController extends Controller
             ->getRepository('CVPlatformBundle:Rating')
             ->ratingsReceivedWithoutPaginator($userId);
 
+        $totalEvaluation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->totalEvaluation($userId);
+
+        $countEvaluation1 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($userId, 1);        
+
+        $countEvaluation2 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($userId, 2);        
+
+        $countEvaluation3 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($userId, 3);        
+
+        $countEvaluation4 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($userId, 4);
+
+        $countEvaluation5 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($userId, 5);
+
+        $avgEvaluations = ($countEvaluation1*1 + $countEvaluation2*2 + $countEvaluation3*3 + $countEvaluation4*4 + $countEvaluation5*5) / $totalEvaluation;
+
         return $this->render('CVProfileBundle::view.html.twig', array(
-            'profile'               => $profile,
-            'listRatingsReceived'   => $listRatingsReceived,
+            'profile'                   => $profile,
+            'listRatingsReceived'       => $listRatingsReceived,
+            'totalEvaluation'           => $totalEvaluation,
+            'evaluation1ToPercent'      => $countEvaluation1*100/$totalEvaluation,
+            'evaluation2ToPercent'      => $countEvaluation2*100/$totalEvaluation,
+            'evaluation3ToPercent'      => $countEvaluation3*100/$totalEvaluation,
+            'evaluation4ToPercent'      => $countEvaluation4*100/$totalEvaluation,
+            'evaluation5ToPercent'      => $countEvaluation5*100/$totalEvaluation,
+            'avgEvaluations'            => $avgEvaluations,
         ));
     }
 

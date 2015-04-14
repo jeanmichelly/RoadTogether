@@ -92,7 +92,8 @@ class RideRepository extends EntityRepository
 
     public function isFull($ride) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(re.id) FROM CVPlatformBundle:Reservation re
+                SELECT COUNT(re.id) 
+                FROM CVPlatformBundle:Reservation re
                 JOIN re.ride ri
                 WHERE re.ride = :ride')
             ->setParameter('ride', $ride);
