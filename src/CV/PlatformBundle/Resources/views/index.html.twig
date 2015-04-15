@@ -49,7 +49,7 @@
     {% endjavascripts %}
 
     <script>
-        initialize('cv_platformbundle_ride_search_departure', 'cv_platformbundle_ride_search_arrival');
+        initialize('{{ form.departure.vars.id }}', '{{ form.arrival.vars.id }}');
         $('#cv_platformbundle_ride_search_departureDate').datetimepicker({
             mask:'9999/19/39',
             format:'Y/m/d',    
