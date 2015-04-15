@@ -44,11 +44,12 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     {% javascripts 
         'js/jquery.datetimepicker.js'
-	   'js/autocompletion_index.js' %}
+	    'js/autocompletion.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     <script>
+        initialize('cv_platformbundle_ride_search_departure', 'cv_platformbundle_ride_search_arrival');
         $('#cv_platformbundle_ride_search_departureDate').datetimepicker({
             mask:'9999/19/39',
             format:'Y/m/d',    
