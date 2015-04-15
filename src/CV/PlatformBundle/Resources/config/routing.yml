@@ -127,3 +127,7 @@ cv_platform_leave_rating:
 cv_platform_delete_notification:
     path:      /delete-notification
     defaults:  { _controller: CVPlatformBundle:Notification:delete }
+
+cv_platform_admin:
+    pattern:   /admin
+    defaults:  { _controller: CVAdminBundle:Dashboard:view }

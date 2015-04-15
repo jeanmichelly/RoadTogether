@@ -1,3 +1,7 @@
+cv_admin:
+    resource: "@CVAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 cv_profile:
     resource: "@CVProfileBundle/Resources/config/routing.yml"
     prefix:   /
