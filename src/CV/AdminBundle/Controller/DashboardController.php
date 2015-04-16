@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function viewAction()
     {
-        return $this->render('CVAdminBundle:Default:index.html.twig');
+        return $this->render('CVAdminBundle:Dashboard:view.html.twig');
     }
 }
