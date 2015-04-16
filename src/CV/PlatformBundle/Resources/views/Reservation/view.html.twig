@@ -18,7 +18,7 @@
             <a href="{{ path('cv_platform_home') }}" class="btn btn-primary btn-outline btn-lg"><i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste</a>
             {% if isFull %}
                 <button class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok-circle"></i> Complet</button>                
-            {% else %}     
+            {% elseif app.security.getToken().getUser() != ride.user %}     
                 <button class="btn btn-lg btn-warning sweet-13" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Warning']);"><i class="glyphicon glyphicon-hand-up"></i> Réserver</button>
             {% endif %}
         </p>
