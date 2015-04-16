@@ -1,10 +1,52 @@
-<div class="collapse navbar-collapse" id="navbar-collapse-4">
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a></li>
-            </ul>
-        </li>
-    </ul>           
-</div>
+<ul class="nav navbar-top-links navbar-right">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-messages">
+            {% include 'CVAdminBundle:NavbarTop:messages.html.twig' %}   
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-tasks">
+            <li>
+                <center><h2>Avis</2></center>
+            </li>
+            {% include 'CVAdminBundle:NavbarTop:ratings.html.twig' %}   
+            <li>
+                <a class="text-center" href="#">
+                    <strong>Voir les détails</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-alerts">
+            {% include 'CVAdminBundle:NavbarTop:notifications.html.twig' %}   
+            <li>
+                <a class="text-center" href="#">
+                    <strong>Voir les alertes</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li><a href="#"><i class="fa fa-user fa-fw"></i> Profil</a></li>
+            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Paramètre</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Se déconnecter</a></li>
+        </ul>
+    </li>
+</ul>

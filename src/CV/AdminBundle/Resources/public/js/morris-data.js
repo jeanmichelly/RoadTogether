@@ -4,58 +4,58 @@ $(function() {
         element: 'morris-area-chart',
         data: [{
             period: '2010 Q1',
-            iphone: 2666,
-            ipad: null,
-            itouch: 2647
+            commission: 2666,
+            annonce: null,
+            reservation: 2647
         }, {
             period: '2010 Q2',
-            iphone: 2778,
-            ipad: 2294,
-            itouch: 2441
+            commission: 2778,
+            annonce: 2294,
+            reservation: 2441
         }, {
             period: '2010 Q3',
-            iphone: 4912,
-            ipad: 1969,
-            itouch: 2501
+            commission: 4912,
+            annonce: 1969,
+            reservation: 2501
         }, {
             period: '2010 Q4',
-            iphone: 3767,
-            ipad: 3597,
-            itouch: 5689
+            commission: 3767,
+            annonce: 3597,
+            reservation: 5689
         }, {
             period: '2011 Q1',
-            iphone: 6810,
-            ipad: 1914,
-            itouch: 2293
+            commission: 6810,
+            annonce: 1914,
+            reservation: 2293
         }, {
             period: '2011 Q2',
-            iphone: 5670,
-            ipad: 4293,
-            itouch: 1881
+            commission: 5670,
+            annonce: 4293,
+            reservation: 1881
         }, {
             period: '2011 Q3',
-            iphone: 4820,
-            ipad: 3795,
-            itouch: 1588
+            commission: 4820,
+            annonce: 3795,
+            reservation: 1588
         }, {
             period: '2011 Q4',
-            iphone: 15073,
-            ipad: 5967,
-            itouch: 5175
+            commission: 15073,
+            annonce: 5967,
+            reservation: 5175
         }, {
             period: '2012 Q1',
-            iphone: 10687,
-            ipad: 4460,
-            itouch: 2028
+            commission: 10687,
+            annonce: 4460,
+            reservation: 2028
         }, {
             period: '2012 Q2',
-            iphone: 8432,
-            ipad: 5713,
-            itouch: 1791
+            commission: 8432,
+            annonce: 5713,
+            reservation: 1791
         }],
         xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
+        ykeys: ['commission', 'annonce', 'reservation'],
+        labels: ['Commission', 'Annonce', 'Reservation'],
         pointSize: 2,
         hideHover: 'auto',
         resize: true
@@ -64,13 +64,13 @@ $(function() {
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [{
-            label: "Download Sales",
+            label: "Reservation",
             value: 12
         }, {
-            label: "In-Store Sales",
+            label: "Annnonce",
             value: 30
         }, {
-            label: "Mail-Order Sales",
+            label: "Commission",
             value: 20
         }],
         resize: true
@@ -79,37 +79,37 @@ $(function() {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-            y: '2006',
+            y: 'Janvier 2015',
             a: 100,
             b: 90
         }, {
-            y: '2007',
+            y: 'Février 2015',
             a: 75,
             b: 65
         }, {
-            y: '2008',
+            y: 'Mars 2015',
             a: 50,
             b: 40
         }, {
-            y: '2009',
+            y: 'Avril 2015',
             a: 75,
             b: 65
         }, {
-            y: '2010',
+            y: 'Mai 2015',
             a: 50,
             b: 40
         }, {
-            y: '2011',
+            y: 'Juin 2015',
             a: 75,
             b: 65
         }, {
-            y: '2012',
+            y: 'Juillet 2015',
             a: 100,
             b: 90
         }],
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['Series A', 'Series B'],
+        labels: ['Commission', 'Annonce'],
         hideHover: 'auto',
         resize: true
     });
