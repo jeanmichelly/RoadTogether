@@ -1,3 +1,6 @@
+.container {
+    margin-left: 280px;
+}
 .filterable {
     margin-top: 15px;
 }
@@ -20,4 +23,8 @@
 }
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
+}
+
+.form-control {
+    display: none;
 }

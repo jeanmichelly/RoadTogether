@@ -5,17 +5,17 @@
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
     <div class="container">
-        <h3>The columns titles are merged with the filters inputs thanks to the placeholders attributes</h3>
-        <hr>
+        <h3>Vue tableau des utilisateurs avec leur profil</h3>
+        <hr>    
         <div class="row">
             <div class="panel panel-primary filterable">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Users</h3>
+                    <h3 class="panel-title">Utilisateurs</h3>
                     <div class="pull-right">
-                        <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+                        <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filtrer</button>
                     </div>
                 </div>
-                <table class="table">
+                <table id="dataTables-example" class="table">
                     <thead>
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="id" disabled></th>
@@ -34,7 +34,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         {% for profile in profiles %}
                             <tr>
                                 <td>{{ profile.user.id }}</td>
@@ -57,4 +56,16 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {% javascripts 
+        '@CVAdminBundle/Resources/public/js/filterTable.js'
+        '@CVAdminBundle/Resources/public/js/jquery.dataTables.min.js'
+        '@CVAdminBundle/Resources/public/js/dataTables.bootstrap.min.js'
+        '@CVAdminBundle/Resources/public/js/metisMenu.min.js'
+        '@CVAdminBundle/Resources/public/js/admin.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

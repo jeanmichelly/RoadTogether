@@ -2,6 +2,10 @@
 Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
 */
 $(document).ready(function(){
+    $('#dataTables-example').DataTable({
+        "bFilter": false
+    });
+
     $('.filterable .btn-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
         $filters = $panel.find('.filters input'),
