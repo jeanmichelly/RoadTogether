@@ -24,7 +24,3 @@
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
-
-.form-control {
-    display: none;
-}
