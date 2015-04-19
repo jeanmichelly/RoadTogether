@@ -95,7 +95,7 @@ class ProfileController extends Controller
         ));
     }
 
-    public function pictureAction() {
+    public function pictureAction($thumb) {
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
@@ -106,7 +106,8 @@ class ProfileController extends Controller
             throw new NotFoundHttpException("Le profil n'existe pas.");
         }         
         return $this->render('CVProfileBundle::picture.html.twig', array(
-            'profile' => $profile
+            'profile'   => $profile,
+            'thumb'     => $thumb
         ));
     }
 }

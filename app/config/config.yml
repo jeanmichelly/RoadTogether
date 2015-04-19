@@ -98,4 +98,4 @@ liip_imagine:
         my_picture_profile_medium:
             quality: 75
             filters:
-                thumbnail: { size: [675, 515], mode: outbound }
+                thumbnail: { size: [386, 500], mode: outbound }
