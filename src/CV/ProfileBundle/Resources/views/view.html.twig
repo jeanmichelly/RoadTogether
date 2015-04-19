@@ -36,8 +36,7 @@
 	<div class="container" style="padding-top:20px;">
 	    <div class="row">
 	        <div class="col-sm-2 col-md-2">
-	            <img src="http://img15.hostingpics.net/pics/731336sasa.png"
-	            alt="" class="img-rounded img-responsive" />
+	            <img src="{{ profile.image.getWebPath() | imagine_filter('my_picture_profile_medium') }}" alt="" class="img-rounded img-responsive"/>
 	        </div>
 	        <div class="col-sm-4 col-md-4">
 	            <blockquote>

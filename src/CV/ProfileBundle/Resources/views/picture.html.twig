@@ -1,9 +1,6 @@
 
 {% if profile.image != null %}
-	<img 
-	  src="{{ asset(profile.image.getWebPath()) }}"
-	  alt="{{ profile.image.alt }}"
-	/> 
+	<img src="{{ profile.image.getWebPath() | imagine_filter('my_picture_profile_small') }}" alt="{{ profile.image.alt }}"/>
 {%else %}
 	<img src="http://placehold.it/120x120" alt="Alternate Text" class="img-responsive" />
 {% endif %}
