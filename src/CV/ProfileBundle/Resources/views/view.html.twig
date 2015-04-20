@@ -57,7 +57,13 @@
 	            <div class="well well-sm" style="width:780px;">
 	                <div class="row">
 	                    <div class="col-xs-12 col-md-6 text-center">
-	                        <h1 class="rating-num">{{ avgEvaluations }}</h1>
+	                        <h1 class="rating-num">
+	                       		{% if totalEvaluation < 0 %} 
+	                       			-
+	                       		{% else %}
+	                        		{{ avgEvaluations }}
+								{% endif %}
+	                        </h1>
 	                        <div class="rating">
 	                        	{% for i in 1..5 %}
 	                        		{% if i <= avgEvaluations|round %}
@@ -69,7 +75,11 @@
 	                        </div>
 	                        <div>
 	                            <span class="glyphicon glyphicon-user"></span>
-	                            {{ totalEvaluation }} total
+	                            {% if totalEvaluation < 0 %}
+	                            	0 total
+	                        	{% else %}
+	                            	{{ totalEvaluation }} total
+	                        	{% endif %}
 	                        </div>
 	                    </div>
 	                    <div class="col-xs-12 col-md-6">

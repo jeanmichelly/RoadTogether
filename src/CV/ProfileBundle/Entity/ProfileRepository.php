@@ -12,13 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProfileRepository extends EntityRepository
 {
-   	public function requestProfileUser($idUser) {
+   	public function requestProfileUser($userId) {
 		
         $query = $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'user')
             ->addSelect('user')
             ->where('p.user = :user')
-            ->setParameter('user', $idUser)
+            ->setParameter('user', $userId)
             ->getQuery();
 
         return $query->getSingleResult();

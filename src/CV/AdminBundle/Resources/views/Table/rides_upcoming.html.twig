@@ -33,7 +33,7 @@
                         <tbody>
                             {% for upcomingRide in listAllUpcomingRides %}
                                 <tr>
-                                    <td>{{ upcomingRide.user }}</td>
+                                    <td><a href="{{ path('cv_profile_view', {'id': upcomingRide.user.getId() } ) }}">{{ upcomingRide.user }} <i class="glyphicon glyphicon-hand-right"></i></a></td>
                                     <td>{{ upcomingRide.departure }}</td>
                                     <td>{{ upcomingRide.arrival }}</td>
                                     <td>{{ upcomingRide.departureDate }}</td>
