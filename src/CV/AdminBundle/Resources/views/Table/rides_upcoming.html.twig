@@ -1,0 +1,65 @@
+{% extends "CVAdminBundle::layout.html.twig" %}
+
+{% block body %}
+    {% stylesheets '@CVAdminBundle/Resources/public/css/filterTable.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <div id="page-wrapper">
+        <div class="container" style="margin-left:0px;">
+            <h3>Vue tableau des annonces à venir</h3>
+            <hr>    
+            <div class="row">
+                <div class="panel panel-primary filterable">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Annonces à venir</h3>
+                        <div class="pull-right">
+                            <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filtrer</button>
+                        </div>
+                    </div>
+                    <table id="dataTables-example" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr class="filters">
+                                <th><input type="text" class="form-control" placeholder="Conducteur" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Ville de départ" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Ville d'arrivée" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Date de départ" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Prix" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Nombre de passager" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Détails" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Statut" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Publié le" disabled></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for upcomingRide in listAllUpcomingRides %}
+                                <tr>
+                                    <td>{{ upcomingRide.user }}</td>
+                                    <td>{{ upcomingRide.departure }}</td>
+                                    <td>{{ upcomingRide.arrival }}</td>
+                                    <td>{{ upcomingRide.departureDate }}</td>
+                                    <td>{{ upcomingRide.price }}</td>
+                                    <td>{{ upcomingRide.numberPassenger }}</td>
+                                    <td>{{ upcomingRide.details }}</td>
+                                    <td>{{ upcomingRide.state }}</td>
+                                    <td>{{ upcomingRide.offerPublished | date('d/m/Y à H:i:s') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {% javascripts 
+        '@CVAdminBundle/Resources/public/js/filterTable.js'
+        '@CVAdminBundle/Resources/public/js/jquery.dataTables.min.js'
+        '@CVAdminBundle/Resources/public/js/dataTables.bootstrap.min.js'
+        '@CVAdminBundle/Resources/public/js/metisMenu.min.js'
+        '@CVAdminBundle/Resources/public/js/admin.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

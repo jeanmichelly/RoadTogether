@@ -135,3 +135,7 @@ cv_platform_admin:
 cv_platform_table_users:
     path:     /table/users
     defaults: { _controller: CVAdminBundle:Table:users }
+
+cv_platform_table_rides_upcoming:
+    path:     /table/rides-upcoming
+    defaults: { _controller: CVAdminBundle:Table:ridesUpcoming }

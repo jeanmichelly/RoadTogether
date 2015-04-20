@@ -100,4 +100,16 @@ class RideRepository extends EntityRepository
 
         return ($ride->getNumberPassenger() == $query->getSingleScalarResult()) ? true:false;
     }
+
+    public function allUpcomingRides() {
+        $query = $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'user')
+            ->addSelect('user')
+            ->andWhere('r.departureDate > :departureDate')
+                ->setParameter('departureDate', date('Y-m-d H:i:s'))
+            ->orderBy('r.offerPublished', 'DESC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }
