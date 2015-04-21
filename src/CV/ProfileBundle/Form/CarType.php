@@ -20,11 +20,17 @@ class CarType extends AbstractType
             'Peugeot' => 'Peugeot',
         );
 
+        $choiceYearCommissionning = array();
+
+        for($i=1950; $i<=date("Y"); $i++) {
+            $choiceYearCommissionning[$i] = $i;
+        } 
+
         $choiceNumberPlace = array(
-            '0' => '2',
-            '1' => '3',
-            '2' => '4',
-            '3' => '5',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5',
         );
 
         $choiceComfort = array(
@@ -58,6 +64,13 @@ class CarType extends AbstractType
               'choices' => $choiceMark))
 
             ->add('model',               'text')
+
+            ->add('yearCommissionning', 'choice',array(
+              'multiple' => false,
+              'expanded' => false,
+              'empty_value' => '- Choisissez lannée de mise en service',
+              'empty_data'  => -1,
+              'choices' => $choiceYearCommissionning))
 
             ->add('comfort', 'choice',array(
               'multiple' => false,

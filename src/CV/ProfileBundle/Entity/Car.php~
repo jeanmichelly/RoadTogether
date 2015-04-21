@@ -141,29 +141,6 @@ class Car
     }
 
     /**
-     * Set yearCommissionning
-     *
-     * @param integer $yearCommissionning
-     * @return Car
-     */
-    public function setYearCommissionning($yearCommissionning)
-    {
-        $this->yearCommissionning = $yearCommissionning;
-
-        return $this;
-    }
-
-    /**
-     * Get yearCommissionning
-     *
-     * @return integer 
-     */
-    public function getYearCommissionning()
-    {
-        return $this->yearCommissionning;
-    }
-
-    /**
      * Set comfort
      *
      * @param string $comfort
