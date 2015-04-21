@@ -24,8 +24,8 @@ class Reservation
   private $state;
 
   /**
-   * @ORM\ManyToOne(targetEntity="CV\PlatformBundle\Entity\Ride", cascade={"persist", "remove"})
-   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+   * @ORM\ManyToOne(targetEntity="CV\PlatformBundle\Entity\Ride", inversedBy="reservations")
+   * @ORM\JoinColumn(nullable=false)
    */
   private $ride;
 

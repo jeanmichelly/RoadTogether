@@ -109,6 +109,11 @@ class Ride
      */
     private $offerPublished;
 
+    /**
+      * @ORM\OneToMany(targetEntity="CV\PlatformBundle\Entity\Reservation", mappedBy="ride", cascade={"persist"})
+      */
+    private $reservations;
+
     public function __construct() {
         $this->state = 0;
         $this->offerPublished = new \Datetime();
@@ -301,5 +306,39 @@ class Ride
      */
     public function getUser() {
         return $this->user;
+    }
+
+    /**
+     * Add reservations
+     *
+     * @param \CV\PlatformBundle\Entity\Reservation $reservations
+     * @return Ride
+     */
+    public function addReservation(\CV\PlatformBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+        $reservation->setRide($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \CV\PlatformBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\CV\PlatformBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

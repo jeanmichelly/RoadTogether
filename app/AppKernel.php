@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new CV\PlatformBundle\CVPlatformBundle(),
             new CV\UserBundle\CVUserBundle(),
             new CV\ProfileBundle\CVProfileBundle(),
+            new CV\AdminBundle\CVAdminBundle(),
             
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),

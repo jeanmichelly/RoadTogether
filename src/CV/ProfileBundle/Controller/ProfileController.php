@@ -7,54 +7,62 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use CV\ProfileBundle\Form\ProfileType;
+use CV\UserBundle\Entity\User;
 
 class ProfileController extends Controller
 {
-    public function viewAction(Request $request) {
-
-        $userId = $this->get('security.context')->getToken()->getUser()->getId();
-
+    public function viewAction(Request $request, User $user) {
         $profile = $this->getDoctrine()
                         ->getManager()
                         ->getRepository('CVProfileBundle:Profile')
-                        ->requestProfileUser($userId);
+                        ->requestProfileUser($user->getId());
 
         $listRatingsReceived = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Rating')
-            ->ratingsReceivedWithoutPaginator($userId);
+            ->ratingsReceivedWithoutPaginator($user->getId());
 
         $totalEvaluation = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Rating')
-            ->totalEvaluation($userId);
+            ->totalEvaluation($user->getId());
 
-        $countEvaluation1 = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->countEvaluation($userId, 1);        
+        if ( $totalEvaluation != 0 ) {
+            $countEvaluation1 = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('CVPlatformBundle:Rating')
+                ->countEvaluation($user->getId(), 1);        
 
-        $countEvaluation2 = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->countEvaluation($userId, 2);        
+            $countEvaluation2 = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('CVPlatformBundle:Rating')
+                ->countEvaluation($user->getId(), 2);        
 
-        $countEvaluation3 = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->countEvaluation($userId, 3);        
+            $countEvaluation3 = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('CVPlatformBundle:Rating')
+                ->countEvaluation($user->getId(), 3);        
 
-        $countEvaluation4 = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->countEvaluation($userId, 4);
+            $countEvaluation4 = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('CVPlatformBundle:Rating')
+                ->countEvaluation($user->getId(), 4);
 
-        $countEvaluation5 = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->countEvaluation($userId, 5);
+            $countEvaluation5 = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('CVPlatformBundle:Rating')
+                ->countEvaluation($user->getId(), 5);
 
-        $avgEvaluations = ($countEvaluation1*1 + $countEvaluation2*2 + $countEvaluation3*3 + $countEvaluation4*4 + $countEvaluation5*5) / $totalEvaluation;
+            $avgEvaluations = ($countEvaluation1*1 + $countEvaluation2*2 + $countEvaluation3*3 + $countEvaluation4*4 + $countEvaluation5*5) / $totalEvaluation;  
+        } else {
+            $countEvaluation1 = 0;
+            $countEvaluation2 = 0;
+            $countEvaluation3 = 0;
+            $countEvaluation4 = 0;
+            $countEvaluation5 = 0;
+            $avgEvaluations = 0;
+            $totalEvaluation = -1;
+        }
 
         return $this->render('CVProfileBundle::view.html.twig', array(
             'profile'                   => $profile,
