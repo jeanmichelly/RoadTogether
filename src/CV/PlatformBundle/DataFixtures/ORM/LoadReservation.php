@@ -14,13 +14,27 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $user = $this->getReference('jeanmly');
 
         $reservationRoundTrip = new Reservation($ride, $user);
-        $manager->persist($reservationRoundTrip);
+        $ride->addReservation($reservationRoundTrip);
+        $manager->persist($ride);
 
         $ride = $this->getReference('ride_trip_round');
         $user = $this->getReference('jeanmly');
 
         $reservationTripRound = new Reservation($ride, $user);
-        $manager->persist($reservationTripRound);
+        $ride->addReservation($reservationTripRound);
+        $manager->persist($ride);
+
+        $ride = $this->getReference('ride');
+
+        $user = $this->getReference('jeanmly');
+        $reservation = new Reservation($ride, $user);
+        $ride->addReservation($reservation);
+
+        $user2 = $this->getReference('isa01');
+        $reservation2 = new Reservation($ride, $user2);
+        $ride->addReservation($reservation2);
+
+        $manager->persist($ride);
         
         $manager->flush();
     }

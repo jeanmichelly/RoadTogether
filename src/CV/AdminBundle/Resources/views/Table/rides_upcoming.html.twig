@@ -39,6 +39,11 @@
                                     <td>{{ upcomingRide.departureDate }}</td>
                                     <td>{{ upcomingRide.price }}</td>
                                     <td>{{ upcomingRide.numberPassenger }}</td>
+                                    <td>
+                                        {% for reservation in upcomingRide.reservations %}
+                                            <a href="{{ path('cv_profile_view', {'id': reservation.user.getId() } ) }}">{{ reservation.user }} <i class="glyphicon glyphicon-hand-right"></i></a>
+                                        {% endfor %}
+                                    </td>
                                     <td>{{ upcomingRide.details }}</td>
                                     <td>{{ upcomingRide.state }}</td>
                                     <td>{{ upcomingRide.offerPublished | date('d/m/Y à H:i:s') }}</td>
