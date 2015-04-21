@@ -111,7 +111,8 @@ class CarController extends Controller
         ));
 
         return $this->render('CVProfileBundle:Car:my_car_details.html.twig', array(
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
+            'car'   => $car,
         ));
     }
 
@@ -144,6 +145,13 @@ class CarController extends Controller
             'cars'     => $cars,
             'nbPages'       => $nbPages,
             'page'          => $page,
+        ));
+    }
+
+    public function pictureAction($car, $thumb) {    
+        return $this->render('CVProfileBundle:Car:picture.html.twig', array(
+            'car'     => $car,
+            'thumb'   => $thumb,
         ));
     }
 }

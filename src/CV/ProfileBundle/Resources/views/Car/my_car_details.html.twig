@@ -9,74 +9,76 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Détails de ma voiture</h2>
     <p>
         {% for message in app.session.flashbag.get('notice') %}
-
-        <p class="alert alert-success">{{ message }}</p> 
+            <p class="alert alert-success">{{ message }}</p> 
         {% endfor %}
     </p>
 
-                <div class="well well-sm">
-                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                        {{ form_errors(form) }}
-                        <fieldset>
-                           <div class="form-group">
-                            {{ form_label(form.mark, "Marque", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.mark) }}
-                            <div class="col-md-9">{{ form_widget(form.mark, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.model, "Modele", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.model) }}
-
-                            <div class="col-md-9">{{ form_widget(form.model, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.yearCommissionning, "Année de mise en service", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.yearCommissionning) }}
-
-                            <div class="col-md-9">{{ form_widget(form.yearCommissionning, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.comfort, "Confort", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.comfort) }}
-
-                            <div class="col-md-9">{{ form_widget(form.comfort, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-    
-                        <div class="form-group">
-                            {{ form_label(form.numberPlace, "Nombre de place", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.numberPlace) }}
-
-                            <div class="col-md-9">{{ form_widget(form.numberPlace, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.color, "Couleur", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.color) }}
-
-                            <div class="col-md-9">{{ form_widget(form.color, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.category, "Catégorie", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.category) }}
-
-                            <div class="col-md-9">{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.picture, "Photo", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                            {{ form_errors(form.picture) }}
-
-                            <div class="col-md-9">{{ form_widget(form.picture, {'attr': {'class': 'form-control'}}) }}</div>
-                        </div>
-    
-                        </fieldset>
-                        {{ form_rest(form) }}
-                    {{ form_end(form) }}
+    <div class="well well-sm">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_errors(form) }}
+            <fieldset>
+                <legend class="text-center">Editer ma voiture</legend>
+                <div class="well">
+                    {{ render(controller('CVProfileBundle:Car:picture', {'car': car, 'thumb': 'my_picture_car_profile_medium'})) }} 
                 </div>
+
+                <div class="form-group">
+                    {{ form_label(form.mark, "Marque", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.mark) }}
+                    <div class="col-md-9">{{ form_widget(form.mark, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.model, "Modele", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.model) }}
+
+                    <div class="col-md-9">{{ form_widget(form.model, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.yearCommissionning, "Année de mise en service", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.yearCommissionning) }}
+
+                    <div class="col-md-9">{{ form_widget(form.yearCommissionning, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.comfort, "Confort", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.comfort) }}
+
+                    <div class="col-md-9">{{ form_widget(form.comfort, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.numberPlace, "Nombre de place", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.numberPlace) }}
+
+                    <div class="col-md-9">{{ form_widget(form.numberPlace, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.color, "Couleur", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.color) }}
+
+                    <div class="col-md-9">{{ form_widget(form.color, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.category, "Catégorie", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.category) }}
+
+                    <div class="col-md-9">{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.image.file, "Photo", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                    {{ form_errors(form.image.file) }}
+
+                    <div class="col-md-9">{{ form_widget(form.image.file, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+            </fieldset>
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
     <p>
         <a href="{{ path('cv_profile_my_cars') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste</a>

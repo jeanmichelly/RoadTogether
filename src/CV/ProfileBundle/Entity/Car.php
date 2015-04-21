@@ -3,6 +3,7 @@
 namespace CV\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Car
@@ -17,7 +18,7 @@ class Car
    * @ORM\ManyToOne(targetEntity="CV\ProfileBundle\Entity\Profile")
    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
-  private $profile;
+    private $profile;
 
     /**
      * @var integer
@@ -78,11 +79,10 @@ class Car
     private $category;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="picture", type="string", length=255, nullable=true)
-     */
-    private $picture;
+      * @ORM\OneToOne(targetEntity="CV\PlatformBundle\Entity\Image", cascade={"persist"})
+      * @Assert\Valid
+      */
+    private $image;
 
     /**
      * Get id
@@ -299,5 +299,28 @@ class Car
     public function getProfile()
     {
         return $this->profile;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \CV\PlatformBundle\Entity\Image $image
+     * @return Car
+     */
+    public function setImage(\CV\PlatformBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \CV\PlatformBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

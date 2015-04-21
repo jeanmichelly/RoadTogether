@@ -5,6 +5,7 @@ namespace CV\ProfileBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use CV\PlatformBundle\Form\ImageType;
 
 class CarType extends AbstractType
 {
@@ -99,7 +100,7 @@ class CarType extends AbstractType
               'empty_value' => '- Choisissez la catégorie -',
               'empty_data'  => -1,
               'choices' => $choiceCategory))
-            ->add('picture',             'text')
+            ->add('image',      new ImageType(), array("required" => false)) 
             ->add('enregistrer',       'submit');
     ;
     }
