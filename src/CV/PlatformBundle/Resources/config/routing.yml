@@ -132,6 +132,10 @@ cv_platform_admin:
     pattern:   /admin
     defaults:  { _controller: CVAdminBundle:Dashboard:view }
 
+cv_platform_home_edit:
+    pattern:   /admin/home-news/edit
+    defaults:  { _controller: CVAdminBundle:Editor:homeNews }
+
 cv_platform_table_users:
     path:     /table/users
     defaults: { _controller: CVAdminBundle:Table:users }
