@@ -6,12 +6,12 @@
                     <i class="fa fa-comments fa-5x"></i>
                 </div>
                 <div class="col-xs-11 text-right">
-                    <div class="huge">26</div>
-                    <div>Nouveaux messages</div>
+                    <div>Total de messages</div>
+                    <div class="huge">{{ totalPublicMessages }}</div>
                 </div>
             </div>
         </div>
-        <a href="#">
+        <a href="{{ path('cv_platform_public_messages') }}">
             <div class="panel-footer">
                 <span class="pull-left">Voir les messages</span>
                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -28,12 +28,12 @@
                     <i class="fa fa-tasks fa-5x"></i>
                 </div>
                 <div class="col-xs-11 text-right">
-                    <div class="huge">12</div>
-                    <div>Nouveaux avis</div>
+                    <div>Total d'avis</div>
+                    <div class="huge">{{ totalRatings }}</div>
                 </div>
             </div>
         </div>
-        <a href="#">
+        <a href="{{ path('cv_platform_ratings') }}">
             <div class="panel-footer">
                 <span class="pull-left">Voir les avis</span>
                 <span class="pull-right"><i class="glyphicon glyphicon-hand-right"></i></span>
@@ -42,7 +42,7 @@
         </a>
     </div>
 </div>
-<div class="col-lg-3 col-md-6">
+<div class="col-lg-3 col-md-6" style="opacity: 0.5;">
     <div class="panel panel-yellow">
         <div class="panel-heading">
             <div class="row">
@@ -50,8 +50,8 @@
                     <i class="fa fa-shopping-cart fa-5x"></i>
                 </div>
                 <div class="col-xs-11 text-right">
-                    <div class="huge">13</div>
-                    <div>Nouvelles commissions</div>
+                    <div>Total de commissions</div>
+                    <div class="huge">-</div>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
     </div>
 </div>
 
-<div class="col-lg-3 col-md-6">
+<div class="col-lg-3 col-md-6" style="opacity: 0.5;">
     <div class="panel panel-red">
         <div class="panel-heading">
             <div class="row">
@@ -73,8 +73,8 @@
                     <i class="fa fa-support fa-5x"></i>
                 </div>
                 <div class="col-xs-11 text-right">
-                    <div class="huge">13</div>
-                    <div>Nouvelles incidences</div>
+                    <div>Total d'incidences</div>
+                    <div class="huge">-</div>
                 </div>
             </div>
         </div>

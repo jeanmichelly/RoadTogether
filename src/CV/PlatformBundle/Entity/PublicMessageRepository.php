@@ -60,4 +60,12 @@ class PublicMessageRepository extends EntityRepository
 
 	    return new Paginator($query, true);
     }
+
+    public function totalPublicMessages() {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(p) 
+                FROM CVPlatformBundle:PublicMessage p');
+
+        return $query->getSingleScalarResult();
+    }     
 }

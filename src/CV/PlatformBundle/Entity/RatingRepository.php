@@ -57,6 +57,7 @@ class RatingRepository extends EntityRepository
                 FROM CVPlatformBundle:Rating r
                 WHERE r.relateduser = :userId')
             ->setParameter('userId', $userId);
+
         return $query->getSingleScalarResult();
     }   
 
@@ -68,6 +69,15 @@ class RatingRepository extends EntityRepository
                 AND r.evaluation = :evaluation')
             ->setParameter('userId', $userId)
             ->setParameter('evaluation', $evaluation);
+
         return $query->getSingleScalarResult();
-    }   
+    } 
+
+    public function totalRatings() {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(r) 
+                FROM CVPlatformBundle:Rating r');
+        
+        return $query->getSingleScalarResult();
+    }     
 }

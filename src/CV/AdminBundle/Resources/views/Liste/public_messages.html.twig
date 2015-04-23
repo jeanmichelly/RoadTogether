@@ -1,0 +1,26 @@
+{% extends "CVAdminBundle::layout.html.twig" %}
+
+{% block body %}
+    {% stylesheets '@CVAdminBundle/Resources/public/css/filterTable.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <div id="page-wrapper">
+        <div class="container" style="margin-left:0px;">
+            <div class="row">
+                <h1 class="page-header">Messages public</h1>
+            </div>
+            <div class="row">
+               
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {% javascripts 
+        '@CVAdminBundle/Resources/public/js/metisMenu.min.js'
+        '@CVAdminBundle/Resources/public/js/admin.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

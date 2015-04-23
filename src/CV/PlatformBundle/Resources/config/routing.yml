@@ -143,3 +143,11 @@ cv_platform_table_users:
 cv_platform_table_rides_upcoming:
     path:     /table/rides-upcoming
     defaults: { _controller: CVAdminBundle:Table:ridesUpcoming }
+
+cv_platform_public_messages:
+    path:     /liste/public-messages
+    defaults: { _controller: CVAdminBundle:Liste:publicMessages }
+
+cv_platform_ratings:
+    path:     /liste/ratings
+    defaults: { _controller: CVAdminBundle:Liste:ratings }

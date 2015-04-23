@@ -12,7 +12,7 @@
                 </div>
             </li>
             <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="{{ path('cv_platform_admin') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
                 <a href="{{ path('cv_platform_home_edit') }}"><i class="fa fa-pencil-square-o"></i> Editor</a>
@@ -39,6 +39,13 @@
                 <ul class="nav nav-second-level">
                     <li><a href="{{ path('cv_platform_table_users') }}">Utilisateurs</a></li>
                     <li><a href="{{ path('cv_platform_table_rides_upcoming') }}">Annonces à venir</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-table fa-fw"></i> Vue liste<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="{{ path('cv_platform_public_messages') }}">Messages public</a></li>
+                    <li><a href="{{ path('cv_platform_ratings') }}">Avis</a></li>
                 </ul>
             </li>
             <li>
