@@ -15,12 +15,11 @@ use CV\PlatformBundle\Form\RideSearchType;
 class RideController extends Controller
 {
     public function viewAction(Ride $ride) {
+        $user = $this->get('security.context')->getToken()->getUser();
 
-              $user = $this->get('security.context')->getToken()->getUser();
-
-      if($ride->getUser() != $user){
+        if($ride->getUser() != $user) {
             throw new NotFoundHttpException("Désolé la page est introuvable");
-    }
+        }
 
         $form = $this->createForm(new RideViewType, $ride,array(
             'read_only' => true
