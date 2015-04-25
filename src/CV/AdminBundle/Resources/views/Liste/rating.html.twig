@@ -5,11 +5,15 @@
         <div class="col-xs-10 col-md-11">
             <div>
                 <div class="mic-info">
-                    De: <a href="#">Bhaumik Patel</a> le {{ publicMessage.date | date }}
+                    De: <a href="#">{{ rating.user }}</a> à <a href="#">{{ rating.relateduser }}</a> le {{ rating.date | date("m/d/Y") }}
                 </div>
             </div>
             <div class="comment-text">
-                {{ publicMessage.content }}
+                <ul>
+                    <li>Description : {{ rating.description }}</li>
+                    <li>Evaluation : {{ rating.evaluation }}</li>
+                    <li>Conduite : {{ rating.driving }}</li>
+                </ul>
             </div>
             <div class="action">
                 <button type="button" class="btn btn-primary btn-xs" title="Edit">

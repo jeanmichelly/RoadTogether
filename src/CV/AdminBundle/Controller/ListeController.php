@@ -11,7 +11,6 @@ class ListeController extends Controller
 		  	->getManager()
 		  	->getRepository('CVPlatformBundle:PublicMessage')
 		  	->findAll();
-		;
 
         return $this->render('CVAdminBundle:Liste:public_messages.html.twig', array(
         	'listPublicMessages'	=> $listPublicMessages,
@@ -19,8 +18,13 @@ class ListeController extends Controller
     }
 
     public function ratingsAction() {
+        $listRatings = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->findAll();
+            
         return $this->render('CVAdminBundle:Liste:ratings.html.twig', array(
-
+            'listRatings'    => $listRatings,
         ));
     }
 }
