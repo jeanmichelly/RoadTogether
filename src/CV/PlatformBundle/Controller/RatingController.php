@@ -12,6 +12,7 @@ use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Entity\PublicMessage;
 use CV\PlatformBundle\Entity\Notification;
 use CV\PlatformBundle\Form\RatingType;
+use CV\UserBundle\Entity\User;
 
 class RatingController extends Controller
 {
@@ -123,6 +124,20 @@ class RatingController extends Controller
         return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
             'form' => $form->createView(),
             'notification' => $notification,
+        ));
+    }
+
+    public function pictureAction($thumb, User $user) {
+        $em = $this->getDoctrine()->getManager();
+        $profile = $em->getRepository('CVProfileBundle:Profile')
+                  ->requestProfileUser($user->getId());
+
+        if (null === $profile) {
+            throw new NotFoundHttpException("Le profil n'existe pas.");
+        }         
+        return $this->render('CVPlatformBundle:Rating:picture.html.twig', array(
+            'profile'   => $profile,
+            'thumb'     => $thumb
         ));
     }
 }

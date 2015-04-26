@@ -36,7 +36,7 @@
 	<div class="container" style="padding-top:20px;">
 	    <div class="row">
 	        <div class="col-sm-2 col-md-2">
-	            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_profile_medium'})) }} 
+	            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_profile_medium', 'user': profile.user})) }} 
 	        </div>
 	        <div class="col-sm-4 col-md-4">
 	            <blockquote>

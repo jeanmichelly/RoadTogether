@@ -1,0 +1,5 @@
+{% if profile.image != null %}
+	<img src="{{ profile.image.getWebPath() | imagine_filter(thumb) }}" alt="{{ profile.image.alt }}"/>
+{%else %}
+	<img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+{% endif %}

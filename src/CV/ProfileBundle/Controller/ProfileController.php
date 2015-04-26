@@ -103,12 +103,10 @@ class ProfileController extends Controller
         ));
     }
 
-    public function pictureAction($thumb) {
-        $userId = $this->get('security.context')->getToken()->getUser()->getId();
-
+    public function pictureAction($thumb, User $user) {
         $em = $this->getDoctrine()->getManager();
         $profile = $em->getRepository('CVProfileBundle:Profile')
-                  ->requestProfileUser($userId);
+                  ->requestProfileUser($user->getId());
 
         if (null === $profile) {
             throw new NotFoundHttpException("Le profil n'existe pas.");

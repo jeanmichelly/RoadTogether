@@ -1,7 +1,7 @@
 <article class="row">
 	<div class="col-md-2 col-sm-2 hidden-xs">
 		<figure class="thumbnail">
-			<img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+			{{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ratingReceived.user})) }} 
 			<figcaption class="text-center">{{ ratingReceived.user }}</figcaption>
 		</figure>
 	</div>

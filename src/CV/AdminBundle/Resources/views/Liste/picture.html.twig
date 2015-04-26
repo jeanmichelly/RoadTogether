@@ -1,0 +1,5 @@
+{% if profile.image != null %}
+	<img src="{{ profile.image.getWebPath() | imagine_filter(thumb) }}" class="img-circle img-responsive" alt="{{ profile.image.alt }}"/>
+{%else %}
+	<img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+{% endif %}

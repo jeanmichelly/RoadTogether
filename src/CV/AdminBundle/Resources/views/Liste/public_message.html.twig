@@ -1,7 +1,8 @@
  <li class="list-group-item">
     <div class="row">
         <div class="col-xs-2 col-md-1">
-            <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
+           {{ render(controller('CVAdminBundle:Liste:picture', {'thumb': 'picture_admin_liste_small', 'user': publicMessage.user})) }} 
+        </div>
         <div class="col-xs-10 col-md-11">
             <div>
                 <div class="mic-info">

@@ -103,3 +103,11 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [180, 233], mode: outbound }
+        picture_rating_dialog_medium:
+            quality: 75
+            filters:
+                thumbnail: { size: [400, 400], mode: outbound }
+        picture_admin_liste_small:
+            quality: 75
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
