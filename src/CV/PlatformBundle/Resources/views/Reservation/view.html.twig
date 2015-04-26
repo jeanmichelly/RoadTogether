@@ -6,7 +6,7 @@
 
 {% block cvplatform_body %}
     {% stylesheets 
-        '@CVPlatformBundle/Resources/public/css/accordeon.css'
+        '@CVPlatformBundle/Resources/public/css/dialog.css'
         '@CVPlatformBundle/Resources/public/css/button.css' %}
         <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -25,17 +25,24 @@
     </div>
 
     <div class="well">
-        <ol id="messages" class="messages">
+<!--         <ol id="messages" class="messages">
             {% for publicMessage in listPublicMessagesOfRide %}
                 {% include 'CVPlatformBundle:PublicMessage:view.html.twig' with {'publicMessage': publicMessage} %}
             {% endfor %}
-        </ol>
-
-        <p class="boutons">
-            <a href="#" class="voir_tous">Tous les messages ({{ listPublicMessagesOfRide|length }})</a> 
-            <a href="#" class="voir_recent">5 seulement</a>
-            <a href="#" class="replier_tous">Tout replier</a>
-        </p>
+        </ol> -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="page-header">Questions posées</h2>
+                    <section id="messages" class="messages comment-list">
+                        {% for publicMessage in listPublicMessagesOfRide %}
+                            {% include 'CVPlatformBundle:PublicMessage:view.html.twig' %}
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+  
         <div class="well">
             <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
             <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
@@ -46,33 +53,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-
     <script type="text/javascript"> // Commentaires
-        $(document).ready(function(){
-            $(".messages .corps:gt(0)").hide();
-            $(".messages li:gt(4)").hide();
-            $(".entete").click(function(){
-                $(this).next(".corps").slideToggle(500)
-                return false;
-            });
-            $(".replier_tous").click(function(){
-                $(".corps").slideUp(500)
-                return false;
-            });
-            $(".voir_tous").click(function(){
-                $(this).hide()
-                $(".voir_recent").show()
-                $(".messages li:gt(4)").slideDown()
-                return false;
-            });
-            $(".voir_recent").click(function(){
-                $(this).hide()
-                $(".voir_tous").show()
-                $(".messages li:gt(4)").slideUp()
-                return false;
-            });
-        });
-
         $("#publish").on("click", addPublicMessage);
         function addPublicMessage(){
             var content = 'content='+document.getElementById('contentT').value;

@@ -1,7 +1,38 @@
-<li>
-	<p class="entete">
-		<cite>{{publicMessage.user}}</cite> 
-		<span class="commentaire">{{publicMessage.date|date}}</span>
-	</p>
-	<div class="corps"><p>{{publicMessage.content}}</p></div>
-</li>
+<article class="row">
+	{% if publicMessage.user == ride.user %}
+	    <div class="col-md-2 col-sm-2 hidden-xs">
+	        <figure class="thumbnail">
+	        	{{ render(controller('CVPlatformBundle:PublicMessage:picture', {'thumb': 'picture_publicmessage_dialog_medium', 'user': publicMessage.user})) }} 
+	            <figcaption class="text-center">{{publicMessage.user}}</figcaption>
+	        </figure>
+	    </div>
+    {% endif %}
+    <div class="col-md-10 col-sm-10">
+    	{% if publicMessage.user == ride.user %}
+        	<div class="panel panel-default arrow left">
+        {% else %}
+        	<div class="panel panel-default arrow right">
+        {% endif %}
+	            <div class="panel-body">
+	            	{% if publicMessage.user == ride.user %}
+		                <header class="text-left">
+		          	{% else %}
+		          		<header class="text-right">
+		           	{% endif %} 
+		                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{publicMessage.date|date}}</time>
+		                </header>
+		                <div class="comment-post">
+		                    <p>{{publicMessage.content}}</p>
+		                </div>
+	            </div>
+        	</div>
+    </div>
+    {% if publicMessage.user != ride.user %}
+	    <div class="col-md-2 col-sm-2 hidden-xs">
+	        <figure class="thumbnail">
+	        	{{ render(controller('CVPlatformBundle:PublicMessage:picture', {'thumb': 'picture_rating_dialog_medium', 'user': publicMessage.user})) }} 
+	            <figcaption class="text-center">{{publicMessage.user}}</figcaption>
+	        </figure>
+	    </div>
+    {% endif %}
+ </article>
