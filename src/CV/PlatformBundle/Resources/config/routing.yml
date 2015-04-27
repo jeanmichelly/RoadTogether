@@ -60,6 +60,10 @@ cv_platform_reservation_ride:
     requirements:
         id: \d+
 
+cv_platform_add_private_message:
+    path:      /add-private-message/{id}
+    defaults:  { _controller: CVPlatformBundle:PrivateMessage:add }
+
 cv_platform_add_public_message:
     path:      /reservation-ride/add_public_message/{ride}
     defaults:  { _controller: CVPlatformBundle:PublicMessage:add }
@@ -88,14 +92,27 @@ cv_platform_my_reservations:
     requirements:
         page: \d*
 
-cv_platform_messages_received:
-    path:      /messages-received/{page}
+cv_platform_private_messages_received:
+    path:      /private-messages-received/{page}
+    defaults:  { _controller: CVPlatformBundle:PrivateMessage:messagesReceived, page: 1 }
+    requirements:
+        page: \d*
+
+cv_platform_private_messages_sended:
+    path:      /private-messages-sended/{page}
+    defaults:  { _controller: CVPlatformBundle:PrivateMessage:messagesSended, page: 1 }
+    requirements:
+        page: \d*
+
+
+cv_platform_public_messages_received:
+    path:      /public-messages-received/{page}
     defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesReceived, page: 1 }
     requirements:
         page: \d*
 
-cv_platform_messages_sended:
-    path:      /messages-sended/{page}
+cv_platform_public_messages_sended:
+    path:      /public-messages-sended/{page}
     defaults:  { _controller: CVPlatformBundle:PublicMessage:messagesSended, page: 1 }
     requirements:
         page: \d*

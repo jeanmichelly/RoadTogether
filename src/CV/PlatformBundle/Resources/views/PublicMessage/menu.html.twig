@@ -1,20 +1,35 @@
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
     <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-eye-open"></span><a href="{{ path('cv_platform_messages_received') }}"> Messages reçus</a>  
-                </h4>
-            </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-eye-open"></span> Messages publiques</a>
+            </h4>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <a href="{{ path('cv_platform_messages_sended') }}"> Messages laissés</a>   
-                </h4>
-            </div>
+        <div id="collapseOne" class="panel-collapse collapse ">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('cv_platform_public_messages_received') }}"> Messages reçus</a></li>
+                <li class="list-group-item"><a href="{{ path('cv_platform_public_messages_sended') }}"> Messages envoyés</a></li>
+            </ul>
         </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-eye-open"></span> Messages privés</a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse ">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('cv_platform_private_messages_received') }}"> Messages reçus</a></li>
+                <li class="list-group-item"><a href="{{ path('cv_platform_private_messages_sended') }}"> Messages envoyés</a></li>
+            </ul>
+        </div>
+    </div>
+
     </div> 
 {% endif %}

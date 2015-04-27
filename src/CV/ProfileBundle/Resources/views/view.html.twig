@@ -1,7 +1,7 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Votre profil - {{ parent() }}
+    Profil de {{profile.user}} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -33,6 +33,14 @@
 {% endblock %}
 
 {% block cvplatform_body %}
+
+	<p>
+        {% for message in app.session.flashbag.get('notice') %}
+
+        <p class="alert alert-success">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
 	<div class="container" style="padding-top:20px;">
 	    <div class="row">
 	        <div class="col-sm-2 col-md-2">
@@ -46,6 +54,7 @@
 <!-- 						<i class="glyphicon glyphicon-gift"></i> {{ profile.birthday | date('d/m/Y') }}
  -->	            	</p>
 	            </blockquote>
+	             <a href="{{ path('cv_platform_add_private_message', {'id': profile.user.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-envelope"></i>Envoyer un message</a>
 	        </div>
 	    </div>
 	</div>

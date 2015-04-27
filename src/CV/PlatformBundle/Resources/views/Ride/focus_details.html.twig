@@ -1,5 +1,6 @@
 <div class="container">
-    <div class="row"><div class="col-md-3">Conducteur : </div><div class="col-md-3">{{ride.user}} </div></div>
+    <div class="row"><div class="col-md-3">Conducteur : </div><div class="col-md-3"><a href="{{ path('cv_profile_view', {'id': ride.user.id   }) }}"></i>{{ride.user}}</a></div></div>
+
     <div class="row"><div class="col-md-3">Lieu de départ : </div><div class="col-md-3">{{ride.departure}}</div></div>
     <div class="row"><div class="col-md-3">Lieu d'arrivé : </div><div class="col-md-3">{{ride.arrival}}</div></div>
     <div class="row"><div class="col-md-3">Date et heure de départ : </div><div class="col-md-3">{{ride.departureDate|date}}</div></div>
