@@ -18,7 +18,7 @@
             {{ form_start(form) }}
                 {{ form_errors(form) }}
                 <fieldset>
-                    <legend class="text-center"><h2>Trouver votre covoiturage</h2></legend>
+                    <legend class="text-center"><h2>Trouver votre covoiturage</h2><a id="swap"><i class="glyphicon glyphicon-transfer"></i></a></legend>
                     <div class="input-group">
                         <div class="input-group-addon"><img src="{{ asset('icon/departure.png') }}"></img></div>
                         {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:250px', 'placeholder': 'De' }}) }}
@@ -59,6 +59,11 @@
             formatDate:'Y/m/d',
             lang:'fr',
             minDate:new Date()
+        });
+        $( "#swap" ).click(function() {
+            var tmp = $({{ form.departure.vars.id }}).val();
+            $({{ form.departure.vars.id }}).val($({{ form.arrival.vars.id }}).val());
+            $({{ form.arrival.vars.id }}).val(tmp);
         });
     </script>
 {% endblock %}

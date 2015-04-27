@@ -12,8 +12,8 @@ class LoadRide extends AbstractFixture implements OrderedFixtureInterface {
         
         $rideRoundTrip = new Ride();
         $rideRoundTrip->setUser($this->getReference('mario032'));
-        $rideRoundTrip->setDeparture("Marolle sur seine");
-        $rideRoundTrip->setArrival("Troyes");
+        $rideRoundTrip->setDeparture("Marolles-sur-Seine, France");
+        $rideRoundTrip->setArrival("Troyes, France");
         $rideRoundTrip->setDepartureDate('2015-03-02');
         $rideRoundTrip->setPrice(10);
         $rideRoundTrip->setNumberPassenger(3);
@@ -25,8 +25,8 @@ class LoadRide extends AbstractFixture implements OrderedFixtureInterface {
 
         $rideTripRound = new Ride();
         $rideTripRound->setUser($this->getReference('mario032'));
-        $rideTripRound->setDeparture("Troyes");
-        $rideTripRound->setArrival("Marolle sur seine");
+        $rideTripRound->setDeparture("Troyes, France");
+        $rideTripRound->setArrival("Marolles-sur-Seine, France");
         $rideTripRound->setDepartureDate('2015-03-05');
         $rideTripRound->setPrice(10);
         $rideTripRound->setNumberPassenger(3);
@@ -38,8 +38,8 @@ class LoadRide extends AbstractFixture implements OrderedFixtureInterface {
 
         $rideTripRound = new Ride();
         $rideTripRound->setUser($this->getReference('mario032'));
-        $rideTripRound->setDeparture("Paris");
-        $rideTripRound->setArrival("Marseille");
+        $rideTripRound->setDeparture("Paris, France");
+        $rideTripRound->setArrival("Marseille, France");
         $rideTripRound->setDepartureDate('2015-05-01');
         $rideTripRound->setPrice(10);
         $rideTripRound->setNumberPassenger(3);

@@ -14,8 +14,8 @@ class RideType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('departure',         'text', array('data' => 'Paris'))
-            ->add('arrival',           'text', array('data' => 'Marseille'))
+            ->add('departure',         'text', array('data' => 'Paris, France'))
+            ->add('arrival',           'text', array('data' => 'Marseille, France'))
             ->add('departureDate',     'text', array('data' => '2015/05/01'))
             ->add('price',             'integer', array('attr' => array('min' => '1', 'max' => '1000')))
             ->add('numberPassenger',   'integer', array('attr' => array('min' => '1', 'max' => '4')))
