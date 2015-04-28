@@ -30,6 +30,9 @@
         <nav class="navbar navbar-default">
             <div class="navbar-header">
                 <a class="navbar-brand" href="{{ path('cv_platform_home') }}">Covoiturage</a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="navbar-brand" href="{{ path('cv_admin_home') }}">Administration</a>
+            {% endif %}
             </div>
                 {% include '::navbar-top.html.twig' %}
         </nav>

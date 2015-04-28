@@ -38,5 +38,9 @@ security:
             remember_me:
                 key:        %secret% # %secret% est un paramètre de parameters.yml
 
+    # a modifier les acces control ici pour les anonymous
     access_control:
             - { path: ^/admin, roles: ROLE_ADMIN }
+            - { path: ^/(login$|register|resetting|platform/$), role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/, role: ROLE_USER }

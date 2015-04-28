@@ -15,47 +15,51 @@ class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwa
    * @var ContainerInterface
    */
   private $container;
- 
+
   /**
    * {@inheritDoc}
    */
   public function setContainer(ContainerInterface $container = null) 
   {
-        $this->container = $container;
+    $this->container = $container;
   }
 
 
   public function load(ObjectManager $manager)
   {
-        $references = array(
-            'mario032',
-            'jeanmly',
-            'isa01',
-            'mar02e',
-            'totito',
-            'sabri01',
-            '59cindy'
-        );
+    $references = array(
+      'mario032',
+      'jeanmly',
+      'isa01',
+      'mar02e',
+      'totito',
+      'sabri01',
+      '59cindy'
+      );
 
-        $userManager = $this->container->get('fos_user.user_manager');
+    $userManager = $this->container->get('fos_user.user_manager');
 
-        foreach ($references as $ref) {
-            $user = $userManager->createUser();
-            $user->setUsername($ref);
-            $user->setEmail($ref.'@gmail.com');
-            $user->setPlainPassword($ref);
-            $user->setEnabled(true);
-            $user->setBalance(100);
-            $user->setDateRegistration(new \DateTime());
+    foreach ($references as $ref) {
+      $user = $userManager->createUser();
+      $user->setUsername($ref);
+      $user->setEmail($ref.'@gmail.com');
+      $user->setPlainPassword($ref);
+      $user->setEnabled(true);
+      $user->setBalance(100);
+      $user->setDateRegistration(new \DateTime());
 
-            $manager->persist($user);
-            $this->addReference($ref, $user);
-        }
+      if($user->getUserName() == 'mario032'){
+        $user->setRoles(array('ROLE_ADMIN'));
+      }
+      
+     $manager->persist($user);
+     $this->addReference($ref, $user);
+   }
 
-        $manager->flush();
-    }
+   $manager->flush();
+ }
 
-    public function getOrder() {
-        return 1;
-    }
+ public function getOrder() {
+  return 1;
+}
 }

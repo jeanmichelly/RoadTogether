@@ -11,8 +11,8 @@
             <li><a href="{{ path('cv_platform_ratings_received') }}">Avis</a> </li>
             <li><a href="{{ path('cv_platform_current_reservations') }}">Réservations</a> </li>
             <li><a href="{{ path('cv_platform_public_messages_received') }}"> Messages</a> </li>
+            <li><a href="{{ path('cv_platform_search_rides') }}"> Annonces</a> </li>
         {% endif %}
-        <li><a href="{{ path('cv_platform_search_rides') }}"> Annonces</a> </li>
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
             <li><a href="{{ path('cv_profile_edit') }}">Profil</a> </li>

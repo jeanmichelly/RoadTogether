@@ -1,0 +1,96 @@
+#body {
+	padding-top:20px;
+	width:300px;
+}
+ 
+.plan:hover {
+  	box-shadow: 0 0 12px 3px #b0b2ab;
+}
+ 
+.plan {
+  	background-color: #f3f3f3;
+ 	box-shadow: 0 0 6px 2px #b0b2ab;
+ 	width: 100%;
+  	padding: 2px;
+}
+
+ul {
+  	list-style: none;
+}
+ 
+li.plan-feature {
+	width: 245px;
+  	border-top: 1px solid #c5c8c0;
+}
+
+.data_profile {
+    padding: 10px;
+}
+.comment-list .row {
+    margin-bottom: 0px;
+}
+.comment-list .panel .panel-heading {
+    padding: 4px 15px;
+    position: absolute;
+    border:none;
+    border-top-right-radius:0px;
+    top: 1px;
+}
+.comment-list .panel .panel-heading.right {
+    border-right-width: 0px;
+    border-top-left-radius:0px;
+    right: 16px;
+}
+.comment-list .panel .panel-heading .panel-body {
+    padding-top: 6px;
+}
+.comment-list figcaption {
+    word-wrap: break-word;
+}
+@media (min-width: 768px) {
+    .comment-list .arrow:after, .comment-list .arrow:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-color: transparent;
+    }
+    .comment-list .panel.arrow.left:after, .comment-list .panel.arrow.left:before {
+        border-left: 0;
+    }
+    .comment-list .panel.arrow.left:before {
+        left: 0px;
+        top: 30px;
+        border-right-color: inherit;
+        border-width: 16px;
+    }
+    .comment-list .panel.arrow.left:after {
+        left: 1px;
+        top: 31px;
+        border-right-color: #FFFFFF;
+        border-width: 15px;
+    }
+    .comment-list .panel.arrow.right:before {
+        right: -16px;
+        top: 30px;
+        border-left-color: inherit;
+        border-width: 16px;
+    }
+    .comment-list .panel.arrow.right:after {
+        right: -14px;
+        top: 31px;
+        border-left-color: #FFFFFF;
+        border-width: 15px;
+    }
+}
+.comment-list .comment-post {
+    margin-top: 6px;
+}
+.glyphicon { margin-right:5px;}
+.rating .glyphicon {font-size: 22px;}
+.rating-num { margin-top:0px;font-size: 54px; }
+.progress { margin-bottom: 5px;}
+.progress-bar { text-align: left; }
+.rating-desc .col-md-3 {padding-right: 0px;}
+.sr-only { margin-left: 5px;overflow: visible;clip: auto; }

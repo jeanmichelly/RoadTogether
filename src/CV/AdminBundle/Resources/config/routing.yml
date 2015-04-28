@@ -1,3 +1,23 @@
-cv_admin_homepage:
-    path:     /
-    defaults: { _controller: CVAdminBundle:Default:index }
+cv_admin_home:
+    pattern:   /
+    defaults:  { _controller: CVAdminBundle:Dashboard:view }
+
+cv_admin_home_edit:
+    pattern:   /home-news/edit
+    defaults:  { _controller: CVAdminBundle:Editor:homeNews }
+
+cv_admin_table_users:
+    path:     /table/users
+    defaults: { _controller: CVAdminBundle:Table:users }
+
+cv_admin_table_rides_upcoming:
+    path:     /table/rides-upcoming
+    defaults: { _controller: CVAdminBundle:Table:ridesUpcoming }
+
+cv_admin_public_messages:
+    path:     /liste/public-messages
+    defaults: { _controller: CVAdminBundle:Liste:publicMessages }
+
+cv_admin_ratings:
+    path:     /liste/ratings
+    defaults: { _controller: CVAdminBundle:Liste:ratings }

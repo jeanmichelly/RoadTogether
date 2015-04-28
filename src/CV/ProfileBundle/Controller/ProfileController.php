@@ -13,45 +13,45 @@ class ProfileController extends Controller
 {
     public function viewAction(Request $request, User $user) {
         $profile = $this->getDoctrine()
-                        ->getManager()
-                        ->getRepository('CVProfileBundle:Profile')
-                        ->requestProfileUser($user->getId());
+        ->getManager()
+        ->getRepository('CVProfileBundle:Profile')
+        ->requestProfileUser($user->getId());
 
         $listRatingsReceived = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->ratingsReceivedWithoutPaginator($user->getId());
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Rating')
+        ->ratingsReceivedWithoutPaginator($user->getId());
 
         $totalEvaluation = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->totalEvaluation($user->getId());
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Rating')
+        ->totalEvaluation($user->getId());
 
         if ( $totalEvaluation != 0 ) {
             $countEvaluation1 = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('CVPlatformBundle:Rating')
-                ->countEvaluation($user->getId(), 1);        
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 1);        
 
             $countEvaluation2 = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('CVPlatformBundle:Rating')
-                ->countEvaluation($user->getId(), 2);        
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 2);        
 
             $countEvaluation3 = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('CVPlatformBundle:Rating')
-                ->countEvaluation($user->getId(), 3);        
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 3);        
 
             $countEvaluation4 = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('CVPlatformBundle:Rating')
-                ->countEvaluation($user->getId(), 4);
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 4);
 
             $countEvaluation5 = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('CVPlatformBundle:Rating')
-                ->countEvaluation($user->getId(), 5);
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 5);
 
             $avgEvaluations = ($countEvaluation1*1 + $countEvaluation2*2 + $countEvaluation3*3 + $countEvaluation4*4 + $countEvaluation5*5) / $totalEvaluation;  
         } else {
@@ -74,7 +74,7 @@ class ProfileController extends Controller
             'evaluation4ToPercent'      => $countEvaluation4*100/$totalEvaluation,
             'evaluation5ToPercent'      => $countEvaluation5*100/$totalEvaluation,
             'avgEvaluations'            => $avgEvaluations,
-        ));
+            ));
     }
 
     public function editAction(Request $request) {
@@ -83,7 +83,7 @@ class ProfileController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $profile = $em->getRepository('CVProfileBundle:Profile')
-                    ->requestProfileUser($userId);
+        ->requestProfileUser($userId);
 
         if (null === $profile) {
             throw new NotFoundHttpException("Le profil n'existe pas.");
@@ -99,14 +99,14 @@ class ProfileController extends Controller
             return $this->redirect($this->generateUrl('cv_profile_edit', array('id' => $profile->getId())));
         }
         return $this->render('CVProfileBundle::edit.html.twig', array(
-        'form' => $form->createView(),
-        ));
+            'form' => $form->createView(),
+            ));
     }
 
     public function pictureAction($thumb, User $user) {
         $em = $this->getDoctrine()->getManager();
         $profile = $em->getRepository('CVProfileBundle:Profile')
-                  ->requestProfileUser($user->getId());
+        ->requestProfileUser($user->getId());
 
         if (null === $profile) {
             throw new NotFoundHttpException("Le profil n'existe pas.");
@@ -114,6 +114,6 @@ class ProfileController extends Controller
         return $this->render('CVProfileBundle::picture.html.twig', array(
             'profile'   => $profile,
             'thumb'     => $thumb
-        ));
+            ));
     }
 }
