@@ -8,6 +8,7 @@
                     <span id="numberNotify" class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
                 {% endif %}
             </li>
+            <li><a href="{{ path('cv_platform_ratings_received') }}">Avis</a> </li>
             <li><a href="{{ path('cv_platform_current_reservations') }}">Réservations</a> </li>
             <li><a href="{{ path('cv_platform_public_messages_received') }}"> Messages</a> </li>
         {% endif %}
