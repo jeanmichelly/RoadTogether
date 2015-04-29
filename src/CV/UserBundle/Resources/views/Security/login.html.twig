@@ -1,27 +1,48 @@
-
 {% extends "CVUserBundle::layout.html.twig" %}
 {% block body %}
-  {# S'il y a une erreur, on l'affiche dans un joli cadre #}
-  {% if error %}
-    <p class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</p> 
-  {% endif %}
-  <!--Pulling Awesome Font -->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    {% stylesheets '@CVUserBundle/Resources/public/css/login.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    {% if error %}
+        <p class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</p> 
+    {% endif %}
 
-<h3>Identification</h3>
-<ul class="nav nav-pills nav-stacked">
-    <div class="form-login"> 
-        <form action="{{ path("fos_user_security_check") }}" method="post">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-            <input type="text" id="username" class="form-control input-sm chat-input" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/></br>
-            <input type="password" id="password"   class="form-control input-sm chat-input" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"     /></br>
-            <div class="wrapper">
-                <span class="group-btn">     
-                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-md">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }} <i class="fa fa-sign-in"></i></button>
-                </span>
+    <div class="container col-md-12">
+        <div class="row">
+            <div class="main">
+                <h3>Se connecter, ou <a href="#">S'inscrire</a></h3>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
+                    </div>
+                </div>
+                <div class="login-or">
+                    <hr class="hr-or">
+                    <span class="span-or">ou</span>
+                </div>
+
+                <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
+                    <div class="form-group">
+                        <label for="inputUsernameEmail">Nom d'utilisateur : </label>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        <input type="text" id="username" class="form-control input-sm chat-input" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/></br>
+                    </div>
+                    <div class="form-group">
+                        <a class="pull-right" href="#">Mot de passe oublié ?</a>
+                        <label for="inputPassword">Mot de passe</label>
+                        <input type="password" id="password"   class="form-control input-sm chat-input" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"     /></br>
+                    </div>
+                    <div class="checkbox pull-right">
+                        <label><input type="checkbox">Se souvenir de moi </label>
+                    </div>
+                    <button id="_submit" name="_submit" type="submit" class="btn btn btn-primary">
+                        {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
+                    </button>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-</ul>
-
 {% endblock %}
