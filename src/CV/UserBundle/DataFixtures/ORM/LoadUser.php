@@ -48,7 +48,7 @@ class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwa
       $user->setBalance(100);
       $user->setDateRegistration(new \DateTime());
 
-      if($user->getUserName() == 'mario032'){
+      if($user->getUserName() == 'jeanmly'){ // :D
         $user->setRoles(array('ROLE_ADMIN'));
       }
       

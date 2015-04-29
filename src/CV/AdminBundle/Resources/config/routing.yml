@@ -21,3 +21,11 @@ cv_admin_public_messages:
 cv_admin_ratings:
     path:     /liste/ratings
     defaults: { _controller: CVAdminBundle:Liste:ratings }
+
+cv_admin_attribute_roles:
+    path:     /attribute-roles
+    defaults: { _controller: CVAdminBundle:AttributeRoles:view }
+
+cv_admin_attribute_roles_save:
+    path:     /attribute-roles/save
+    defaults: { _controller: CVAdminBundle:AttributeRoles:save }
