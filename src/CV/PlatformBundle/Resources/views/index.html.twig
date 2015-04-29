@@ -65,5 +65,9 @@
             $({{ form.departure.vars.id }}).val($({{ form.arrival.vars.id }}).val());
             $({{ form.arrival.vars.id }}).val(tmp);
         });
+
+        // Anti-anonymous : Centrer le body (plus de login au menu frontal)
+            document.getElementById('content').className="col-md-12";
+            document.getElementById('menu').className="";
     </script>
 {% endblock %}
