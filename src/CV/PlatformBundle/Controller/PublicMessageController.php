@@ -33,16 +33,14 @@ class PublicMessageController extends Controller
         $listMessagesReceived = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PublicMessage')
-            ->messagesReceived($page, $nbPerPage, $userId)
-        ;
+            ->messagesReceived($page, $nbPerPage, $userId);
 
-        if(count($listMessagesReceived) == 0){
+        if (count($listMessagesReceived) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages reçus');
 
-
-        return $this->render('CVPlatformBundle:PublicMessage:messages_received.html.twig', array(
-            'listMessagesReceived'     => $listMessagesReceived,
-        ));
+            return $this->render('CVPlatformBundle:PublicMessage:messages_received.html.twig', array(
+                'listMessagesReceived'     => $listMessagesReceived,
+            ));
         }
 
         $nbPages = ceil(count($listMessagesReceived)/$nbPerPage);
@@ -55,7 +53,6 @@ class PublicMessageController extends Controller
     }
 
     public function messagesSendedAction($page, Request $request) {
-      
         $nbPerPage = 5;
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -63,16 +60,14 @@ class PublicMessageController extends Controller
         $listMessagesSended = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PublicMessage')
-            ->messagesSended($page, $nbPerPage, $userId)
-        ;
+            ->messagesSended($page, $nbPerPage, $userId);
 
-        if(count($listMessagesSended) == 0){
+        if (count($listMessagesSended) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages laissés');
 
-
-        return $this->render('CVPlatformBundle:PublicMessage:messages_sended.html.twig', array(
-            'listMessagesSended'     => $listMessagesSended,
-        ));
+            return $this->render('CVPlatformBundle:PublicMessage:messages_sended.html.twig', array(
+                'listMessagesSended'     => $listMessagesSended,
+            ));
         }
 
         $nbPages = ceil(count($listMessagesSended)/$nbPerPage);
@@ -87,11 +82,12 @@ class PublicMessageController extends Controller
     public function pictureAction($thumb, User $user) {
         $em = $this->getDoctrine()->getManager();
         $profile = $em->getRepository('CVProfileBundle:Profile')
-                  ->requestProfileUser($user->getId());
+            ->requestProfileUser($user->getId());
 
         if (null === $profile) {
             throw new NotFoundHttpException("Le profil n'existe pas.");
-        }         
+        }    
+             
         return $this->render('CVPlatformBundle:PublicMessage:picture.html.twig', array(
             'profile'   => $profile,
             'thumb'     => $thumb

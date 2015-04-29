@@ -11,40 +11,35 @@ use CV\UserBundle\Entity\User;
 
 class PrivateMessageController extends Controller
 {
-
     public function addAction(Request $request, User $relatedUser) {
+        $privateMessage = new PrivateMessage();
 
-      $privateMessage = new PrivateMessage();
+        $form = $this->get('form.factory')->createBuilder('form', $privateMessage)
+            ->add('content',        'textarea')
+            ->add('enregistrer',    'submit')
+            ->getForm();
 
-      $form = $this->get('form.factory')->createBuilder('form', $privateMessage)
-      ->add('content',   'textarea')
-      ->add('enregistrer',      'submit')
-      ->getForm()
-    ;
-
-    $form->handleRequest($request);
-
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $privateMessage->setUser($this->get('security.context')->getToken()->getUser());
-      $privateMessage->setRelatedUser($relatedUser);
-      $em->persist($privateMessage);
-      $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $privateMessage->setUser($this->get('security.context')->getToken()->getUser());
+            $privateMessage->setRelatedUser($relatedUser);
+            $em->persist($privateMessage);
+            $em->flush();
 
-      $request->getSession()->getFlashBag()->add('notice', 'Message bien transmis');
+            $request->getSession()->getFlashBag()->add('notice', 'Message bien transmis');
 
-      return $this->redirect($this->generateUrl('cv_profile_view', array('id' => $privateMessage->getRelatedUser()->getId())));
-    }
+            return $this->redirect($this->generateUrl('cv_profile_view', array('id' => $privateMessage->getRelatedUser()->getId())));
+        }
          
-    return $this->render('CVPlatformBundle:PrivateMessage:add.html.twig', array(
-      'form' => $form->createView(),
-      'relatedUser' => $relatedUser,
-    ));
+        return $this->render('CVPlatformBundle:PrivateMessage:add.html.twig', array(
+            'form'          => $form->createView(),
+            'relatedUser'   => $relatedUser,
+        ));
     }
 
-
-        public function messagesReceivedAction($page, Request $request) {
+    public function messagesReceivedAction($page, Request $request) {
         $nbPerPage = 5;
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -52,16 +47,13 @@ class PrivateMessageController extends Controller
         $listMessagesReceived = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PrivateMessage')
-            ->messagesReceived($page, $nbPerPage, $userId)
-        ;
+            ->messagesReceived($page, $nbPerPage, $userId);
 
-        if(count($listMessagesReceived) == 0){
+        if (count($listMessagesReceived) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages reçus');
-
-
-        return $this->render('CVPlatformBundle:PrivateMessage:messages_received.html.twig', array(
-            'listMessagesReceived'     => $listMessagesReceived,
-        ));
+            return $this->render('CVPlatformBundle:PrivateMessage:messages_received.html.twig', array(
+                'listMessagesReceived'     => $listMessagesReceived,
+            ));
         }
 
         $nbPages = ceil(count($listMessagesReceived)/$nbPerPage);
@@ -74,7 +66,6 @@ class PrivateMessageController extends Controller
     }
 
     public function messagesSendedAction($page, Request $request) {
-      
         $nbPerPage = 5;
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
@@ -82,16 +73,14 @@ class PrivateMessageController extends Controller
         $listMessagesSended = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PrivateMessage')
-            ->messagesSended($page, $nbPerPage, $userId)
-        ;
+            ->messagesSended($page, $nbPerPage, $userId);
 
-        if(count($listMessagesSended) == 0){
+        if (count($listMessagesSended) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de messages laissés');
 
-
-        return $this->render('CVPlatformBundle:PrivateMessage:messages_sended.html.twig', array(
-            'listMessagesSended'     => $listMessagesSended,
-        ));
+            return $this->render('CVPlatformBundle:PrivateMessage:messages_sended.html.twig', array(
+                'listMessagesSended'     => $listMessagesSended,
+            ));
         }
 
         $nbPages = ceil(count($listMessagesSended)/$nbPerPage);
@@ -102,5 +91,4 @@ class PrivateMessageController extends Controller
             'page'                  => $page,
         ));
     }
-
 }

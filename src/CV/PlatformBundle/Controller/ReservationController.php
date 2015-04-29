@@ -13,7 +13,6 @@ use CV\PlatformBundle\Entity\Reservation;
 class ReservationController extends Controller
 {
     public function addAction(Ride $ride) {
-        
         $listPublicMessagesOfRide = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PublicMessage')
@@ -32,7 +31,6 @@ class ReservationController extends Controller
     }
     
     public function confirmAction(Ride $ride, Request $request) {
-     
         $reservation = new Reservation($ride, $this->get('security.context')->getToken()->getUser());
         
         $em = $this->getDoctrine()->getManager();
@@ -61,13 +59,12 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:Reservation')
             ->currentReservations($page, $nbPerPage, $userId);
 
-          if(count($listCurrentReservations) == 0){
+        if (count($listCurrentReservations) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore réservations en cours');
 
-
-        return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
-            'listCurrentReservations'     => $listCurrentReservations,
-        ));
+            return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
+                'listCurrentReservations'     => $listCurrentReservations,
+            ));
         }
 
         $nbPages = ceil(count($listCurrentReservations)/$nbPerPage);
@@ -98,13 +95,12 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:Reservation')
             ->pastReservations($page, $nbPerPage, $userId);
 
-        if(count($listPastReservations) == 0){
+        if (count($listPastReservations) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore réservations passées');
 
-
-        return $this->render('CVPlatformBundle:Reservation:past.html.twig', array(
-            'listPastReservations'     => $listPastReservations,
-        ));
+            return $this->render('CVPlatformBundle:Reservation:past.html.twig', array(
+                'listPastReservations'     => $listPastReservations,
+            ));
         }
 
         $nbPages = ceil(count($listPastReservations)/$nbPerPage);

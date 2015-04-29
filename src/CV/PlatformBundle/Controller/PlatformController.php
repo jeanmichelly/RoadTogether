@@ -18,22 +18,17 @@ class PlatformController extends Controller
         $form = $this->createForm(new RideSearchType, $ride);
 
         if ($form->handleRequest($request)->isValid()) {
-         $form = $form->getData();
+            $form = $form->getData();
             $departureDateToUrl = strtr($form->getDepartureDate(), '/', '-');
             $form->setDepartureDate($departureDateToUrl);
 
-            return $this->redirect($this->generateUrl('cv_platform_focus_rides', 
-               array(
-                    'departure' => $form->getDeparture(),
-                    'arrival' => $form->getArrival(),
-                    'departureDate' => $form->getDepartureDate(),
-                )));
-        }
-        else
-        {
-          if ($form->isSubmitted()) {
-           return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
-          }
+            return $this->redirect($this->generateUrl('cv_platform_focus_rides', array(
+                'departure' => $form->getDeparture(),
+                'arrival' => $form->getArrival(),
+                'departureDate' => $form->getDepartureDate(),
+            )));
+        } else if ($form->isSubmitted()) {
+            return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
         }
 
         $userId = $this->get('security.context')->getToken()->getUser();
