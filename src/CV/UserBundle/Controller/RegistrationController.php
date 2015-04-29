@@ -59,19 +59,14 @@ class RegistrationController extends BaseController
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
         /*****************************************/
-            $profile = new Profile();
+            $profile = $user->getProfile();
             $preference = new Preference();
-
-            $profile->setUser($user);
             $preference->setProfile($profile);
 
             $em = $this->getDoctrine()->getManager();
-
-            $em->persist($profile);
             $em->persist($preference);
 
             $em->flush();
-
         /*****************************************/
 
             return $response;

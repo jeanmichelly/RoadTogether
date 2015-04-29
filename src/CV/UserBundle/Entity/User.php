@@ -4,6 +4,7 @@ namespace CV\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -45,6 +46,12 @@ class User extends BaseUser
     * @ORM\OneToMany(targetEntity="\CV\PlatformBundle\Entity\Notification", mappedBy="user", cascade={"persist", "remove"})
     */
     private $notifications; 
+
+    /**
+    * @ORM\OneToOne(targetEntity="CV\ProfileBundle\Entity\Profile", mappedBy="user", cascade={"persist", "remove"})
+    * @Assert\Valid()
+    */
+    private $profile;
 
     /**
      * Get id
@@ -179,4 +186,51 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \CV\ProfileBundle\Entity\Profile $profile
+     * @return User
+     */
+    public function setProfile(\CV\ProfileBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+        $profile->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \CV\ProfileBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }

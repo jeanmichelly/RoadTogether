@@ -15,7 +15,7 @@ class Profile
 {
 
     /**
-     * @ORM\OneToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="CV\UserBundle\Entity\User", inversedBy="profile", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
@@ -332,6 +332,7 @@ class Profile
     public function setUser(\CV\UserBundle\Entity\User $user)
     {
         $this->user = $user;
+        //$user->setProfile($this);
 
         return $this;
     }
