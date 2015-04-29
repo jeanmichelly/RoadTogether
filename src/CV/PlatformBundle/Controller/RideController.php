@@ -5,6 +5,7 @@ namespace CV\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
 use CV\PlatformBundle\Entity\Ride;
 use CV\PlatformBundle\Form\RideType;
@@ -227,4 +228,17 @@ class RideController extends Controller
               'page'        => $page
         ));
     }
+
+    public function testAction(Ride $ride){
+
+        $res = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->numberOfRemainingSpace($ride)
+        ;
+
+        return new Response($res);
+
+    }
+
 }

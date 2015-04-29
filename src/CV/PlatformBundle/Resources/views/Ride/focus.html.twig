@@ -1,42 +1,53 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Réserver - {{ parent() }}
+Réserver - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Liste des annonces</h2>
+<h2>Liste des annonces</h2>
 
 
-    {% if listRides|length == 0 %}
-        <p>
-        {% for message in app.session.flashbag.get('info') %}
+{% if listRides|length == 0 %}
+<p>
+    {% for message in app.session.flashbag.get('info') %}
 
-        <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-    {% else %}
-
-    {% for ride in listRides %}
-        <div class="well">
-            <i>Annonce créé le {{ ride.offerPublished|date('d/m/Y à H:i:s') }}</i>
-            <li>Lieu de départ : {{ ride.departure }}</li>
-            <li>Lieu d'arrivé : {{ ride.arrival }}</li>
-            <li>Prix : {{ ride.price }}</li>
-            <p>
-                <a href="{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir détails</a>
-            </p>
-        </div>
+    <p class="alert alert-info">{{ message }}</p> 
     {% endfor %}
+</p>
 
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}>
-                <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+{% else %}
 
-   {% endif %}
+{% for ride in listRides %}
+
+    <table class="table table-hover" onclick="document.location.href='{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}'" style="cursor:pointer">
+        <tbody>
+            <tr>
+                <td class="col-md-2">
+                    <figure class="thumbnail">
+                        {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ride.user})) }} 
+                        <div class="media-body">
+                            <h4 class="media-heading text-center">{{ ride.user }}</h4>
+                        </div>
+                    </figure>
+                </td>
+                <td class="col-sm-1 col-md-6 text-center"><strong>{{ ride.departure }} --> {{ ride.arrival }}</strong></td>
+                <td class="col-sm-1 col-md-3 text-center"><strong>{{ ride.price }}€ <br> par place
+                    <br><br>                                         {{ render(controller('CVPlatformBundle:Ride:test', {'ride': ride})) }} places restantes</strong></td>
+            </tr>
+        </tbody>
+    </table>
+{% endfor %}
+
+
+<ul class="pagination">
+    {% for p in range(1, nbPages) %}
+    <li{% if p == page %} class="active"{% endif %}>
+    <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
+</li>
+{% endfor %}
+</ul>
+
+{% endif %}
 {% endblock %}
+
