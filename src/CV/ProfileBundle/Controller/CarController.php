@@ -14,144 +14,130 @@ use CV\ProfileBundle\Entity\Car;
 class CarController extends Controller
 {
 
-  public function addAction(Request $request)
-  {
+    public function addAction(Request $request) {
+        $user = $this->get('security.context')->getToken()->getUser();
 
-    $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
 
+        $car = new Car();
+        $car->setProfile($profileUser);
 
-    $em = $this->getDoctrine()->getManager();
-    $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
+        $form = $this->createForm(new CarType, $car);
 
+        if ($form->handleRequest($request)->isValid()) {
+            $em->persist($car);
+            $em->flush();
 
+            $request->getSession()->getFlashBag()->add('notice', 'Voiture bien ajouté');
 
-    $car = new Car();
-    $car->setProfile($profileUser);
+            return $this->redirect($this->generateUrl('cv_profile_view_car', array('id' => $car->getId())));
+        }
 
-    $form = $this->createForm(new CarType, $car);
-
-
-    if ($form->handleRequest($request)->isValid()) {
-
-      $em->persist($car);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('notice', 'Voiture bien ajouté');
-
-      return $this->redirect($this->generateUrl('cv_profile_view_car', array('id' => $car->getId())));
-    }
-    return $this->render('CVProfileBundle:Car:add.html.twig', array(
-      'form' => $form->createView(),
-      ));
-
-
-  }
-
-  public function editAction(Car $car, Request $request) {
-
-    $user = $this->get('security.context')->getToken()->getUser();
-
-    if($car->getProfile()->getUser() != $user){
-      throw new NotFoundHttpException("Désolé la page est introuvable");
+        return $this->render('CVProfileBundle:Car:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
-    $form = $this->createForm(new CarEditType, $car);
+    public function editAction(Car $car, Request $request) {
+        $user = $this->get('security.context')->getToken()->getUser();
 
-    if ($form->handleRequest($request)->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $em->flush();
-      $request->getSession()->getFlashBag()->add('notice', 'Voiture bien modifiée');
+        if ($car->getProfile()->getUser() != $user) {
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+        }
 
-      return $this->redirect($this->generateUrl('cv_profile_view_car', array('id' => $car->getId())));
+        $form = $this->createForm(new CarEditType, $car);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Voiture bien modifiée');
+
+            return $this->redirect($this->generateUrl('cv_profile_view_car', array('id' => $car->getId())));
+        }
+
+        return $this->render('CVProfileBundle:Car:edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
-    return $this->render('CVProfileBundle:Car:edit.html.twig', array(
-      'form' => $form->createView(),
-      ));
-  }
+    public function deleteAction(Car $car, Request $request) {
+        $user = $this->get('security.context')->getToken()->getUser();
 
-  public function deleteAction(Car $car, Request $request) {
+        if ($car->getProfile()->getUser() != $user) {
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+        }
 
-    $user = $this->get('security.context')->getToken()->getUser();
+        $form = $this->createFormBuilder()->getForm();
 
-    if($car->getProfile()->getUser() != $user){
-      throw new NotFoundHttpException("Désolé la page est introuvable");
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($car);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('notice', 'La voiture a bien été supprimée');
+
+            return $this->redirect($this->generateUrl('cv_profile_my_cars'));
+        }
+
+        return $this->render('CVProfileBundle:Car:delete.html.twig', array(
+            'car' => $car,
+            'form'   => $form->createView()
+        ));
     }
 
-    $form = $this->createFormBuilder()->getForm();
 
-    if ($form->handleRequest($request)->isValid()) {
+    public function viewAction(Car $car) {
+        $user = $this->get('security.context')->getToken()->getUser();
 
-      $em = $this->getDoctrine()->getManager();
-      $em->remove($car);
-      $em->flush();
+        if ($car->getProfile()->getUser() != $user) {
+            throw new NotFoundHttpException("Désolé la page est introuvable");
+        }
 
-      $request->getSession()->getFlashBag()->add('notice', 'La voiture a bien été supprimée');
+        $form = $this->createForm(new CarViewType, $car,array(
+            'read_only' => true
+        ));
 
-      return $this->redirect($this->generateUrl('cv_profile_my_cars'));
+        return $this->render('CVProfileBundle:Car:my_car_details.html.twig', array(
+            'form'  => $form->createView(),
+            'car'   => $car,
+        ));
     }
 
-    return $this->render('CVProfileBundle:Car:delete.html.twig', array(
-      'car' => $car,
-      'form'   => $form->createView()
-      ));
-  }
+    public function myCarsAction($page, Request $request) {
 
+        $nbPerPage = 5;
 
-  public function viewAction(Car $car) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
 
-   $user = $this->get('security.context')->getToken()->getUser();
+        $cars = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVProfileBundle:Car')
+            ->requestCarUser($page, $nbPerPage, $profileUser->getId());
 
-   if($car->getProfile()->getUser() != $user){
-    throw new NotFoundHttpException("Désolé la page est introuvable");
-  }
+        if (count($cars) == 0) {
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de voitures');
 
-  $form = $this->createForm(new CarViewType, $car,array(
-    'read_only' => true
-    ));
+            return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
+                'cars'     => $cars,
+            ));
+        }
 
-  return $this->render('CVProfileBundle:Car:my_car_details.html.twig', array(
-    'form'  => $form->createView(),
-    'car'   => $car,
-    ));
-}
+        $nbPages = ceil(count($cars)/$nbPerPage);
 
-public function myCarsAction($page, Request $request) {
+        return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
+            'cars'          => $cars,
+            'nbPages'       => $nbPages,
+            'page'          => $page,
+        ));
+    }
 
-  $nbPerPage = 5;
-
-  $user = $this->get('security.context')->getToken()->getUser();
-  $em = $this->getDoctrine()->getManager();
-  $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
-
-  $cars = $this->getDoctrine()
-  ->getManager()
-  ->getRepository('CVProfileBundle:Car')
-  ->requestCarUser($page, $nbPerPage, $profileUser->getId());
-
-  if(count($cars) == 0){
-    $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de voitures');
-
-
-    return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
-      'cars'     => $cars,
-      ));
-  }
-
-
-  $nbPages = ceil(count($cars)/$nbPerPage);
-
-  return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
-    'cars'     => $cars,
-    'nbPages'       => $nbPages,
-    'page'          => $page,
-    ));
-}
-
-public function pictureAction($car, $thumb) {    
-  return $this->render('CVProfileBundle:Car:picture.html.twig', array(
-    'car'     => $car,
-    'thumb'   => $thumb,
-    ));
-  }
+    public function pictureAction($car, $thumb) {    
+        return $this->render('CVProfileBundle:Car:picture.html.twig', array(
+            'car'     => $car,
+            'thumb'   => $thumb,
+        ));
+    }
 }

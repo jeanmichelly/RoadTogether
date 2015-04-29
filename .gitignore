@@ -7,4 +7,4 @@
 /app/SymfonyRequirements.php
 /app/bootstrap.php.cache
 /composer.lock
-/web/css/*
+/web/*
