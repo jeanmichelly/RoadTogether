@@ -31,9 +31,13 @@ Réserver - {{ parent() }}
                         </div>
                     </figure>
                 </td>
-                <td class="col-sm-1 col-md-6 text-center"><strong>{{ ride.departure }} --> {{ ride.arrival }}</strong></td>
+                <td class="col-sm-1 col-md-6 text-center"><strong>{{ ride.departure }} --> {{ ride.arrival }} <br>
+
+
+                    le  {{ ride.departureDate|localizeddate('medium', 'none', 'fr') }}
+                    à {{ ride.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
                 <td class="col-sm-1 col-md-3 text-center"><strong>{{ ride.price }}€ <br> par place
-                    <br><br>                                         {{ render(controller('CVPlatformBundle:Ride:test', {'ride': ride})) }} places restantes</strong></td>
+                    <br><br>                                         {{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': ride})) }} places restantes</strong></td>
             </tr>
         </tbody>
     </table>

@@ -87,6 +87,12 @@ fos_user:
 parameters:
     fos_user.template.engine: 'twig'
 
+services:
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
 liip_imagine:
     resolvers:
        default:

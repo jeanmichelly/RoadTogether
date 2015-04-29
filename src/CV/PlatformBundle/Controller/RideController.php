@@ -229,7 +229,7 @@ class RideController extends Controller
         ));
     }
 
-    public function testAction(Ride $ride){
+    public function numberOfRemainingSpaceAction(Ride $ride){
 
         $res = $this->getDoctrine()
         ->getManager()
@@ -240,5 +240,4 @@ class RideController extends Controller
         return new Response($res);
 
     }
-
 }
