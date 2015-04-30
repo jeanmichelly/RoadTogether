@@ -20,7 +20,7 @@ Réserver - {{ parent() }}
 
 {% for ride in listRides %}
 
-    <table class="table table-hover" onclick="document.location.href='{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}'" style="cursor:pointer">
+    <table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black" onclick="document.location.href='{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}'" style="cursor:pointer">
         <tbody>
             <tr>
                 <td class="col-md-2">

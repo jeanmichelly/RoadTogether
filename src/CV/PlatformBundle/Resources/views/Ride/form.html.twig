@@ -4,36 +4,44 @@
                     {{ form_errors(form) }}
                     <fieldset>
                         <legend class="text-center">Mon annonce</legend>
+
+                        <table>
+                                  <tr>
+    <td class="col-sm-1 col-md-9 text-center">
+  
                         <div class="form-group">
                             {{ form_label(form.departure, "Lieu de départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
                             <div class="col-md-9" onChange="javascript:calculate()">{{ form_widget(form.departure, {'attr': {'class': 'form-control'}}) }}</div>
-                            <div class="col-md-3"></div>
+                          
                        <div class="col-md-9"> {{ form_errors(form.departure) }}</div>
                         </div>
+
 
                         <div class="form-group">
                             {{ form_label(form.arrival, "Lieu d'arrivé", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
                             <div class="col-md-9" onChange="javascript:calculate()">{{ form_widget(form.arrival, {'attr': {'class': 'form-control'}}) }}</div>
-                        <div class="col-md-3"></div>
+                       
                        <div class="col-md-9"> {{ form_errors(form.arrival) }}</div>
                         </div>
-                        <div id="map">
-                           <p>Veuillez patienter pendant le chargement de la carte...</p>
-                         </div>
-                        <div class="form-group">
-                            {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
 
-                            <div class="col-md-9">{{ form_widget(form.departureDate, {'attr': {'class': 'form-control'}}) }}</div>
-                        <div class="col-md-3"></div>
-                       <div class="col-md-9"> {{ form_errors(form.departureDate) }}</div>
-                        </div>
-    
+
+
                         <div class="form-group">
                             {{ form_label(form.price, "Prix du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
                             <div class="col-md-9">{{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}</div>
                              <div class="col-md-3"></div>
                        <div class="col-md-9"> {{ form_errors(form.price) }}</div>
                         </div>
+
+
+                       <div class="form-group">
+                            {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+
+                            <div class="col-md-9">{{ form_widget(form.departureDate, {'attr': {'class': 'form-control'}}) }}</div>
+                        <div class="col-md-3"></div>
+                       <div class="col-md-9"> {{ form_errors(form.departureDate) }}</div>
+                        </div>
+
 
                         <div class="form-group">
                             {{ form_label(form.numberPassenger, "Nombre de passagers", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
@@ -42,6 +50,19 @@
                         <div class="col-md-3"></div>
                        <div class="col-md-9"> {{ form_errors(form.numberPassenger) }}</div>
                         </div>
+                
+
+                    </td>
+                    <td align="right">
+                        <div id="map">
+                           <p>Veuillez patienter pendant le chargement de la carte...</p>
+                         </div>
+                     </td>
+                 </tr>
+
+                   </table>
+
+                   <br><br>
 
                         <div class="form-group">
                             {{ form_label(form.details, "Description du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
