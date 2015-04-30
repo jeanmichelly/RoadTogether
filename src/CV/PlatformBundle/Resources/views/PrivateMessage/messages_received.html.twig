@@ -23,11 +23,40 @@
 
 
     {% for messageReceived in listMessagesReceived %}
-        <div class="well">
-            <i>Message publié le {{ messageReceived.date|date('d/m/Y à H:i:s') }}</>
-            <li>Utilisateur : {{ messageReceived.user }}</li>
-            <li>Contenu : {{ messageReceived.content }}</li>
-        </div>
+
+
+<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
+           <i>Message publié le {{ messageReceived.date|date('d/m/Y à H:i:s') }}<i/>
+            <tr>
+           <td width="120px" height="100px">
+                 <figure class="thumbnail">
+
+                     <a href="{{ path('cv_profile_view', {'id': messageReceived.user.id   }) }}">
+       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': messageReceived.user})) }} 
+                     </a>
+                        <div class="media-body">
+                            <h4 class="media-heading text-center">{{ messageReceived.user }}</h4>
+                        </div>
+                    </figure> 
+                </td>
+
+               <td class="col-sm-1 col-md-9 text-center" ><strong>{{ messageReceived.content }}
+               </strong></td>
+
+                <td width="120px" height="100px">
+                 <figure class="thumbnail">
+
+                     <a href="{{ path('cv_profile_view', {'id': app.user.id   }) }}">
+       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user})) }} 
+                     </a>
+                        <div class="media-body">
+                            <h4 class="media-heading text-center"> {{ app.user }} </h4>
+                        </div>
+                    </figure> 
+                </td>
+
+    </table>
+
    	{% endfor %}
 
 	<ul class="pagination">

@@ -226,4 +226,6 @@ class RideController extends Controller
 
         return new Response($res);
     }
+
+    
 }
