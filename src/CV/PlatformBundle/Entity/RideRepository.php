@@ -101,6 +101,18 @@ class RideRepository extends EntityRepository
         return ($ride->getNumberPassenger() == $query->getSingleScalarResult()) ? true:false;
     }
 
+
+    public function numberOfPlacesBooked($ride) {
+        $query = $this->_em->createQuery('
+                SELECT SUM(re.numberOfPlaces)
+                FROM CVPlatformBundle:Reservation re
+                JOIN re.ride ri
+                WHERE re.ride = :ride')
+            ->setParameter('ride', $ride);
+
+        return $query->getSingleScalarResult();
+    }
+
     public function numberOfRemainingSpace($ride) {
         $query = $this->_em->createQuery('
                 SELECT COUNT(re.id) 

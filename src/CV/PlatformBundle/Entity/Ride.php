@@ -110,7 +110,7 @@ class Ride
     private $offerPublished;
 
     /**
-      * @ORM\OneToMany(targetEntity="CV\PlatformBundle\Entity\Reservation", mappedBy="ride", cascade={"persist"})
+      * @ORM\OneToMany(targetEntity="CV\PlatformBundle\Entity\Reservation", mappedBy="ride", cascade={"persist", "remove"})
       */
     private $reservations;
 

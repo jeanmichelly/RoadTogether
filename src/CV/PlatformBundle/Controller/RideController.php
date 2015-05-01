@@ -76,6 +76,13 @@ class RideController extends Controller
 
     public function deleteAction(Ride $ride, Request $request) {
         $user = $this->get('security.context')->getToken()->getUser();
+        
+
+        foreach($ride->getReservations() as $value){
+                $ride->getUser()->setBalance($ride->getUser()->getBalance() - 10);
+                $value->getUser()->setBalance($value->getUser()->getBalance() + 10);
+            }
+        
 
         if ($ride->getUser() != $user) {
             throw new NotFoundHttpException("Désolé la page est introuvable");

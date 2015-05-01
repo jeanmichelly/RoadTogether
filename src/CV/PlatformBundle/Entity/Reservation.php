@@ -30,16 +30,23 @@ class Reservation
   private $ride;
 
   /**
-   * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
+   * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
   private $user;
+
+
+  /**
+   * @ORM\Column(name="numberOfPlaces", type="smallint")
+   */
+  private $numberOfPlaces;
   
 
-    public function __construct($ride, $user) {
+    public function __construct($ride, $user, $numberOfPlaces) {
         $this->ride = $ride;
         $this->user = $user;
         $this->state = 0;
+        $this->numberOfPlaces = $numberOfPlaces;
     }
 
     /**
@@ -109,5 +116,28 @@ class Reservation
      */
     public function getUser() {
         return $this->user;
+    }
+
+    /**
+     * Set numberOfPlaces
+     *
+     * @param integer $numberOfPlaces
+     * @return Reservation
+     */
+    public function setNumberOfPlaces($numberOfPlaces)
+    {
+        $this->numberOfPlaces = $numberOfPlaces;
+
+        return $this;
+    }
+
+    /**
+     * Get numberOfPlaces
+     *
+     * @return integer 
+     */
+    public function getNumberOfPlaces()
+    {
+        return $this->numberOfPlaces;
     }
 }

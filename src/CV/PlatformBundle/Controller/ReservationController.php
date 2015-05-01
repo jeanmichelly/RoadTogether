@@ -13,6 +13,9 @@ use CV\PlatformBundle\Entity\Reservation;
 class ReservationController extends Controller
 {
     public function addAction(Ride $ride) {
+
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+
         $listPublicMessagesOfRide = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:PublicMessage')
@@ -23,16 +26,29 @@ class ReservationController extends Controller
             ->getRepository('CVPlatformBundle:Ride')
             ->isFull($ride);
 
+        $numberOfPlacesBooked = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->numberOfPlacesBooked($ride);
+
+        $existPassenger = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Reservation')
+            ->existPassenger($userId);
+
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
               'ride'                        => $ride,
               'listPublicMessagesOfRide'    => $listPublicMessagesOfRide,
               'isFull'                      => $isFull,
+              'numberOfPlacesBooked'        => $numberOfPlacesBooked,
+              'existPassenger'              => $existPassenger,
         ));
     }
     
     public function confirmAction(Ride $ride, Request $request) {
-        $reservation = new Reservation($ride, $this->get('security.context')->getToken()->getUser());
-        
+
+        $reservation = new Reservation($ride, $this->get('security.context')->getToken()->getUser(), $this->container->get('request')->get('valeur'));
+        // $reservation->setNumberOfPlaces($this->container->get('request')->get('valeur'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($reservation);
         $em->flush();            
