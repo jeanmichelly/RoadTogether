@@ -48,8 +48,12 @@ class PrivateMessage
      */
     private $relatedUser;
 
-    public function __construct() {
+
+    public function __construct($user, $relatedUser, $content) {
+        $this->user = $user;
+        $this->relatedUser = $relatedUser;
         $this->date = new \Datetime();
+        $this->content = $content;
     }
 
     /**

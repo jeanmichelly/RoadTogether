@@ -34,7 +34,7 @@ class ReservationController extends Controller
         $existPassenger = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Reservation')
-            ->existPassenger($userId);
+            ->existPassenger($userId, $ride->getId());
 
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
               'ride'                        => $ride,

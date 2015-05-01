@@ -47,13 +47,15 @@ class ReservationRepository extends EntityRepository
 	    return new Paginator($query, true);
    	}
 
-   	public function existPassenger($userId){
+   	public function existPassenger($userId, $idRide){
 
             $query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      	->setParameter('user', $userId)
+	      	->andwhere('r.ride = :idRide')
+	      	->setParameter('idRide', $idRide)
 	      	->getQuery();
 
          return ($query->getResult()) ? true:false;

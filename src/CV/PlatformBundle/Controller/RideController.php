@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
 use CV\PlatformBundle\Entity\Ride;
+use CV\PlatformBundle\Entity\PrivateMessage;
 use CV\PlatformBundle\Form\RideType;
 use CV\PlatformBundle\Form\RideEditType;
 use CV\PlatformBundle\Form\RideViewType;
@@ -79,9 +80,16 @@ class RideController extends Controller
         
 
         foreach($ride->getReservations() as $value){
-                $ride->getUser()->setBalance($ride->getUser()->getBalance() - 10);
-                $value->getUser()->setBalance($value->getUser()->getBalance() + 10);
-            }
+            $ride->getUser()->setBalance($ride->getUser()->getBalance() - 10);
+            $value->getUser()->setBalance($value->getUser()->getBalance() + 10);
+            $privateMessage = new PrivateMessage($ride->getUser(), $value->getUser(), 
+                "Vous avez recu un virement de 10€ de la part de ".$ride->getUser()." suite à l'annulation du voyage 
+                au départ de ".$ride->getDeparture()." et à destination de ".$ride->getArrival()
+                );
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($privateMessage);
+        $em->flush();
+        }
         
 
         if ($ride->getUser() != $user) {

@@ -12,7 +12,9 @@ use CV\UserBundle\Entity\User;
 class PrivateMessageController extends Controller
 {
     public function addAction(Request $request, User $relatedUser) {
-        $privateMessage = new PrivateMessage();
+
+
+        $privateMessage = new PrivateMessage($this->get('security.context')->getToken()->getUser(),$relatedUser,$this->container->get('request')->get('content'));
 
         $form = $this->get('form.factory')->createBuilder('form', $privateMessage)
             ->add('content',        'textarea')
@@ -23,8 +25,6 @@ class PrivateMessageController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $privateMessage->setUser($this->get('security.context')->getToken()->getUser());
-            $privateMessage->setRelatedUser($relatedUser);
             $em->persist($privateMessage);
             $em->flush();
 
