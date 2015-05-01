@@ -21,36 +21,39 @@ class NotificationController extends Controller
        	
         $this->getDoctrine()
             ->getManager()
-            ->getRepository('CVPlatformBundle:Notification')
-            ->update($userId);
-        
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateStates($userId);
+            ->getRepository('CVPlatformBundle:Rating')
+            ->updateToNotify($userId);
 
-		$listNotifications = $this->getDoctrine()
+		$listRatingNotifications = $this->getDoctrine()
             ->getManager()
-            ->getRepository('CVPlatformBundle:Notification')
+            ->getRepository('CVPlatformBundle:Rating')
             ->myNotifications($page, $nbPerPage, $userId);
 
-		$nbPages = ceil(count($listNotifications)/$nbPerPage);
+		$nbPages = ceil(count($listRatingNotifications)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Notification:my_notifications.html.twig', array(
-        	'listNotifications'      => $listNotifications,
-       		'nbPages'                => $nbPages,
-			'page'                   => $page,
+        	'listRatingNotifications'      => $listRatingNotifications,
+       		'nbPages'                      => $nbPages,
+			'page'                         => $page,
         ));
     }
 
     public function deleteAction(Request $request) {    
+        $session = $request->getSession();
+        
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         $notifId = $this->container->get('request')->get('notifId');
 
         $em = $this->getDoctrine()->getManager();
-        $notification = $em->getRepository('CVPlatformBundle:Notification')->find($notifId);
-        $notification->setState(1);
+        $rating = $em->getRepository('CVPlatformBundle:Rating')->find($notifId);
+        $rating->setState(2);
         $em->flush();
+
+        if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
+            $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
+                ->numberOfNotification($userId);
+        }
+        $session->set('numberNotify', $numberNotify);
 
         return $this->redirect($this->generateUrl('cv_platform_my_notifications'));
     }

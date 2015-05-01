@@ -16,38 +16,6 @@ use CV\UserBundle\Entity\User;
 
 class RatingController extends Controller
 {
-    public function notificationsAction($page, Request $request) {
-		if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }           
-        $nbPerPage = 5;
-        
-        $userId = $this->get('security.context')->getToken()->getUser()->getId();
-       	
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Notification')
-            ->update($userId);
-        
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateStates($userId);
-
-		$listPastReservationsToNotify = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->pastReservations($page, $nbPerPage, $userId);
-
-		$nbPages = ceil(count($listPastReservationsToNotify)/$nbPerPage);
-
-        return $this->render('CVPlatformBundle:Rating:notifications.html.twig', array(
-        	'listPastReservationsToNotify' 	=> $listPastReservationsToNotify,
-       		'nbPages'           			=> $nbPages,
-			'page'              			=> $page,
-        ));
-    }
-
     public function receivedAction($page) {
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
@@ -102,28 +70,33 @@ class RatingController extends Controller
         ));
     }
 
-    public function leaveAction(Notification $notification, Request $request) {
-        $rating = new Rating();
+    public function leaveAction(Rating $rating, Request $request) {
+        $session = $request->getSession();
         $form = $this->createForm(new RatingType, $rating);
 
         if ($form->handleRequest($request)->isValid()) {
             $request->getSession()->getFlashBag()->add('info', 'Avis bien publié.');
         
             $rating->setDate(new \Datetime());
-            $rating->setUser($notification->getUser());
-            $rating->setRelateduser($notification->getRelateduser());
+            $rating->setState(1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($rating);
-            $em->remove($notification);
             $em->flush();
+
+            $userId = $this->get('security.context')->getToken()->getUser()->getId();
+            if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
+                $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
+                    ->numberOfNotification($userId);
+            }
+            $session->set('numberNotify', $numberNotify);
 
             return $this->redirect($this->generateUrl('cv_platform_ratings_sended'));
         }
 
         return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
             'form' => $form->createView(),
-            'notification' => $notification,
+            'rating' => $rating,
         ));
     }
 

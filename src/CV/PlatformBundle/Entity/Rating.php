@@ -24,21 +24,14 @@ class Rating
     /**
      * @var integer
      *
-     * @ORM\Column(name="function", type="smallint", nullable=true)
-     */
-    private $function;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="evaluation", type="smallint")
+     * @ORM\Column(name="evaluation", type="smallint", nullable=true)
      */
     private $evaluation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
@@ -52,9 +45,14 @@ class Rating
     /**
      * @var \Date
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @ORM\Column(name="state", type="smallint")
+     */
+    private $state;
 
     /**
      * @ORM\ManyToOne(targetEntity="\CV\UserBundle\Entity\User",inversedBy="ratings", cascade={"persist", "remove"})
@@ -75,26 +73,6 @@ class Rating
      */
     public function getId() {
         return $this->id;
-    }
-
-    /**
-     * Set function
-     *
-     * @param integer $function
-     * @return Rating
-     */
-    public function setFunction($function) {
-        $this->function = $function;
-        return $this;
-    }
-
-    /**
-     * Get function
-     *
-     * @return integer 
-     */
-    public function getFunction() {
-        return $this->function;
     }
 
     /**
@@ -215,5 +193,28 @@ class Rating
      */
     public function getRelateduser() {
         return $this->relateduser;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     * @return Rating
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer 
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }
