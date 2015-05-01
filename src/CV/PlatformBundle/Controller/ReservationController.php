@@ -44,16 +44,6 @@ class ReservationController extends Controller
         $nbPerPage = 5;
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Notification')
-            ->update($userId);
-
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateStates($userId);
-
         $listCurrentReservations = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Reservation')
@@ -79,16 +69,6 @@ class ReservationController extends Controller
     public function pastReservationsAction($page, Request $request) {      
         $nbPerPage = 5;
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Notification')
-            ->update($userId);
-
-        $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Reservation')
-            ->updateStates($userId);
 
         $listPastReservations = $this->getDoctrine()
             ->getManager()

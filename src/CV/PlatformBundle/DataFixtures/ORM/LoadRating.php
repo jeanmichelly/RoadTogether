@@ -10,38 +10,38 @@ use CV\PlatformBundle\Entity\Rating;
 class LoadRating extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager) {
     	$rating = new Rating();
-      	$rating->setFunction(0);
       	$rating->setEvaluation(4);
       	$rating->setDescription('Trop cool');
       	$rating->setDriving(0);
-      	$rating->setDate(new \DateTime('1970-1-1'));
+        $rating->setDate(new \DateTime('1970-1-1'));
+      	$rating->setState(1);
       	$rating->setUser($this->getReference('mario032'));
       	$rating->setRelateduser($this->getReference('jeanmly'));
 
         $rating2 = new Rating();
-        $rating2->setFunction(0);
         $rating2->setEvaluation(3);
         $rating2->setDescription('Yeah');
         $rating2->setDriving(0);
         $rating2->setDate(new \DateTime('1970-1-1'));
+        $rating2->setState(1);
         $rating2->setUser($this->getReference('mario032'));
         $rating2->setRelateduser($this->getReference('jeanmly'));        
 
         $rating3 = new Rating();
-        $rating3->setFunction(0);
         $rating3->setEvaluation(2);
         $rating3->setDescription('toto');
         $rating3->setDriving(0);
         $rating3->setDate(new \DateTime('1970-1-1'));
+        $rating3->setState(1);
         $rating3->setUser($this->getReference('mario032'));
         $rating3->setRelateduser($this->getReference('jeanmly'));
 
         $rating4 = new Rating();
-        $rating4->setFunction(0);
         $rating4->setEvaluation(4);
         $rating4->setDescription('Trop cool');
         $rating4->setDriving(0);
         $rating4->setDate(new \DateTime('1970-1-1'));
+        $rating4->setState(1);
         $rating4->setUser($this->getReference('mario032'));
         $rating4->setRelateduser($this->getReference('jeanmly'));
 

@@ -13,31 +13,14 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
-	public function updateStates($userId) {
+	public function currentReservations($page, $nbPerPage, $userId) {	
 	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('r.state = 0')
-	      	->andWhere('ride.departureDate < :now')
+	      	->andWhere('ride.departureDate > :now')
 	      		->setParameter('now', date('Y-m-d H:i:s'))
-	      	->getQuery();
-
-        foreach ($query->getResult() as $reservation) {
-          	$reservation->setState(1);
-        }
-
-        $this->_em->flush();
-	}
-
-	public function currentReservations($page, $nbPerPage, $userId) {	
-	    $query = $this->createQueryBuilder('r')
-	      	->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      		->setParameter('user', $userId)
-	      	->andWhere('r.state = 0')
 	      	->getQuery();
 
         $query
@@ -48,12 +31,13 @@ class ReservationRepository extends EntityRepository
    	}
 
    	public function pastReservations($page, $nbPerPage, $userId) {	
-	    $query = $this->createQueryBuilder('r')
+	  	$query = $this->createQueryBuilder('r')
 	      	->join('r.ride', 'ride')
 	      	->addSelect('ride')
 	      	->where('r.user = :user')
 	      		->setParameter('user', $userId)
-	      	->andWhere('r.state = 1')
+	      	->andWhere('ride.departureDate < :now')
+	      		->setParameter('now', date('Y-m-d H:i:s'))
 	      	->getQuery();
 
         $query
