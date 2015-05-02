@@ -13,10 +13,9 @@
 
 
 {% if listCurrentReservations|length == 0 %}
-        <p>
+    <p>
         {% for message in app.session.flashbag.get('info') %}
-
-        <p class="alert alert-info">{{ message }}</p> 
+            <p class="alert alert-info">{{ message }}</p> 
         {% endfor %}
     </p>
 

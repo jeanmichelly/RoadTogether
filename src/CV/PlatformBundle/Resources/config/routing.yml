@@ -141,6 +141,10 @@ cv_platform_leave_rating:
     requirements:
         id: \d+
 
-cv_platform_delete_notification:
-    path:      /delete-notification
-    defaults:  { _controller: CVPlatformBundle:Notification:delete }
+cv_platform_delete_rating_notification:
+    path:      /delete-rating-notification
+    defaults:  { _controller: CVPlatformBundle:Notification:deleteRatingNotification }
+
+cv_platform_validate_payment:
+    path:      /validate-payment
+    defaults:  { _controller: CVPlatformBundle:Payment:validate }

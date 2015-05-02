@@ -19,19 +19,9 @@ class Payment
   private $id;
 
   /**
-   * @ORM\Column(name="payment_date", type="datetime")
+   * @ORM\Column(name="payment_date", type="datetime", nullable=true)
    */
   private $date;
-
-  /**
-   * @ORM\Column(name="number_seat", type="smallint")
-   */
-  private $numberSeat;
-
-  /**
-   * @ORM\Column(name="type", type="boolean")
-   */
-  private $type;
 
   /**
    * @ORM\Column(name="amount", type="smallint")
@@ -45,10 +35,9 @@ class Payment
   private $ride;
 
   /**
-   * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
-   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+   * @ORM\Column(name="state", type="smallint")
    */
-  private $user;
+  private $state;
   
 
     /**
@@ -78,46 +67,6 @@ class Payment
      */
     public function getDate() {
         return $this->date;
-    }
-
-    /**
-     * Set numberSeat
-     *
-     * @param integer $numberSeat
-     * @return Payment
-     */
-    public function setNumberSeat($numberSeat) {
-        $this->numberSeat = $numberSeat;
-        return $this;
-    }
-
-    /**
-     * Get numberSeat
-     *
-     * @return integer 
-     */
-    public function getNumberSeat() {
-        return $this->numberSeat;
-    }
-
-    /**
-     * Set type
-     *
-     * @param boolean $type
-     * @return Payment
-     */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return boolean 
-     */
-    public function getType() {
-        return $this->type;
     }
 
     /**
@@ -161,22 +110,25 @@ class Payment
     }
 
     /**
-     * Set user
+     * Set state
      *
-     * @param \CV\UserBundle\Entity\User $user
+     * @param integer $state
      * @return Payment
      */
-    public function setUser(\CV\UserBundle\Entity\User $user) {
-        $this->user = $user;
+    public function setState($state)
+    {
+        $this->state = $state;
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get state
      *
-     * @return \CV\UserBundle\Entity\User 
+     * @return integer 
      */
-    public function getUser() {
-        return $this->user;
+    public function getState()
+    {
+        return $this->state;
     }
 }

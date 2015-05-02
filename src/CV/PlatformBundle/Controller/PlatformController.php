@@ -38,6 +38,11 @@ class PlatformController extends Controller
             ->getRepository('CVPlatformBundle:Rating')
             ->updateToNotify($userId);
 
+        $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Payment')
+            ->updateToNotify($userId);
+
         $numberNotify = 0;
 
         if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {

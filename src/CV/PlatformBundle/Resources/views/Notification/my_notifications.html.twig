@@ -1,13 +1,20 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Laisser un avis - {{ parent() }}
+    Mes notifications - {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
     <h2>Notifications</h2>
 
-	<table id="mytable" class="table table-bordred table-striped">
+    <p>
+        {% for message in app.session.flashbag.get('notice') %}
+            <p class="alert alert-info">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    <h3>Avis</h3>
+	<table id="tableRatingNotifications" class="table table-bordred table-striped">
 		<tbody>
 			{% for ratingNotification in listRatingNotifications %}
 				{% include 'CVPlatformBundle:Notification:rating.html.twig' with {'ratingNotification': ratingNotification} %}
@@ -20,16 +27,39 @@
             <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
         {% endfor %}
     </ul>
+
+    <h3>Paiement</h3>
+    <table id="tablePaymentNotifications" class="table table-bordred table-striped">
+        <tbody>
+            {% for paymentNotification in listPaymentNotifications %}
+                {% include 'CVPlatformBundle:Notification:payment.html.twig' with {'paymentNotification': paymentNotification} %}
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $( ".delete" ).click(function() {
+        $( ".deleteNotificationRating" ).click(function() {
             var notifId = this.id;
             var param = "notifId="+notifId;
             $.ajax({
-                url: "{{ path('cv_platform_delete_notification') }}",
+                url: "{{ path('cv_platform_delete_rating_notification') }}",
+                data: param,
+                success: function(data) {
+                    //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );
+                    $('#notif_'+notifId).remove();       
+                    window.location.replace("{{ path('cv_platform_my_notifications') }}");
+                }
+            }); 
+        });
+
+        $( ".validateNotificationPayment" ).click(function() {
+            var notifId = this.id;
+            var param = "notifId="+notifId;
+            $.ajax({
+                url: "{{ path('cv_platform_validate_payment') }}",
                 data: param,
                 success: function(data) {
                     //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );

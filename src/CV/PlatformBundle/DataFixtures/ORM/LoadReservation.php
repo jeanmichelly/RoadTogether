@@ -9,7 +9,6 @@ use CV\PlatformBundle\Entity\Reservation;
 
 class LoadReservation extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager) {
-     	  
         $ride = $this->getReference('ride_round_trip');
         $user = $this->getReference('jeanmly');
 
@@ -20,8 +19,14 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $ride = $this->getReference('ride_trip_round');
         $user = $this->getReference('jeanmly');
 
+        $reservationTripRound = new Reservation($ride, $user, 2);
+        $ride->addReservation($reservationTripRound);
+
+        $user = $this->getReference('isa01');
+
         $reservationTripRound = new Reservation($ride, $user, 1);
         $ride->addReservation($reservationTripRound);
+
         $manager->persist($ride);
 
         $ride = $this->getReference('ride');

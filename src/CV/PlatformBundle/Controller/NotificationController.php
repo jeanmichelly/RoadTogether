@@ -24,21 +24,32 @@ class NotificationController extends Controller
             ->getRepository('CVPlatformBundle:Rating')
             ->updateToNotify($userId);
 
+        $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Payment')
+            ->updateToNotify($userId);
+
 		$listRatingNotifications = $this->getDoctrine()
             ->getManager()
             ->getRepository('CVPlatformBundle:Rating')
             ->myNotifications($page, $nbPerPage, $userId);
 
+        $listPaymentNotifications = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Payment')
+            ->myNotifications($userId);
+
 		$nbPages = ceil(count($listRatingNotifications)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Notification:my_notifications.html.twig', array(
         	'listRatingNotifications'      => $listRatingNotifications,
+            'listPaymentNotifications'     => $listPaymentNotifications,
        		'nbPages'                      => $nbPages,
 			'page'                         => $page,
         ));
     }
 
-    public function deleteAction(Request $request) {    
+    public function deleteRatingNotificationAction(Request $request) {    
         $session = $request->getSession();
         
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
