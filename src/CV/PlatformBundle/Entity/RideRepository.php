@@ -80,6 +80,8 @@ class RideRepository extends EntityRepository
                 ->setParameter('arrival', $arrival)
             ->andWhere('r.departureDate LIKE :departureDate')
                 ->setParameter('departureDate', $departure_date.'%')
+            ->andWhere('r.departureDate > :now')
+                ->setParameter('now', date('Y-m-d H:i:s'))
             ->orderBy('r.offerPublished', 'DESC')
             ->getQuery();
 
@@ -92,7 +94,7 @@ class RideRepository extends EntityRepository
 
     public function isFull($ride) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(re.id) 
+                SELECT SUM(re.numberOfPlaces) 
                 FROM CVPlatformBundle:Reservation re
                 JOIN re.ride ri
                 WHERE re.ride = :ride')
@@ -115,7 +117,7 @@ class RideRepository extends EntityRepository
 
     public function numberOfRemainingSpace($ride) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(re.id) 
+                SELECT SUM(re.numberOfPlaces) 
                 FROM CVPlatformBundle:Reservation re
                 JOIN re.ride ri
                 WHERE re.ride = :ride')

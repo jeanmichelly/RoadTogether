@@ -242,5 +242,13 @@ class RideController extends Controller
         return new Response($res);
     }
 
+    public function numberOfPlacesBookedAction(Ride $ride) {
+        $res = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Ride')
+            ->numberOfPlacesBooked($ride);
+
+        return new Response($res);
+    }
     
 }

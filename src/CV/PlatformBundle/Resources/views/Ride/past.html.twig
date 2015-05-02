@@ -38,7 +38,7 @@
                     à {{ pastRide.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
                 <td class="col-sm-1 col-md-5 text-center"><strong>{{ pastRide.price }}€ <br> par place
                     <br><br>                                         
-{{ pastRide.getReservations()|length }} place(s) réservé(s) sur {{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': pastRide})) }} 
+ {{ render(controller('CVPlatformBundle:Ride:numberOfPlacesBooked', {'ride': pastRide})) }} place(s) réservé(s) sur {{ pastRide.numberPassenger }} 
                     </strong></td>
                     <td col-sm-1 col-md-5 text-center>            
                 <p>
@@ -66,6 +66,7 @@
                         <div class="media-body">
                             <h4 class="media-heading text-center">{{ reservation.user }}</h4>
                         </div>
+                               {{ reservation.getNumberOfPlaces() }} place(s)
                     </figure> 
                 </td>
                 {% endfor %}

@@ -115,6 +115,7 @@ class RatingRepository extends EntityRepository
     public function ratingsReceivedWithoutPaginator($userId) {
         $query = $this->createQueryBuilder('r')
             ->where('r.relateduser = :user')
+            ->andWhere('r.state = 1')
                 ->setParameter('user', $userId)
             ->orderBy('r.date', 'DESC')
             ->getQuery();

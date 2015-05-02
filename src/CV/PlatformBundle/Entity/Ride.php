@@ -31,10 +31,10 @@ class Ride
     /**
      * @var string
      *
-     * @ORM\Column(name="departure", type="string", length=25)
+     * @ORM\Column(name="departure", type="string", length=50)
      * @Assert\Length(
      *      min = 2,
-     *      max = 100,
+     *      max = 300,
      *      minMessage = "Le lieu de départ doit avoir au minimum {{ limit }} caractères",
      *      maxMessage = "Le lieu de départ doit avoir au maximum {{ limit }} caractères"
      * )
@@ -44,10 +44,10 @@ class Ride
     /**
      * @var string
      *
-     * @ORM\Column(name="arrival", type="string", length=25)
+     * @ORM\Column(name="arrival", type="string", length=50)
      * @Assert\Length(
      *      min = 2,
-     *      max = 100,
+     *      max = 300,
      *      minMessage = "Le lieu d'arrivé doit avoir au minimum {{ limit }} caractères",
      *      maxMessage = "Le lieu d'arrivé doit avoir au maximum {{ limit }} caractères"
      * )

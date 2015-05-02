@@ -44,7 +44,10 @@
                     le  {{ upcomingRide.departureDate|localizeddate('medium', 'none', 'fr') }}
                     à {{ upcomingRide.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
                 <td class="col-sm-1 col-md-5 text-center"><strong>{{ upcomingRide.price }}€ <br> par place
-                    <br><br>                                         {{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': upcomingRide})) }} places restantes</strong></td>
+                    <br><br>                                         
+                    {{ render(controller('CVPlatformBundle:Ride:numberOfPlacesBooked', {'ride': upcomingRide})) }} place(s) réservé(s) sur {{ upcomingRide.numberPassenger }} 
+                    <br>
+                    {{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': upcomingRide})) }} place(s) restante(s)</strong></td>
                     <td col-sm-1 col-md-5 text-center>            
                 <p>
                 <a href="{{ path('cv_platform_view', {'id': upcomingRide.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Modifier</a>
@@ -72,6 +75,7 @@
                         <div class="media-body">
                             <h4 class="media-heading text-center">{{ reservation.user }}</h4>
                         </div>
+                        {{ reservation.getNumberOfPlaces() }} place(s)
                     </figure> 
                 </td>
                 {% endfor %}
