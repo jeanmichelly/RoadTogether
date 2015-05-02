@@ -88,6 +88,8 @@ class RatingController extends Controller
             if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
                 $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
                     ->numberOfNotification($userId);
+                $numberNotify += $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Payment')
+                    ->numberOfNotification($userId);
             }
             $session->set('numberNotify', $numberNotify);
 

@@ -56,4 +56,15 @@ class PaymentRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function numberOfNotification($userId) {
+        $query = $this->_em->createQuery('
+                SELECT COUNT(p.id) 
+                FROM CVPlatformBundle:Payment p
+                JOIN p.ride ri
+                WHERE ri.user = :user
+                AND p.state = 0')
+            ->setParameter('user', $userId);
+        return $query->getSingleScalarResult();
+    }
 }
