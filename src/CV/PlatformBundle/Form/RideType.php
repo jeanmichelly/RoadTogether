@@ -14,13 +14,13 @@ class RideType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('departure',         'text')
-            ->add('arrival',           'text')
-            ->add('departureDate',     'text')
-            ->add('price',             'integer', array('attr' => array('min' => '1', 'max' => '1000')))
-            ->add('numberPassenger',   'integer', array('attr' => array('min' => '1', 'max' => '4')))
-            ->add('details',           'textarea', array("required" => false, 'attr' => array('rows' => '5')))
-            ->add('enregistrer',       'submit');
+        ->add('departure',         'text')
+        ->add('arrival',           'text')
+        ->add('departureDate',     'text')
+        ->add('price',             'integer', array('attr' => array('min' => '1', 'max' => '1000')))
+        ->add('numberPassenger',   'integer', array('attr' => array('min' => '1', 'max' => '4')))
+        ->add('details',           'textarea', array("required" => false, 'attr' => array('rows' => '5')))
+        ->add('enregistrer',       'submit');
     }
     
     /**
@@ -29,7 +29,7 @@ class RideType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'CV\PlatformBundle\Entity\Ride'
-        ));
+            ));
     }
 
     /**

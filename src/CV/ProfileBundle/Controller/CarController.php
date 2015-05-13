@@ -36,7 +36,7 @@ class CarController extends Controller
 
         return $this->render('CVProfileBundle:Car:add.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function editAction(Car $car, Request $request) {
@@ -58,7 +58,7 @@ class CarController extends Controller
 
         return $this->render('CVProfileBundle:Car:edit.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function deleteAction(Car $car, Request $request) {
@@ -83,7 +83,7 @@ class CarController extends Controller
         return $this->render('CVProfileBundle:Car:delete.html.twig', array(
             'car' => $car,
             'form'   => $form->createView()
-        ));
+            ));
     }
 
 
@@ -96,12 +96,12 @@ class CarController extends Controller
 
         $form = $this->createForm(new CarViewType, $car,array(
             'read_only' => true
-        ));
+            ));
 
         return $this->render('CVProfileBundle:Car:my_car_details.html.twig', array(
             'form'  => $form->createView(),
             'car'   => $car,
-        ));
+            ));
     }
 
     public function myCarsAction($page, Request $request) {
@@ -113,16 +113,16 @@ class CarController extends Controller
         $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
 
         $cars = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVProfileBundle:Car')
-            ->requestCarUser($page, $nbPerPage, $profileUser->getId());
+        ->getManager()
+        ->getRepository('CVProfileBundle:Car')
+        ->requestCarUser($page, $nbPerPage, $profileUser->getId());
 
         if (count($cars) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de voitures');
 
             return $this->render('CVProfileBundle:Car:my_cars.html.twig', array(
                 'cars'     => $cars,
-            ));
+                ));
         }
 
         $nbPages = ceil(count($cars)/$nbPerPage);
@@ -131,13 +131,13 @@ class CarController extends Controller
             'cars'          => $cars,
             'nbPages'       => $nbPages,
             'page'          => $page,
-        ));
+            ));
     }
 
     public function pictureAction($car, $thumb) {    
         return $this->render('CVProfileBundle:Car:picture.html.twig', array(
             'car'     => $car,
             'thumb'   => $thumb,
-        ));
+            ));
     }
 }

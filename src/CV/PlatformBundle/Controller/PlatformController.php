@@ -26,7 +26,7 @@ class PlatformController extends Controller
                 'departure' => $form->getDeparture(),
                 'arrival' => $form->getArrival(),
                 'departureDate' => $form->getDepartureDate(),
-            )));
+                )));
         } else if ($form->isSubmitted()) {
             return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
         }
@@ -34,22 +34,22 @@ class PlatformController extends Controller
         $userId = $this->get('security.context')->getToken()->getUser();
 
         $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->updateToNotify($userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Rating')
+        ->updateToNotify($userId);
 
         $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Payment')
-            ->updateToNotify($userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Payment')
+        ->updateToNotify($userId);
 
         $numberNotify = 0;
 
         if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
             $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
-                ->numberOfNotification($userId);
+            ->numberOfNotification($userId);
             $numberNotify += $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Payment')
-                ->numberOfNotification($userId);
+            ->numberOfNotification($userId);
         }
         $session->set('numberNotify', $numberNotify);
 

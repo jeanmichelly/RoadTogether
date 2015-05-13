@@ -14,7 +14,7 @@ class Preference
 {
 
     /**
-     * @ORM\OneToOne(targetEntity="CV\ProfileBundle\Entity\Profile", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="CV\ProfileBundle\Entity\Profile", inversedBy="preference", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $profile;
@@ -63,7 +63,7 @@ class Preference
       $this->setMusic(false);
       $this->setCigarette(false);
       $this->setAnimal(false);
-    }
+  }
 
     /**
      * Get id

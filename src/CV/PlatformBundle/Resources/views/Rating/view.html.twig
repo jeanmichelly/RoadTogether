@@ -8,9 +8,27 @@
 	<div class="col-md-10 col-sm-10">
 		<div class="panel panel-default arrow left">
 			<div class="panel-body">
-			  	<header class="text-left">
-				    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{ ratingReceived.date | date('d/m/Y H:m:s') }}</time>
+			  	<header class="text-left">Le
+				    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{ ratingReceived.date | date('d/m/Y H:m:s') }}</time> 
+
+				<p style="float: right;">
+                Evaluation : 
+                {% if ratingReceived.evaluation == 1 %}
+                à éviter
+                {% elseif ratingReceived.evaluation == 2 %}
+                décevant
+                {% elseif ratingReceived.evaluation == 3 %}
+                bien
+                {% elseif ratingReceived.evaluation == 4 %}
+                excellent
+                {% else %}
+                extraordinaire
+                {% endif %}
+                </p>
+
+
 			  	</header>
+			  	<br>
 			  	<div class="comment-post">
 				    <p>
 				      	{{ ratingReceived.description }}

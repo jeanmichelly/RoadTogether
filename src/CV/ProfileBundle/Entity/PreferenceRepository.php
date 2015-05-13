@@ -13,15 +13,15 @@ use Doctrine\ORM\EntityRepository;
 class PreferenceRepository extends EntityRepository
 {
 
-   	public function requestPreferenceUser($idProfile) {
+	public function requestPreferenceUser($idProfile) {
 
-	    $query = $this->createQueryBuilder('p')
-      ->leftJoin('p.profile', 'profile')
-      ->addSelect('profile')
-      ->where('p.profile = :profile')
-      ->setParameter('profile', $idProfile)
-      ->getQuery();
+		$query = $this->createQueryBuilder('p')
+		->leftJoin('p.profile', 'profile')
+		->addSelect('profile')
+		->where('p.profile = :profile')
+		->setParameter('profile', $idProfile)
+		->getQuery();
 
-      return $query->getSingleResult();
-  }
+		return $query->getSingleResult();
+	}
 }

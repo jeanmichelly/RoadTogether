@@ -16,14 +16,14 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',               'text')
-            ->add('firstName',          'text')
-            ->add('age',                'integer', array('attr' => array('min' => '10', 'max' => '100')))
-            ->add('biography',          'textarea')
-            ->add('birthday',           'date')
-            ->add('phone',              'text')
-            ->add('image',      new ImageType(), array("required" => false)) 
-            ->add('enregistrer',        'submit') 
+        ->add('name',               'text')
+        ->add('firstName',          'text')
+        ->add('age',                'integer', array('attr' => array('min' => '10', 'max' => '100')))
+        ->add('biography',          'textarea')
+        ->add('birthday',           'date', array('format' => 'd-M-y','pattern' => "{{ day }}/{{ month }}/{{ year }}", 'years' => range(date('Y') - 10, date('Y') - 80)))
+        ->add('phone',              'text')
+        ->add('image',      new ImageType(), array("required" => false)) 
+        ->add('enregistrer',        'submit') 
         ;
     }
     
@@ -34,7 +34,7 @@ class ProfileType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'CV\ProfileBundle\Entity\Profile'
-        ));
+            ));
     }
 
     /**

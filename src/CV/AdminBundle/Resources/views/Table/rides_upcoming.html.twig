@@ -26,8 +26,8 @@
                                 <th><input type="text" class="form-control" placeholder="Date de départ" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="Prix" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="Nombre de passager" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Passagers" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="Détails" disabled></th>
-                                <th><input type="text" class="form-control" placeholder="Statut" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="Publié le" disabled></th>
                             </tr>
                         </thead>
@@ -46,7 +46,6 @@
                                         {% endfor %}
                                     </td>
                                     <td>{{ upcomingRide.details }}</td>
-                                    <td>{{ upcomingRide.state }}</td>
                                     <td>{{ upcomingRide.offerPublished | date('d/m/Y à H:i:s') }}</td>
                                 </tr>
                             {% endfor %}

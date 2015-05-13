@@ -45,14 +45,14 @@ class PublicMessage
      * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $user;
+   private $user;
 
-    public function __construct($content, $ride, $user) {
-        $this->content = $content;
-        $this->date = new \Datetime();
-        $this->ride = $ride;
-        $this->user = $user;
-    }
+   public function __construct($content, $ride, $user) {
+    $this->content = $content;
+    $this->date = new \Datetime();
+    $this->ride = $ride;
+    $this->user = $user;
+}
 
     /**
      * Get id

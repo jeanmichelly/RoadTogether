@@ -15,10 +15,10 @@ class Car
 {
 
   /**
-   * @ORM\ManyToOne(targetEntity="CV\ProfileBundle\Entity\Profile")
+   * @ORM\ManyToOne(targetEntity="CV\ProfileBundle\Entity\Profile",inversedBy="car")
    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
-    private $profile;
+  private $profile;
 
     /**
      * @var integer

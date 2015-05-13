@@ -12,24 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProfileRepository extends EntityRepository
 {
-   	public function requestProfileUser($userId) {
-		
+    public function requestProfileUser($userId) {
+      
         $query = $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'user')
-            ->addSelect('user')
-            ->where('p.user = :user')
-            ->setParameter('user', $userId)
-            ->getQuery();
+        ->leftJoin('p.user', 'user')
+        ->addSelect('user')
+        ->where('p.user = :user')
+        ->setParameter('user', $userId)
+        ->getQuery();
 
         return $query->getSingleResult();
-   	}
+    }
 
     public function requestProfileUsers() {
-    
+        
         $query = $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'user')
-            ->addSelect('user')
-            ->getQuery();
+        ->leftJoin('p.user', 'user')
+        ->addSelect('user')
+        ->getQuery();
 
         return $query->getResult();
     }

@@ -61,8 +61,8 @@ class Image
    * @ORM\PrePersist()
    * @ORM\PreUpdate()
    */
-   public function preUpload()
-   {
+  public function preUpload()
+  {
     if (null === $this->file) {
       return;
     }
@@ -92,7 +92,7 @@ class Image
     $this->file->move(
       $this->getUploadRootDir(), 
       $this->id.'.'.$this->url  
-    );
+      );
   }
 
   /**
@@ -142,9 +142,9 @@ class Image
    */
   public function setUrl($url)
   {
-      $this->url = $url;
+    $this->url = $url;
 
-      return $this;
+    return $this;
   }
 
   /**
@@ -154,7 +154,7 @@ class Image
    */
   public function getUrl()
   {
-      return $this->url;
+    return $this->url;
   }
 
   /**
@@ -165,8 +165,8 @@ class Image
    */
   public function setAlt($alt)
   {
-      $this->alt = $alt;
-      return $this;
+    $this->alt = $alt;
+    return $this;
   }
 
   /**
@@ -176,7 +176,7 @@ class Image
    */
   public function getAlt()
   {
-      return $this->alt;
+    return $this->alt;
   }
 
   /**
@@ -186,7 +186,7 @@ class Image
    */
   public function getFile()
   {
-      return $this->file;
+    return $this->file;
   }
 
   /**
@@ -197,8 +197,8 @@ class Image
    */
   public function setTempFilename($tempFilename)
   {
-      $this->tempFilename = $tempFilename;
-      return $this;
+    $this->tempFilename = $tempFilename;
+    return $this;
   }
 
   /**
@@ -208,6 +208,6 @@ class Image
    */
   public function getTempFilename()
   {
-     return $this->tempFilename;
-  }
+   return $this->tempFilename;
+ }
 }

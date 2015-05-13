@@ -22,14 +22,23 @@ class PaymentController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $user->setBalance($user->getBalance()+$payment->getAmount());
 
+
+        $ride = $payment->getRide();
+        $reservations = $ride->getReservations();
+
+        foreach($reservations as $element){
+            $element->getUser()->setBalance($element->getUser()->getBalance() - $element->getRide()->getPrice()*$element->getNumberOfPlaces());
+        }
+
+
         $em->persist($user);
         $em->flush();
 
         if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
             $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
-                ->numberOfNotification($user->getId());
+            ->numberOfNotification($user->getId());
             $numberNotify += $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Payment')
-                ->numberOfNotification($user->getId());
+            ->numberOfNotification($user->getId());
         }
         $session->set('numberNotify', $numberNotify);
 

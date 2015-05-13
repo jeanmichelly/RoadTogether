@@ -12,18 +12,18 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  * repository methods below.
  */
 class CarRepository extends EntityRepository {
-   	public function requestCarUser($page, $nbPerPage, $idProfile) {
-        $query = $this->createQueryBuilder('c')
-            ->leftJoin('c.profile', 'profile')
-            ->addSelect('profile')
-            ->where('c.profile = :profile')
-            ->setParameter('profile', $idProfile)
-            ->getQuery();
+  public function requestCarUser($page, $nbPerPage, $idProfile) {
+    $query = $this->createQueryBuilder('c')
+    ->leftJoin('c.profile', 'profile')
+    ->addSelect('profile')
+    ->where('c.profile = :profile')
+    ->setParameter('profile', $idProfile)
+    ->getQuery();
 
-        $query
-          ->setFirstResult(($page-1) * $nbPerPage)
-          ->setMaxResults($nbPerPage);
+    $query
+    ->setFirstResult(($page-1) * $nbPerPage)
+    ->setMaxResults($nbPerPage);
 
-        return new Paginator($query, true);
-   	}
+    return new Paginator($query, true);
+  }
 }

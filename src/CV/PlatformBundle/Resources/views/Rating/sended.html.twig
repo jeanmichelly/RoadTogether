@@ -9,24 +9,65 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-    <p>
-        {% for message in app.session.flashbag.get('info') %}
-            <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
+
     <h2>Avis laissés</h2>
 
-    {% for ratingSended in listRatingsSended %}
-        <div class="well">
-            <i>Avis laissé le {{ ratingSended.date|date('d/m/Y') }}<i/>
-            <li>Evaluation : {{ ratingSended.evaluation }}</li>
-            <li>Description : {{ ratingSended.description }}</li>
-        </div>
-    {% endfor %}
+    {% if listRatingsSended|length == 0 %}
+        <p>
+        {% for message in app.session.flashbag.get('info') %}
 
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
+        <p class="alert alert-info">{{ message }}</p> 
         {% endfor %}
-    </ul>
+    </p>
+
+    {% else %}
+
+    {% for ratingSended in listRatingsSended %}
+<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
+    <i>Avis reçu le {{ ratingSended.date|date('d/m/Y') }}, par {{ ratingSended.user.username }}<i/>
+            <tr>
+           <td width="120px" height="100px">
+                 <figure class="thumbnail">
+
+                     <a href="{{ path('cv_profile_view', {'id': app.user.id   }) }}">
+       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user })) }} 
+                     </a>
+                        <div class="media-body">
+                            <h4 class="media-heading text-center">{{ app.user }}</h4>
+                        </div>
+                    </figure> 
+                </td>
+               <td class="col-sm-1 col-md-9 text-center" ><strong>
+                Evaluation : 
+                {% if ratingSended.evaluation == 0 %}
+                à éviter
+                {% elseif ratingSended.evaluation == 1 %}
+                décevant
+                {% elseif ratingSended.evaluation == 2 %}
+                bien
+                {% elseif ratingSended.evaluation == 3 %}
+                excellent
+                {% else %}
+                extraordinaire
+                {% endif %}
+                <br><br>
+                {{ ratingSended.description }}
+               </strong></td>
+
+                <td width="120px" height="100px">
+                 <figure class="thumbnail">
+
+                     <a href="{{ path('cv_profile_view', {'id': ratingSended.relateduser.id   }) }}">
+       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ratingSended.relateduser})) }} 
+                     </a>
+                        <div class="media-body">
+                            <h4 class="media-heading text-center"> {{ ratingSended.relateduser }} </h4>
+                        </div>
+                    </figure> 
+                </td>
+
+    </table>
+    {% endfor %}
+        {% endif %}
+
 {% endblock %}

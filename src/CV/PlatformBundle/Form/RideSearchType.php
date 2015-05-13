@@ -13,17 +13,17 @@ class RideSearchType extends AbstractType
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-                $builder->remove('enregistrer');
-                $builder->remove('price');
-                $builder->remove('numberPassenger');
-                $builder->remove('details');
-                $builder->add('rechercher',         'submit');
-                               
+        $builder->remove('enregistrer');
+        $builder->remove('price');
+        $builder->remove('numberPassenger');
+        $builder->remove('details');
+        $builder->add('rechercher',         'submit');
+        
     }
     
     public function getParent() {
-       return new RideType();
-    }
+     return new RideType();
+ }
 
     /**
      * @return string

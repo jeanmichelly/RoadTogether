@@ -14,15 +14,15 @@ class ProfileRegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->remove('enregistrer')
-                ->remove('biography')
-                ->remove('phone')
-                ->remove('biography')
-                ->remove('age');
+        ->remove('biography')
+        ->remove('phone')
+        ->remove('biography')
+        ->remove('age');
     }
     
     public function getParent() {
-       return new ProfileType();
-    }
+     return new ProfileType();
+ }
 
     /**
      * @return string

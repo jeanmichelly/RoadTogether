@@ -52,14 +52,14 @@ class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwa
         $user->setRoles(array('ROLE_ADMIN'));
       }
       
-     $manager->persist($user);
-     $this->addReference($ref, $user);
-   }
+      $manager->persist($user);
+      $this->addReference($ref, $user);
+    }
 
-   $manager->flush();
- }
+    $manager->flush();
+  }
 
- public function getOrder() {
-  return 1;
-}
+  public function getOrder() {
+    return 1;
+  }
 }

@@ -70,7 +70,7 @@
         </div>
   
         <div class="well">
-            <textarea id="contentT" rows="5" cols="111" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+            <textarea id="contentT" rows="5" cols="100" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
             <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
         </div>
     </div>
@@ -127,7 +127,7 @@
                             url: "{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id }) }}",
                             data: valeur,
                             success: function(data) {
-                                window.location.replace("{{ path('cv_platform_my_reservations') }}");
+                                window.location.replace("{{ path('cv_platform_current_reservations') }}");
                             }
                         }); 
                     });

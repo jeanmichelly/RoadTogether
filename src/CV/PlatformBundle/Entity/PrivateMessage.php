@@ -39,22 +39,22 @@ class PrivateMessage
      * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $user;
+   private $user;
 
 
    /**
      * @ORM\ManyToOne(targetEntity="CV\UserBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $relatedUser;
+   private $relatedUser;
 
 
-    public function __construct($user, $relatedUser, $content) {
-        $this->user = $user;
-        $this->relatedUser = $relatedUser;
-        $this->date = new \Datetime();
-        $this->content = $content;
-    }
+   public function __construct($user, $relatedUser, $content) {
+    $this->user = $user;
+    $this->relatedUser = $relatedUser;
+    $this->date = new \Datetime();
+    $this->content = $content;
+}
 
     /**
      * Get id

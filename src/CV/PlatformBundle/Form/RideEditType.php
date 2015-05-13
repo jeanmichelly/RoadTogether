@@ -16,8 +16,8 @@ class RideEditType extends AbstractType
     }
     
     public function getParent() {
-       return new RideType();
-    }
+     return new RideType();
+ }
 
     /**
      * @return string

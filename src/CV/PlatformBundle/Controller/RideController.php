@@ -25,11 +25,11 @@ class RideController extends Controller
 
         $form = $this->createForm(new RideViewType, $ride,array(
             'read_only' => true
-        ));
+            ));
 
         return $this->render('CVPlatformBundle:Ride:my_ride_details.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function addAction(Request $request) {
@@ -50,7 +50,7 @@ class RideController extends Controller
 
         return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function editAction(Ride $ride, Request $request) {
@@ -72,7 +72,7 @@ class RideController extends Controller
 
         return $this->render('CVPlatformBundle:Ride:edit.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 
     public function deleteAction(Ride $ride, Request $request) {
@@ -86,9 +86,9 @@ class RideController extends Controller
                 "Vous avez recu un virement de 10€ de la part de ".$ride->getUser()." suite à l'annulation du voyage 
                 au départ de ".$ride->getDeparture()." et à destination de ".$ride->getArrival()
                 );
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($privateMessage);
-        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($privateMessage);
+            $em->flush();
         }
         
 
@@ -113,9 +113,9 @@ class RideController extends Controller
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         
         $listUpcomingRides = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->upcomingRides($page, $nbPerPage, $userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->upcomingRides($page, $nbPerPage, $userId);
 
 
         if (count($listUpcomingRides) == 0) {
@@ -123,7 +123,7 @@ class RideController extends Controller
 
             return $this->render('CVPlatformBundle:Ride:upcoming.html.twig', array(
                 'listUpcomingRides'     => $listUpcomingRides,
-            ));
+                ));
         }
 
         $nbPages = ceil(count($listUpcomingRides)/$nbPerPage);
@@ -132,7 +132,7 @@ class RideController extends Controller
             'listUpcomingRides'     => $listUpcomingRides,
             'nbPages'       => $nbPages,
             'page'          => $page,
-        ));
+            ));
     }
 
     public function pastRidesAction($page, Request $request) {
@@ -141,16 +141,16 @@ class RideController extends Controller
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         
         $listPastRides = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->pastRides($page, $nbPerPage, $userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->pastRides($page, $nbPerPage, $userId);
 
         if (count($listPastRides) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de trajets passés');
 
             return $this->render('CVPlatformBundle:Ride:past.html.twig', array(
                 'listPastRides'     => $listPastRides,
-            ));
+                ));
         }
 
         $nbPages = ceil(count($listPastRides)/$nbPerPage);
@@ -159,7 +159,7 @@ class RideController extends Controller
             'listPastRides'     => $listPastRides,
             'nbPages'           => $nbPages,
             'page'              => $page,
-        ));
+            ));
     }
 
     public function myRidesAction($page) {
@@ -172,9 +172,9 @@ class RideController extends Controller
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         
         $listRides = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->myRides($page, $nbPerPage, $userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->myRides($page, $nbPerPage, $userId);
 
         $nbPages = ceil(count($listRides)/$nbPerPage);
 
@@ -186,7 +186,7 @@ class RideController extends Controller
             'listRides'     => $listRides,
             'nbPages'       => $nbPages,
             'page'          => $page,
-        ));
+            ));
     }
 
     public function searchRidesUserAction(Request $request) {
@@ -203,7 +203,7 @@ class RideController extends Controller
                 'departure'     => $form->getDeparture(),
                 'arrival'       => $form->getArrival(),
                 'departureDate' => $form->getDepartureDate(),
-            )));
+                )));
         }
         return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
     }
@@ -212,43 +212,42 @@ class RideController extends Controller
         $nbPerPage = 5;
 
         $listRides = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->focusRidesUser($departure, $arrival, $departureDate, $page, $nbPerPage);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->focusRidesUser($departure, $arrival, $departureDate, $page, $nbPerPage);
 
         if (count($listRides) == 0) {
             $request->getSession()->getFlashBag()->add('info', 'Il n\'existe pas de trajets correspondant à votre recherche');
 
             return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
                 'listRides'     => $listRides,
-            ));
+                ));
         }
 
         $nbPages = ceil(count($listRides)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
-              'listRides'   => $listRides,
-              'nbPages'     => $nbPages,
-              'page'        => $page
-        ));
+          'listRides'   => $listRides,
+          'nbPages'     => $nbPages,
+          'page'        => $page
+          ));
     }
 
     public function numberOfRemainingSpaceAction(Ride $ride) {
         $res = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->numberOfRemainingSpace($ride);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->numberOfRemainingSpace($ride);
 
         return new Response($res);
     }
 
     public function numberOfPlacesBookedAction(Ride $ride) {
         $res = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Ride')
-            ->numberOfPlacesBooked($ride);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Ride')
+        ->numberOfPlacesBooked($ride);
 
-        return new Response($res);
-    }
-    
+        return new Response(count($res));
+    } 
 }

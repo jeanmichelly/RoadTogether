@@ -17,7 +17,7 @@ class LoadProfile extends AbstractFixture implements OrderedFixtureInterface {
             'mar02e',
             'sabri01',
             '59cindy'
-        );
+            );
 
         $names = array(
             'Laporte',
@@ -26,7 +26,7 @@ class LoadProfile extends AbstractFixture implements OrderedFixtureInterface {
             'lit',
             'Lebois',
             'Laserrure'
-        );
+            );
 
         $firstNames = array(
             'Mario',
@@ -35,7 +35,7 @@ class LoadProfile extends AbstractFixture implements OrderedFixtureInterface {
             'Marie',
             'Sabrina',
             'Cindy'
-        );
+            );
 
         for ($i=0; $i<count($references); $i++) {
             $profile = new Profile();

@@ -24,3 +24,18 @@
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
+
+
+/* A mettre dans le bootstrap plus tard */
+
+.dataTables_wrapper {
+  overflow: scroll;
+}
+
+.row {
+  width: 80%;
+}
+
+.container {
+  width: 948px;
+}

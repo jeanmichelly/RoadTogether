@@ -14,9 +14,9 @@ class RatingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('evaluation',     'integer', array('attr' => array('min' => '1', 'max' => 5)))
-            ->add('description',    'textarea', array('attr' => array('rows' => '5')))
-            ->add('publier',        'submit');
+        ->add('evaluation',     'integer', array('attr' => array('min' => '1', 'max' => 5)))
+        ->add('description',    'textarea', array('attr' => array('rows' => '5')))
+        ->add('publier',        'submit');
     }
 
     /**

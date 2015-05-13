@@ -57,7 +57,7 @@ class RegistrationController extends BaseController
 
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
-        /*****************************************/
+            /*****************************************/
             $profile = $user->getProfile();
             $preference = new Preference();
             $preference->setProfile($profile);
@@ -66,13 +66,13 @@ class RegistrationController extends BaseController
             $em->persist($preference);
 
             $em->flush();
-        /*****************************************/
+            /*****************************************/
 
             return $response;
         }
 
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 }

@@ -13,7 +13,7 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Pouvez vous venir me chercher à la gare de Marolles ? Cordialement", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('jeanmly')
-        );
+            );
         $publicMessageRoundTripPassenger->setDate(new \DateTime('1970-1-1'));
         $manager->persist($publicMessageRoundTripPassenger);
 
@@ -22,7 +22,7 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Oui bien sur", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('mario032')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-1'));
         $manager->persist($publicMessageTripRoundPassenger);
 
@@ -31,7 +31,7 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Avez vous la place pour une valise 90x40cm ? ", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('jeanmly')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-3'));
         $manager->persist($publicMessageTripRoundPassenger);
 
@@ -40,7 +40,7 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Est ce que je peux ramener mon bouldogue ? ", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('jeanmly')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-4'));
         $manager->persist($publicMessageTripRoundPassenger);
 
@@ -49,7 +49,7 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Heu, faut peut être pas abusé là :/", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('mario032')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-5'));
         $manager->persist($publicMessageTripRoundPassenger);
 
@@ -58,16 +58,16 @@ class LoadPublicMessage extends AbstractFixture implements OrderedFixtureInterfa
             "Bonjour, pouvez vous venir me chercher devant l'UTT ?", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('isa01')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-6'));
         $manager->persist($publicMessageTripRoundPassenger);
 
-      
+        
         $publicMessageTripRoundPassenger = new PublicMessage(
             "Non j'ai pas envie", 
             $this->getReference('ride_round_trip'), 
             $this->getReference('mario032')
-        );
+            );
         $publicMessageTripRoundPassenger->setDate(new \DateTime('1970-1-7'));
         $manager->persist($publicMessageTripRoundPassenger);
         

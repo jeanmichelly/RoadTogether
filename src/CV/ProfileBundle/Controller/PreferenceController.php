@@ -15,7 +15,7 @@ class PreferenceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $profileUser = $em->getRepository('CVProfileBundle:Profile')->findOneBy(array('user' => $user));
         $preference = $em->getRepository('CVProfileBundle:Preference')
-            ->requestPreferenceUser($profileUser->getId());
+        ->requestPreferenceUser($profileUser->getId());
 
         if (null === $preference) {
             throw new NotFoundHttpException("Les preférences n'existe pas.");
@@ -31,6 +31,6 @@ class PreferenceController extends Controller
         }
         return $this->render('CVProfileBundle:Preference:edit.html.twig', array(
             'form' => $form->createView(),
-        ));
+            ));
     }
 }

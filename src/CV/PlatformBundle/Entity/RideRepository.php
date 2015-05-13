@@ -7,134 +7,134 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class RideRepository extends EntityRepository 
 {
-   	public function requestRidesFiltered($departure, $arrival) {
-		$listRides = $this->findBy(
-  			array('departure' => $departure,
-				'arrival' => $arrival,
-  			),
-  			null,
-  			null,
-  			null,
-  			null
-		);
-	    return $listRides;
-   	}
+    public function requestRidesFiltered($departure, $arrival) {
+      $listRides = $this->findBy(
+       array('departure' => $departure,
+        'arrival' => $arrival,
+        ),
+       null,
+       null,
+       null,
+       null
+       );
+      return $listRides;
+  }
 
-    public function upcomingRides($page, $nbPerPage, $idUser) {
-        $query = $this->createQueryBuilder('r')
-            ->leftJoin('r.user', 'user')
-            ->addSelect('user')
-            ->where('r.user = :user')
-                ->setParameter('user', $idUser)
-            ->andWhere('r.departureDate > :departureDate')
-                ->setParameter('departureDate', date('Y-m-d H:i:s'))
-            ->orderBy('r.offerPublished', 'DESC')
-            ->getQuery();
+  public function upcomingRides($page, $nbPerPage, $idUser) {
+    $query = $this->createQueryBuilder('r')
+    ->leftJoin('r.user', 'user')
+    ->addSelect('user')
+    ->where('r.user = :user')
+    ->setParameter('user', $idUser)
+    ->andWhere('r.departureDate > :departureDate')
+    ->setParameter('departureDate', date('Y-m-d H:i:s'))
+    ->orderBy('r.offerPublished', 'DESC')
+    ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
+    $query
+    ->setFirstResult(($page-1) * $nbPerPage)
+    ->setMaxResults($nbPerPage);
 
-        return new Paginator($query, true);
-    }
+    return new Paginator($query, true);
+}
 
-    public function pastRides($page, $nbPerPage, $idUser) {
-        $query = $this->createQueryBuilder('r')
-            ->leftJoin('r.user', 'user')
-            ->addSelect('user')
-            ->where('r.user = :user')
-                ->setParameter('user', $idUser)
-            ->andWhere('r.departureDate < :departureDate')
-                ->setParameter('departureDate', date('Y-m-d H:i:s'))
-            ->orderBy('r.offerPublished', 'DESC')
-            ->getQuery();
+public function pastRides($page, $nbPerPage, $idUser) {
+    $query = $this->createQueryBuilder('r')
+    ->leftJoin('r.user', 'user')
+    ->addSelect('user')
+    ->where('r.user = :user')
+    ->setParameter('user', $idUser)
+    ->andWhere('r.departureDate < :departureDate')
+    ->setParameter('departureDate', date('Y-m-d H:i:s'))
+    ->orderBy('r.offerPublished', 'DESC')
+    ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
+    $query
+    ->setFirstResult(($page-1) * $nbPerPage)
+    ->setMaxResults($nbPerPage);
 
-        return new Paginator($query, true);
-    }
+    return new Paginator($query, true);
+}
 
-   	public function myRides($page, $nbPerPage, $idUser) {
-        $query = $this->createQueryBuilder('r')
-            ->leftJoin('r.user', 'user')
-            ->addSelect('user')
-            ->where('r.user = :user')
-                ->setParameter('user', $idUser)
-            ->orderBy('r.offerPublished', 'DESC')
-            ->getQuery();
+public function myRides($page, $nbPerPage, $idUser) {
+    $query = $this->createQueryBuilder('r')
+    ->leftJoin('r.user', 'user')
+    ->addSelect('user')
+    ->where('r.user = :user')
+    ->setParameter('user', $idUser)
+    ->orderBy('r.offerPublished', 'DESC')
+    ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
+    $query
+    ->setFirstResult(($page-1) * $nbPerPage)
+    ->setMaxResults($nbPerPage);
 
-        return new Paginator($query, true);
-   	}
+    return new Paginator($query, true);
+}
 
-    public function focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage) {
-        $query = $this->createQueryBuilder('r')
-            ->where('r.departure = :departure')
-                ->setParameter('departure', $departure)
-            ->andWhere('r.arrival = :arrival')
-                ->setParameter('arrival', $arrival)
-            ->andWhere('r.departureDate LIKE :departureDate')
-                ->setParameter('departureDate', $departure_date.'%')
-            ->andWhere('r.departureDate > :now')
-                ->setParameter('now', date('Y-m-d H:i:s'))
-            ->orderBy('r.offerPublished', 'DESC')
-            ->getQuery();
+public function focusRidesUser($departure, $arrival, $departure_date, $page, $nbPerPage) {
+    $query = $this->createQueryBuilder('r')
+    ->where('r.departure = :departure')
+    ->setParameter('departure', $departure)
+    ->andWhere('r.arrival = :arrival')
+    ->setParameter('arrival', $arrival)
+    ->andWhere('r.departureDate LIKE :departureDate')
+    ->setParameter('departureDate', $departure_date.'%')
+    ->andWhere('r.departureDate > :now')
+    ->setParameter('now', date('Y-m-d H:i:s'))
+    ->orderBy('r.offerPublished', 'DESC')
+    ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
+    $query
+    ->setFirstResult(($page-1) * $nbPerPage)
+    ->setMaxResults($nbPerPage);
 
-        return new Paginator($query, true);
-    }
+    return new Paginator($query, true);
+}
 
-    public function isFull($ride) {
-        $query = $this->_em->createQuery('
-                SELECT SUM(re.numberOfPlaces) 
-                FROM CVPlatformBundle:Reservation re
-                JOIN re.ride ri
-                WHERE re.ride = :ride')
-            ->setParameter('ride', $ride);
+public function isFull($ride) {
+    $query = $this->_em->createQuery('
+        SELECT SUM(re.numberOfPlaces) 
+        FROM CVPlatformBundle:Reservation re
+        JOIN re.ride ri
+        WHERE re.ride = :ride')
+    ->setParameter('ride', $ride);
 
-        return ($ride->getNumberPassenger() == $query->getSingleScalarResult()) ? true:false;
-    }
+    return ($ride->getNumberPassenger() == $query->getSingleScalarResult()) ? true:false;
+}
 
 
-    public function numberOfPlacesBooked($ride) {
-        $query = $this->_em->createQuery('
-                SELECT SUM(re.numberOfPlaces)
-                FROM CVPlatformBundle:Reservation re
-                JOIN re.ride ri
-                WHERE re.ride = :ride')
-            ->setParameter('ride', $ride);
+public function numberOfPlacesBooked($ride) {
+    $query = $this->_em->createQuery('
+        SELECT SUM(re.numberOfPlaces)
+        FROM CVPlatformBundle:Reservation re
+        JOIN re.ride ri
+        WHERE re.ride = :ride')
+    ->setParameter('ride', $ride);
 
-        return $query->getSingleScalarResult();
-    }
+    return $query->getSingleScalarResult();
+}
 
-    public function numberOfRemainingSpace($ride) {
-        $query = $this->_em->createQuery('
-                SELECT SUM(re.numberOfPlaces) 
-                FROM CVPlatformBundle:Reservation re
-                JOIN re.ride ri
-                WHERE re.ride = :ride')
-            ->setParameter('ride', $ride);
+public function numberOfRemainingSpace($ride) {
+    $query = $this->_em->createQuery('
+        SELECT SUM(re.numberOfPlaces) 
+        FROM CVPlatformBundle:Reservation re
+        JOIN re.ride ri
+        WHERE re.ride = :ride')
+    ->setParameter('ride', $ride);
 
-        return ($ride->getNumberPassenger() - $query->getSingleScalarResult());
-    }
+    return ($ride->getNumberPassenger() - $query->getSingleScalarResult());
+}
 
-    public function allUpcomingRides() {
-        $query = $this->createQueryBuilder('r')
-            ->leftJoin('r.user', 'user')
-            ->addSelect('user')
-            ->andWhere('r.departureDate > :departureDate')
-                ->setParameter('departureDate', date('Y-m-d H:i:s'))
-            ->orderBy('r.offerPublished', 'DESC')
-            ->getQuery();
+public function allUpcomingRides() {
+    $query = $this->createQueryBuilder('r')
+    ->leftJoin('r.user', 'user')
+    ->addSelect('user')
+    ->andWhere('r.departureDate > :departureDate')
+    ->setParameter('departureDate', date('Y-m-d H:i:s'))
+    ->orderBy('r.offerPublished', 'DESC')
+    ->getQuery();
 
-        return $query->getResult();
-    }
+    return $query->getResult();
+}
 }

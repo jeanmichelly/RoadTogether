@@ -16,58 +16,40 @@ use CV\UserBundle\Entity\User;
 
 class RatingController extends Controller
 {
-    public function receivedAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
-
-        $nbPerPage = 5;
+    public function receivedAction(Request $request) {
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         
         $listRatingsReceived = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->ratingsReceived($page, $nbPerPage, $userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Rating')
+        ->ratingsReceived($userId);
 
-        $nbPages = ceil(count($listRatingsReceived)/$nbPerPage);
-
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        if (count($listRatingsReceived) == 0) {
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore d\'avis reçus');
         }
 
         return $this->render('CVPlatformBundle:Rating:received.html.twig', array(
             'listRatingsReceived'   => $listRatingsReceived,
-            'nbPages'               => $nbPages,
-            'page'                  => $page,
-        ));
+            ));
     }
 
-    public function sendedAction($page) {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
-
-        $nbPerPage = 5;
+    public function sendedAction(Request $request) {
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
         
         $listRatingsSended = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('CVPlatformBundle:Rating')
-            ->ratingsSended($page, $nbPerPage, $userId);
+        ->getManager()
+        ->getRepository('CVPlatformBundle:Rating')
+        ->ratingsSended($userId);
 
-        $nbPages = ceil(count($listRatingsSended)/$nbPerPage);
-
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        if (count($listRatingsSended) == 0) {
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore d\'avis laissés');
         }
 
         return $this->render('CVPlatformBundle:Rating:sended.html.twig', array(
             'listRatingsSended'   => $listRatingsSended,
-            'nbPages'               => $nbPages,
-            'page'                  => $page,
-        ));
+            ));
     }
 
     public function leaveAction(Rating $rating, Request $request) {
@@ -76,7 +58,7 @@ class RatingController extends Controller
 
         if ($form->handleRequest($request)->isValid()) {
             $request->getSession()->getFlashBag()->add('info', 'Avis bien publié.');
-        
+            
             $rating->setDate(new \Datetime());
             $rating->setState(1);
 
@@ -87,9 +69,9 @@ class RatingController extends Controller
             $userId = $this->get('security.context')->getToken()->getUser()->getId();
             if ( $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
                 $numberNotify = $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Rating')
-                    ->numberOfNotification($userId);
+                ->numberOfNotification($userId);
                 $numberNotify += $this->getDoctrine()->getManager()->getRepository('CVPlatformBundle:Payment')
-                    ->numberOfNotification($userId);
+                ->numberOfNotification($userId);
             }
             $session->set('numberNotify', $numberNotify);
 
@@ -99,13 +81,13 @@ class RatingController extends Controller
         return $this->render('CVPlatformBundle:Rating:leave.html.twig', array(
             'form' => $form->createView(),
             'rating' => $rating,
-        ));
+            ));
     }
 
     public function pictureAction($thumb, User $user) {
         $em = $this->getDoctrine()->getManager();
         $profile = $em->getRepository('CVProfileBundle:Profile')
-                  ->requestProfileUser($user->getId());
+        ->requestProfileUser($user->getId());
 
         if (null === $profile) {
             throw new NotFoundHttpException("Le profil n'existe pas.");
@@ -113,6 +95,6 @@ class RatingController extends Controller
         return $this->render('CVPlatformBundle:Rating:picture.html.twig', array(
             'profile'   => $profile,
             'thumb'     => $thumb
-        ));
+            ));
     }
 }

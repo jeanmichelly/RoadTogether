@@ -1,27 +1,72 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Avis reçus - {{ parent() }}
+Avis reçus - {{ parent() }}
 {% endblock %}
 
 {% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
+{{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Avis reçus</h2>
+<h2>Avis reçus</h2>
 
-    {% for ratingReceived in listRatingsReceived %}
-        <div class="well">
-            <i>Avis reçu le {{ ratingReceived.date|date('d/m/Y') }}, par {{ ratingReceived.user.username }}<i/>
-            <li>Evaluation : {{ ratingReceived.evaluation }}</li>
-            <li>Description : {{ ratingReceived.description }}</li>
-        </div>
+{% if listRatingsReceived|length == 0 %}
+<p>
+    {% for message in app.session.flashbag.get('info') %}
+
+    <p class="alert alert-info">{{ message }}</p> 
     {% endfor %}
+</p>
 
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul>
+{% else %}
+
+{% for ratingReceived in listRatingsReceived %}
+<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
+    <i>Avis reçu le {{ ratingReceived.date|date('d/m/Y') }}, par {{ ratingReceived.user.username }}<i/>
+        <tr>
+         <td width="120px" height="100px">
+           <figure class="thumbnail">
+
+               <a href="{{ path('cv_profile_view', {'id': ratingReceived.user.id   }) }}">
+                 {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ratingReceived.user})) }} 
+             </a>
+             <div class="media-body">
+                <h4 class="media-heading text-center">{{ ratingReceived.user }}</h4>
+            </div>
+        </figure> 
+    </td>
+    <td class="col-sm-1 col-md-9 text-center" ><strong>
+        Evaluation : 
+        {% if ratingReceived.evaluation == 0 %}
+        à éviter
+        {% elseif ratingReceived.evaluation == 1 %}
+        décevant
+        {% elseif ratingReceived.evaluation == 2 %}
+        bien
+        {% elseif ratingReceived.evaluation == 3 %}
+        excellent
+        {% else %}
+        extraordinaire
+        {% endif %}
+        <br><br>
+        {{ ratingReceived.description }}
+    </strong></td>
+
+    <td width="120px" height="100px">
+       <figure class="thumbnail">
+
+           <a href="{{ path('cv_profile_view', {'id': app.user.id   }) }}">
+             {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user})) }} 
+         </a>
+         <div class="media-body">
+            <h4 class="media-heading text-center"> {{ app.user }} </h4>
+        </div>
+    </figure> 
+</td>
+
+</table>
+{% endfor %}
+{% endif %}
+
 {% endblock %}

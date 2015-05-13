@@ -22,15 +22,32 @@
     {% else %}
 
     {% for currentReservation in listCurrentReservations %}
-        <div class="well">
-            <i>Annonce créé le {{ currentReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</>
-            <li>Lieu de départ : {{ currentReservation.ride.departure }}</li>
-            <li>Lieu d'arrivé : {{ currentReservation.ride.arrival }}</li>
-            <li>Prix : {{ currentReservation.ride.price }}</li>
-            <p>
-                <a href="{{ path('cv_platform_view', {'id': currentReservation.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir détails</a>
-            </p>
-        </div>
+          <table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
+
+
+        <i>Annonce créé le {{ currentReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}<i/>
+        <tr>
+
+            <td class="col-sm-1 col-md-5 text-center"><strong>{{ currentReservation.ride.departure }} --> {{ currentReservation.ride.arrival }} <br>
+
+
+                le  {{ currentReservation.ride.departureDate|localizeddate('medium', 'none', 'fr') }}
+                à {{ currentReservation.ride.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
+                <td class="col-sm-1 col-md-5 text-center"><strong>{{ currentReservation.ride.price }}€ <br> par place
+                    <br><br>                                         
+                    {{ currentReservation.getNumberOfPlaces() }} place(s) réservé(s) sur {{ currentReservation.ride.numberPassenger }} 
+                </strong></td>
+                <td col-sm-1 col-md-5 text-center>            
+                    <p>
+                    </p>
+                    <p>
+                        <a href="{{ path('cv_platform_reservation_ride', {'id': currentReservation.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
+                    </p>
+                </td>
+                <br>                 
+            </tr>
+
+        </table>
     {% endfor %}
 
     <ul class="pagination">

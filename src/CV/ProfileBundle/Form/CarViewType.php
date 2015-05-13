@@ -17,8 +17,8 @@ class CarViewType extends AbstractType
     }
     
     public function getParent() {
-       return new CarType();
-    }
+     return new CarType();
+ }
 
     /**
      * @return string

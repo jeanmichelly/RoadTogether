@@ -16,21 +16,21 @@ class RatingRepository extends EntityRepository
     public function updateToNotify($userId) {
         // En tant que passager
         $query = $this->_em->createQuery('
-                SELECT r, ride 
-                FROM CVPlatformBundle:Reservation r
-                JOIN r.ride ride
-                WHERE r.user = :user
-                AND r.state = 0
-                AND ride.departureDate < :now
-                AND NOT EXISTS (
-                    SELECT ra
-                    FROM CVPlatformBundle:Rating ra
-                    WHERE ra.user = :user
-                    AND ra.relateduser = ride.user
+            SELECT r, ride 
+            FROM CVPlatformBundle:Reservation r
+            JOIN r.ride ride
+            WHERE r.user = :user
+            AND r.state = 0
+            AND ride.departureDate < :now
+            AND NOT EXISTS (
+                SELECT ra
+                FROM CVPlatformBundle:Rating ra
+                WHERE ra.user = :user
+                AND ra.relateduser = ride.user
                 )
-                GROUP BY ride.user')
-            ->setParameter('user', $userId)
-            ->setParameter('now', date('Y-m-d H:i:s'));
+        GROUP BY ride.user')
+        ->setParameter('user', $userId)
+        ->setParameter('now', date('Y-m-d H:i:s'));
 
         foreach ($query->getResult() as $reservation) {
             $rating = new Rating();
@@ -43,21 +43,21 @@ class RatingRepository extends EntityRepository
 
         // En tant que conducteur
         $query = $this->_em->createQuery('
-                SELECT r, reservation 
-                FROM CVPlatformBundle:Ride r
-                JOIN r.reservations reservation
-                WHERE r.user = :user
-                AND r.state = 0
-                AND r.departureDate < :now
-                AND NOT EXISTS (
-                    SELECT ra
-                    FROM CVPlatformBundle:Rating ra
-                    WHERE ra.user = :user
-                    AND ra.relateduser = reservation.user
+            SELECT r, reservation 
+            FROM CVPlatformBundle:Ride r
+            JOIN r.reservations reservation
+            WHERE r.user = :user
+            AND r.state = 0
+            AND r.departureDate < :now
+            AND NOT EXISTS (
+                SELECT ra
+                FROM CVPlatformBundle:Rating ra
+                WHERE ra.user = :user
+                AND ra.relateduser = reservation.user
                 )
-                GROUP BY r.user')
-            ->setParameter('user', $userId)
-            ->setParameter('now', date('Y-m-d H:i:s'));
+        GROUP BY r.user')
+        ->setParameter('user', $userId)
+        ->setParameter('now', date('Y-m-d H:i:s'));
 
         foreach ($query->getResult() as $ride) {
             foreach ($ride->getReservations() as $reservation) {
@@ -73,97 +73,89 @@ class RatingRepository extends EntityRepository
 
     public function myNotifications($page, $nbPerPage, $userId) {
         $query = $this->createQueryBuilder('r')
-            ->leftJoin('r.user', 'user')
-            ->addSelect('user')
-            ->where('r.user = :user')
-                ->setParameter('user', $userId)
-            ->andWhere('r.state = 0')
-            ->getQuery();
+        ->leftJoin('r.user', 'user')
+        ->addSelect('user')
+        ->where('r.user = :user')
+        ->setParameter('user', $userId)
+        ->andWhere('r.state = 0')
+        ->getQuery();
 
         $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
+        ->setFirstResult(($page-1) * $nbPerPage)
+        ->setMaxResults($nbPerPage);
 
         return new Paginator($query, true);
     }
 
     public function numberOfNotification($userId) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(r.id) 
-                FROM CVPlatformBundle:Rating r
-                WHERE r.user = :user
-                AND r.state = 0')
-            ->setParameter('user', $userId);
+            SELECT COUNT(r.id) 
+            FROM CVPlatformBundle:Rating r
+            WHERE r.user = :user
+            AND r.state = 0')
+        ->setParameter('user', $userId);
         return $query->getSingleScalarResult();
     }
 
-	public function ratingsReceived($page, $nbPerPage, $userId) {
+    public function ratingsReceived($userId) {
         $query = $this->createQueryBuilder('r')
-            ->where('r.relateduser = :user')
-            ->andWhere('r.state = 1')
-                ->setParameter('user', $userId)
-            ->orderBy('r.date', 'DESC')
-            ->getQuery();
+        ->where('r.relateduser = :user')
+        ->andWhere('r.state = 1')
+        ->setParameter('user', $userId)
+        ->orderBy('r.date', 'DESC')
+        ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
-
-        return new Paginator($query, true);
-	}
+        return $query->getResult();
+    }
 
     public function ratingsReceivedWithoutPaginator($userId) {
         $query = $this->createQueryBuilder('r')
-            ->where('r.relateduser = :user')
-            ->andWhere('r.state = 1')
-                ->setParameter('user', $userId)
-            ->orderBy('r.date', 'DESC')
-            ->getQuery();
+        ->where('r.relateduser = :user')
+        ->andWhere('r.state = 1')
+        ->setParameter('user', $userId)
+        ->orderBy('r.date', 'DESC')
+        ->getQuery();
 
         return $query->getResult();
     }   	
 
-	public function ratingsSended($page, $nbPerPage, $userId) {
+    public function ratingsSended($userId) {
         $query = $this->createQueryBuilder('r')
-            ->where('r.user = :user')
-            ->andWhere('r.state = 1')
-                ->setParameter('user', $userId)
-            ->orderBy('r.date', 'DESC')
-            ->getQuery();
+        ->where('r.user = :user')
+        ->andWhere('r.state = 1')
+        ->setParameter('user', $userId)
+        ->orderBy('r.date', 'DESC')
+        ->getQuery();
 
-        $query
-            ->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
-
-        return new Paginator($query, true);
-	}	
+        return $query->getResult();
+    }	
 
     public function totalEvaluation($userId) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(r) 
-                FROM CVPlatformBundle:Rating r
-                WHERE r.relateduser = :userId')
-            ->setParameter('userId', $userId);
+            SELECT COUNT(r) 
+            FROM CVPlatformBundle:Rating r
+            WHERE r.relateduser = :userId')
+        ->setParameter('userId', $userId);
 
         return $query->getSingleScalarResult();
     }   
 
     public function countEvaluation($userId, $evaluation) {
         $query = $this->_em->createQuery('
-                SELECT COUNT(r) 
-                FROM CVPlatformBundle:Rating r
-                WHERE r.relateduser = :userId
-                AND r.evaluation = :evaluation')
-            ->setParameter('userId', $userId)
-            ->setParameter('evaluation', $evaluation);
+            SELECT COUNT(r) 
+            FROM CVPlatformBundle:Rating r
+            WHERE r.relateduser = :userId
+            AND r.evaluation = :evaluation')
+        ->setParameter('userId', $userId)
+        ->setParameter('evaluation', $evaluation);
 
         return $query->getSingleScalarResult();
     } 
 
     public function totalRatings() {
         $query = $this->_em->createQuery('
-                SELECT COUNT(r) 
-                FROM CVPlatformBundle:Rating r');
+            SELECT COUNT(r) 
+            FROM CVPlatformBundle:Rating r');
         
         return $query->getSingleScalarResult();
     }     

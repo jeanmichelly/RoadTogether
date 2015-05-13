@@ -14,65 +14,65 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ReservationRepository extends EntityRepository
 {
 	public function currentReservations($page, $nbPerPage, $userId) {	
-	  	$query = $this->createQueryBuilder('r')
-	      	->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate > :now')
-	      		->setParameter('now', date('Y-m-d H:i:s'))
-	      	->getQuery();
+		$query = $this->createQueryBuilder('r')
+		->join('r.ride', 'ride')
+		->addSelect('ride')
+		->where('r.user = :user')
+		->setParameter('user', $userId)
+		->andWhere('ride.departureDate > :now')
+		->setParameter('now', date('Y-m-d H:i:s'))
+		->getQuery();
 
-        $query
-          	->setFirstResult(($page-1) * $nbPerPage)
-          	->setMaxResults($nbPerPage);
+		$query
+		->setFirstResult(($page-1) * $nbPerPage)
+		->setMaxResults($nbPerPage);
 
-	    return new Paginator($query, true);
-   	}
+		return new Paginator($query, true);
+	}
 
-   	public function existPassenger($userId, $idRide){
+	public function existPassenger($userId, $idRide){
 
-            $query = $this->createQueryBuilder('r')
-	      	->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      	->setParameter('user', $userId)
-	      	->andwhere('r.ride = :idRide')
-	      	->setParameter('idRide', $idRide)
-	      	->getQuery();
+		$query = $this->createQueryBuilder('r')
+		->join('r.ride', 'ride')
+		->addSelect('ride')
+		->where('r.user = :user')
+		->setParameter('user', $userId)
+		->andwhere('r.ride = :idRide')
+		->setParameter('idRide', $idRide)
+		->getQuery();
 
-         return ($query->getResult()) ? true:false;
-   	}
+		return ($query->getResult()) ? true:false;
+	}
 
-   	public function pastReservations($page, $nbPerPage, $userId) {	
-	  	$query = $this->createQueryBuilder('r')
-	      	->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      		->setParameter('user', $userId)
-	      	->andWhere('ride.departureDate < :now')
-	      		->setParameter('now', date('Y-m-d H:i:s'))
-	      	->getQuery();
+	public function pastReservations($page, $nbPerPage, $userId) {	
+		$query = $this->createQueryBuilder('r')
+		->join('r.ride', 'ride')
+		->addSelect('ride')
+		->where('r.user = :user')
+		->setParameter('user', $userId)
+		->andWhere('ride.departureDate < :now')
+		->setParameter('now', date('Y-m-d H:i:s'))
+		->getQuery();
 
-        $query
-          	->setFirstResult(($page-1) * $nbPerPage)
-          	->setMaxResults($nbPerPage);
+		$query
+		->setFirstResult(($page-1) * $nbPerPage)
+		->setMaxResults($nbPerPage);
 
-	    return new Paginator($query, true);
-   	}
+		return new Paginator($query, true);
+	}
 
 	public function myReservations($page, $nbPerPage, $userId) {	
-	    $query = $this->createQueryBuilder('r')
-	      	->join('r.ride', 'ride')
-	      	->addSelect('ride')
-	      	->where('r.user = :user')
-	      		->setParameter('user', $userId)
-	      	->orderBy('ride.offerPublished', 'DESC')
-	      	->getQuery();
+		$query = $this->createQueryBuilder('r')
+		->join('r.ride', 'ride')
+		->addSelect('ride')
+		->where('r.user = :user')
+		->setParameter('user', $userId)
+		->orderBy('ride.offerPublished', 'DESC')
+		->getQuery();
 
-        $query
-          	->setFirstResult(($page-1) * $nbPerPage)
-          	->setMaxResults($nbPerPage);
-	    return new Paginator($query, true);
-   	}
+		$query
+		->setFirstResult(($page-1) * $nbPerPage)
+		->setMaxResults($nbPerPage);
+		return new Paginator($query, true);
+	}
 }

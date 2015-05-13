@@ -3,5 +3,5 @@
 .rating-num { margin-top:0px;font-size: 54px; }
 .progress { margin-bottom: 5px;}
 .progress-bar { text-align: left; }
-.rating-desc .col-md-3 {padding-right: 0px;}
+.rating-desc .col-md-3 {padding-right: 0px; width: 65%;}
 .sr-only { margin-left: 5px;overflow: visible;clip: auto; }

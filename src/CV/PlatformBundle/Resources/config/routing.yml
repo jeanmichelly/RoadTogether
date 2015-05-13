@@ -86,12 +86,6 @@ cv_platform_past_reservations:
     requirements:
         page: \d*
 
-cv_platform_my_reservations:
-    path:      /my-reservations/{page}
-    defaults:  { _controller: CVPlatformBundle:Reservation:myReservations, page: 1 }
-    requirements:
-        page: \d*
-
 cv_platform_private_messages_received:
     path:      /private-messages-received/{page}
     defaults:  { _controller: CVPlatformBundle:PrivateMessage:messagesReceived, page: 1 }
@@ -124,10 +118,8 @@ cv_platform_my_notifications:
         page: \d*
 
 cv_platform_ratings_received:
-    path:      /ratings-received/{page}
-    defaults:  { _controller: CVPlatformBundle:Rating:received, page: 1 }
-    requirements:
-        page: \d*
+    path:      /ratings-received/
+    defaults:  { _controller: CVPlatformBundle:Rating:received }
 
 cv_platform_ratings_sended:
     path:      /ratings-sended/{page}

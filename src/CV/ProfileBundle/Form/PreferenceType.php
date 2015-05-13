@@ -15,44 +15,44 @@ class PreferenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-$choiceDiscussion = array(
+        $choiceDiscussion = array(
             '0' => 'Vous ne m\'entendrez pas beaucoup',
             '1' => 'J\'aime bien discuter',
-        );
+            );
 
-$choiceMusic = array(
+        $choiceMusic = array(
             '0' => 'Je n\'écoute pas de musique en voiture',
             '1' => 'J\'aime bien écouter de la musique',
-        );
+            );
 
-$choiceCigarette = array(
+        $choiceCigarette = array(
             '0' => 'La cigarette me dérange',
             '1' => 'La cigarette ne me dérange pas',
-        );
+            );
 
-$choiceAnimal = array(
+        $choiceAnimal = array(
             '0' => 'Je ne transporte pas d\'animaux',
             '1' => 'Je peux transporter des animaux',
-        );
+            );
 
         $builder
-            ->add('discussion',           'choice', array(
-                'multiple' => 0,
-                'expanded' => 1,
+        ->add('discussion',           'choice', array(
+            'multiple' => 0,
+            'expanded' => 1,
             'choices' => $choiceDiscussion))
-            ->add('music',                'choice', array(
-                'multiple' => 0,
-                'expanded' => 1,
+        ->add('music',                'choice', array(
+            'multiple' => 0,
+            'expanded' => 1,
             'choices' => $choiceMusic))
-            ->add('cigarette',            'choice', array(
-                'multiple' => 0,
-                'expanded' => 1,
+        ->add('cigarette',            'choice', array(
+            'multiple' => 0,
+            'expanded' => 1,
             'choices' => $choiceCigarette))
-            ->add('animal',               'choice', array(
-                'multiple' => 0,
-                'expanded' => 1,
+        ->add('animal',               'choice', array(
+            'multiple' => 0,
+            'expanded' => 1,
             'choices' => $choiceAnimal))
-            ->add('enregistrer',        'submit') 
+        ->add('enregistrer',        'submit') 
         ;
     }
     
@@ -63,7 +63,7 @@ $choiceAnimal = array(
     {
         $resolver->setDefaults(array(
             'data_class' => 'CV\ProfileBundle\Entity\Preference'
-        ));
+            ));
     }
 
     /**

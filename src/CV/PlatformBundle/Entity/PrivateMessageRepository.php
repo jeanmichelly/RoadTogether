@@ -14,31 +14,31 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class PrivateMessageRepository extends EntityRepository
 {
 
-    public function messagesSended($page, $nbPerPage, $userId) {
+	public function messagesSended($page, $nbPerPage, $userId) {
 		$query = $this->_em->createQuery('
-				SELECT p FROM CVPlatformBundle:PrivateMessage p
-				WHERE p.user = :user
-				ORDER BY p.date DESC')
-			->setParameter('user', $userId);
+			SELECT p FROM CVPlatformBundle:PrivateMessage p
+			WHERE p.user = :user
+			ORDER BY p.date DESC')
+		->setParameter('user', $userId);
 
-        $query
-          	->setFirstResult(($page-1) * $nbPerPage)
-          	->setMaxResults($nbPerPage);
+		$query
+		->setFirstResult(($page-1) * $nbPerPage)
+		->setMaxResults($nbPerPage);
 
-	    return new Paginator($query, true);
-    }
+		return new Paginator($query, true);
+	}
 
 	public function messagesReceived($page, $nbPerPage, $userId) {
-    	$query = $this->_em->createQuery('
-				SELECT p FROM CVPlatformBundle:PrivateMessage p
-				WHERE p.relatedUser = :user
-				ORDER BY p.date DESC')
-			->setParameter('user', $userId);
+		$query = $this->_em->createQuery('
+			SELECT p FROM CVPlatformBundle:PrivateMessage p
+			WHERE p.relatedUser = :user
+			ORDER BY p.date DESC')
+		->setParameter('user', $userId);
 
-        $query
-          	->setFirstResult(($page-1) * $nbPerPage)
-          	->setMaxResults($nbPerPage);
+		$query
+		->setFirstResult(($page-1) * $nbPerPage)
+		->setMaxResults($nbPerPage);
 
-	    return new Paginator($query, true);
-    }  
+		return new Paginator($query, true);
+	}  
 }

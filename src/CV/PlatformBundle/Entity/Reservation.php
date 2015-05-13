@@ -42,12 +42,12 @@ class Reservation
   private $numberOfPlaces;
   
 
-    public function __construct($ride, $user, $numberOfPlaces) {
-        $this->ride = $ride;
-        $this->user = $user;
-        $this->state = 0;
-        $this->numberOfPlaces = $numberOfPlaces;
-    }
+  public function __construct($ride, $user, $numberOfPlaces) {
+    $this->ride = $ride;
+    $this->user = $user;
+    $this->state = 0;
+    $this->numberOfPlaces = $numberOfPlaces;
+  }
 
     /**
      * Get id
@@ -55,7 +55,7 @@ class Reservation
      * @return integer 
      */
     public function getId() {
-        return $this->id;
+      return $this->id;
     }
 
     /**
@@ -65,8 +65,8 @@ class Reservation
      * @return Reservation
      */
     public function setState($state) {
-        $this->state = $state;
-        return $this;
+      $this->state = $state;
+      return $this;
     }
 
     /**
@@ -75,7 +75,7 @@ class Reservation
      * @return integer 
      */
     public function getState() {
-        return $this->state;
+      return $this->state;
     }
 
     /**
@@ -85,8 +85,8 @@ class Reservation
      * @return Reservation
      */
     public function setRide(\CV\PlatformBundle\Entity\Ride $ride) {
-        $this->ride = $ride;
-        return $this;
+      $this->ride = $ride;
+      return $this;
     }
 
     /**
@@ -95,7 +95,7 @@ class Reservation
      * @return \CV\PlatformBundle\Entity\Ride 
      */
     public function getRide() {
-        return $this->ride;
+      return $this->ride;
     }
 
     /**
@@ -105,8 +105,8 @@ class Reservation
      * @return Reservation
      */
     public function setUser(\CV\UserBundle\Entity\User $user) {
-        $this->user = $user;
-        return $this;
+      $this->user = $user;
+      return $this;
     }
 
     /**
@@ -115,7 +115,7 @@ class Reservation
      * @return \CV\UserBundle\Entity\User 
      */
     public function getUser() {
-        return $this->user;
+      return $this->user;
     }
 
     /**
@@ -126,9 +126,9 @@ class Reservation
      */
     public function setNumberOfPlaces($numberOfPlaces)
     {
-        $this->numberOfPlaces = $numberOfPlaces;
+      $this->numberOfPlaces = $numberOfPlaces;
 
-        return $this;
+      return $this;
     }
 
     /**
@@ -138,6 +138,6 @@ class Reservation
      */
     public function getNumberOfPlaces()
     {
-        return $this->numberOfPlaces;
+      return $this->numberOfPlaces;
     }
-}
+  }

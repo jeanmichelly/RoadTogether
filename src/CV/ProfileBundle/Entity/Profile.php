@@ -130,6 +130,16 @@ class Profile
     private $image;
 
     /**
+    * @ORM\OneToOne(targetEntity="CV\ProfileBundle\Entity\Preference", mappedBy="profile", cascade={"persist"})
+    */
+    private $preference;
+
+    /**
+    * @ORM\OneToMany(targetEntity="CV\ProfileBundle\Entity\Car", mappedBy="profile", cascade={"persist"})
+    */
+    private $car;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -369,5 +379,68 @@ class Profile
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set preference
+     *
+     * @param \CV\ProfileBundle\Entity\Preference $preference
+     * @return Profile
+     */
+    public function setPreference(\CV\ProfileBundle\Entity\Preference $preference = null)
+    {
+        $this->preference = $preference;
+
+        return $this;
+    }
+
+    /**
+     * Get preference
+     *
+     * @return \CV\ProfileBundle\Entity\Preference 
+     */
+    public function getPreference()
+    {
+        return $this->preference;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->car = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add car
+     *
+     * @param \CV\ProfileBundle\Entity\Car $car
+     * @return Profile
+     */
+    public function addCar(\CV\ProfileBundle\Entity\Car $car)
+    {
+        $this->car[] = $car;
+
+        return $this;
+    }
+
+    /**
+     * Remove car
+     *
+     * @param \CV\ProfileBundle\Entity\Car $car
+     */
+    public function removeCar(\CV\ProfileBundle\Entity\Car $car)
+    {
+        $this->car->removeElement($car);
+    }
+
+    /**
+     * Get car
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCar()
+    {
+        return $this->car;
     }
 }

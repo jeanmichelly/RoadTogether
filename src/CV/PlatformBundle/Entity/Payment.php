@@ -46,7 +46,7 @@ class Payment
      * @return integer 
      */
     public function getId() {
-        return $this->id;
+      return $this->id;
     }
 
     /**
@@ -56,8 +56,8 @@ class Payment
      * @return Payment
      */
     public function setDate($date) {
-        $this->date = $date;
-        return $this;
+      $this->date = $date;
+      return $this;
     }
 
     /**
@@ -66,7 +66,7 @@ class Payment
      * @return \DateTime 
      */
     public function getDate() {
-        return $this->date;
+      return $this->date;
     }
 
     /**
@@ -76,8 +76,8 @@ class Payment
      * @return Payment
      */
     public function setAmount($amount) {
-        $this->amount = $amount;
-        return $this;
+      $this->amount = $amount;
+      return $this;
     }
 
     /**
@@ -86,7 +86,7 @@ class Payment
      * @return integer 
      */
     public function getAmount() {
-        return $this->amount;
+      return $this->amount;
     }
 
     /**
@@ -96,8 +96,8 @@ class Payment
      * @return Payment
      */
     public function setRide(\CV\PlatformBundle\Entity\Ride $ride) {
-        $this->ride = $ride;
-        return $this;
+      $this->ride = $ride;
+      return $this;
     }
 
     /**
@@ -106,7 +106,7 @@ class Payment
      * @return \CV\PlatformBundle\Entity\Ride 
      */
     public function getRide() {
-        return $this->ride;
+      return $this->ride;
     }
 
     /**
@@ -117,9 +117,9 @@ class Payment
      */
     public function setState($state)
     {
-        $this->state = $state;
+      $this->state = $state;
 
-        return $this;
+      return $this;
     }
 
     /**
@@ -129,6 +129,6 @@ class Payment
      */
     public function getState()
     {
-        return $this->state;
+      return $this->state;
     }
-}
+  }
