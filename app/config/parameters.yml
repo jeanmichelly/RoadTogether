@@ -1,14 +1,17 @@
 # This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
-    database_host: localhost
-    database_port: 3306
+    database_host: 127.0.0.1
+    database_port: null
     database_name: covoiturage
     database_user: root
-    database_password: root
+    database_password: null
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     locale: fr
     secret: ThisTokenIsNotSoSecretChangeIt
+twig:
+    globals:
+        googleapis_key: "AIzaSyBHW5mt4U0rPdCwi7-SfN4M5s6PHoS3RKQ"
