@@ -20,7 +20,7 @@ class RideType extends AbstractType
         ->add('price',             'integer', array('attr' => array('min' => '1', 'max' => '1000')))
         ->add('numberPassenger',   'integer', array('attr' => array('min' => '1', 'max' => '4')))
         ->add('details',           'textarea', array("required" => false, 'attr' => array('rows' => '5')))
-        ->add('enregistrer',       'submit');
+        ->add('enregistrer',       'submit', array('label' => 'Continuer'));
     }
     
     /**

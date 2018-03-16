@@ -1,70 +1,46 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes messages - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-    {{ include("CVPlatformBundle:PublicMessage:menu.html.twig") }}  
+    Messages publiques | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Messages laissés</h2>
+    <h3 class="sub-title">Messages publiques</h3>
+    <hr>
+    {{ include("CVPlatformBundle:PublicMessage:menu.html.twig") }}  
 
-{% if listMessagesSended|length == 0 %}
+    {% if listMessagesSended|length == 0 %}
         <p>
-        {% for message in app.session.flashbag.get('info') %}
-
-        <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
     {% else %}
+        <div class="container list-messages">
+            {% for messageSended in listMessagesSended %}
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href="{{ path('cv_profile_view', {'id': messageSended.user.id }) }}">
+                            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': messageSended.user})) }} 
+                        </a>
+                    </div>
+                    <div class="col-md-2 username-message">
+                        {{ messageSended.user }}
+                    </div>
+                    <div class="col-md-8 content-message">
+                        {{ messageSended.content }}
+                    </div>
+                    <div class="cold-md-1 date-message">
+                        {{ messageSended.date|date('d/m/Y') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-
-    {% for messageSended in listMessagesSended %}
-
-
-<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
-           <i>Message publié le {{ messageSended.date|date('d/m/Y à H:i:s') }}<i/>
-            <tr>
-           <td width="120px" height="100px">
-                 <figure class="thumbnail">
-
-                     <a href="{{ path('cv_profile_view', {'id': messageSended.user.id   }) }}">
-
-
-              {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user})) }} 
-                     </a>
-                        <div class="media-body">
-                            <h4 class="media-heading text-center">{{ app.user }}</h4>
-                        </div>
-                    </figure> 
-                </td>
-
-               <td class="col-sm-1 col-md-9 text-center" ><strong>{{ messageSended.content }}
-               </strong></td>
-
-                <td width="120px" height="100px">
-                 <figure class="thumbnail">
-
-                     <a href="{{ path('cv_profile_view', {'id': messageSended.getRide().getUser().id   }) }}">
-       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': messageSended.getRide().getUser()})) }} 
-                     </a>
-                        <div class="media-body">
-                            <h4 class="media-heading text-center">{{ messageSended.getRide().getUser() }}</h4>
-                        </div>
-                    </figure> 
-                </td>
-
-    </table>
-
-   	{% endfor %}
-
-	<ul class="pagination">
-	   {% for p in range(1, nbPages) %}
-	       <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_public_messages_sended', {'page': p}) }}">{{ p }}</a></li>
-	    {% endfor %}
-  	</ul>
-   {% endif %}   
+    	<ul class="pagination">
+    	   {% for p in range(1, nbPages) %}
+    	       <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_public_messages_sended', {'page': p}) }}">{{ p }}</a></li>
+    	    {% endfor %}
+      	</ul>
+    {% endif %}   
 {% endblock %}

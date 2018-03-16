@@ -1,0 +1,52 @@
+<h3><i class="fa fa-bell-o" aria-hidden="true"></i> Notifications ({{ listRatingNotifications|length + listPaymentNotifications|length }})</h3>
+
+<h3 class="dashboard-right-subtitle">Avis ({{ listRatingNotifications|length }})</h4>
+<table id="tableRatingNotifications" class="table table-bordred table-striped">
+	<tbody>
+		{% for ratingNotification in listRatingNotifications %}
+			{% include 'CVPlatformBundle:Notification:rating.html.twig' with {'ratingNotification': ratingNotification} %}
+		{% endfor %}
+	</tbody>
+</table>
+
+<h3 class="dashboard-right-subtitle">Paiement ({{ listPaymentNotifications|length }}) </h4>
+<table id="tablePaymentNotifications" class="table table-bordred table-striped">
+    <tbody>
+        {% for paymentNotification in listPaymentNotifications %}
+            {% include 'CVPlatformBundle:Notification:payment.html.twig' with {'paymentNotification': paymentNotification} %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% block javascripts %}
+    {% javascripts 'js/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $( ".deleteNotificationRating" ).click(function() {
+            var notifId = this.id;
+            var param = "notifId="+notifId;
+            $.ajax({
+                url: "{{ path('cv_platform_delete_rating_notification') }}",
+                data: param,
+                success: function(data) {
+                    //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );
+                    $('#notif_'+notifId).remove();       
+                }
+            }); 
+        });
+
+        $( ".validateNotificationPayment" ).click(function() {
+            var notifId = this.id;
+            var param = "notifId="+notifId;
+            $.ajax({
+                url: "{{ path('cv_platform_validate_payment') }}",
+                data: param,
+                success: function(data) {
+                    //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );
+                    $('#notif_'+notifId).remove();       
+                }
+            }); 
+        });
+    </script>
+{% endblock %}

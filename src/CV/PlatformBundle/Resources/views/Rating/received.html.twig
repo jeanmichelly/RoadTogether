@@ -1,72 +1,109 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-Avis reçus - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-{{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
+    Avis reçus | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-<h2>Avis reçus</h2>
+    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
 
-{% if listRatingsReceived|length == 0 %}
-<p>
-    {% for message in app.session.flashbag.get('info') %}
+    {% if listRatingsReceived|length == 0 %}
+        <p>
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
+    {% else %}
 
-    <p class="alert alert-info">{{ message }}</p> 
-    {% endfor %}
-</p>
-
-{% else %}
-
-{% for ratingReceived in listRatingsReceived %}
-<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
-    <i>Avis reçu le {{ ratingReceived.date|date('d/m/Y') }}, par {{ ratingReceived.user.username }}<i/>
-        <tr>
-         <td width="120px" height="100px">
-           <figure class="thumbnail">
-
-               <a href="{{ path('cv_profile_view', {'id': ratingReceived.user.id   }) }}">
-                 {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ratingReceived.user})) }} 
-             </a>
-             <div class="media-body">
-                <h4 class="media-heading text-center">{{ ratingReceived.user }}</h4>
+        <div id="synthesis-rating" class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <h4>Synthèse des avis reçus</h4>
+                    <span class="glyphicon glyphicon-star"></span> {{ render(controller('CVPlatformBundle:Rating:avgEvaluations'))|round(1, 'floor') }}/5 <span class="info-label">- {{ listRatingsReceived|length }} avis</span><br>
+                    Conduite : {{ render(controller('CVPlatformBundle:Rating:avgDriving'))|round(1, 'floor') }}/3           
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <div class="row">
+                            <div class="label-evaluation col-md-4"><span class="pull-right">Parfait</span></div>
+                            <div class="col-md-7">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation5*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation5*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 count-evaluation">{{ countEvaluation5 }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="label-evaluation col-md-4"><span class="pull-right">Très bien</span></div>
+                            <div class="col-md-7">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation4*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation4*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 count-evaluation">{{ countEvaluation4 }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="label-evaluation col-md-4"><span class="pull-right">Bien</span></div>
+                            <div class="col-md-7">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation3*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation3*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 count-evaluation">{{ countEvaluation3 }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="label-evaluation col-md-4"><span class="pull-right">Décevant</span></div>
+                            <div class="col-md-7">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation2*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation2*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 count-evaluation">{{ countEvaluation2 }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="label-evaluation col-md-4"><span class="pull-right">À éviter</span></div>
+                            <div class="col-md-7">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation1*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation1*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 count-evaluation">{{ countEvaluation1 }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </figure> 
-    </td>
-    <td class="col-sm-1 col-md-9 text-center" ><strong>
-        Evaluation : 
-        {% if ratingReceived.evaluation == 0 %}
-        à éviter
-        {% elseif ratingReceived.evaluation == 1 %}
-        décevant
-        {% elseif ratingReceived.evaluation == 2 %}
-        bien
-        {% elseif ratingReceived.evaluation == 3 %}
-        excellent
-        {% else %}
-        extraordinaire
-        {% endif %}
-        <br><br>
-        {{ ratingReceived.description }}
-    </strong></td>
-
-    <td width="120px" height="100px">
-       <figure class="thumbnail">
-
-           <a href="{{ path('cv_profile_view', {'id': app.user.id   }) }}">
-             {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user})) }} 
-         </a>
-         <div class="media-body">
-            <h4 class="media-heading text-center"> {{ app.user }} </h4>
         </div>
-    </figure> 
-</td>
 
-</table>
-{% endfor %}
-{% endif %}
-
+        <div class="container list-messages">
+            {% for ratingReceived in listRatingsReceived %}
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href="{{ path('cv_profile_view', {'id': ratingReceived.user.id }) }}">
+                            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ratingReceived.user})) }} 
+                        </a>
+                    </div>
+                    <div class="col-md-2 username-message">
+                        {{ ratingReceived.user.getProfile().getFirstname() }} {{ ratingReceived.user.getProfile().getName()[:1] }}
+                    </div>
+                    <div class="col-md-8 content-message">
+                        {% if ratingReceived.evaluation == 1 %}
+                            <div class="evaluation-label rating-grade--0">A éviter</div>
+                        {% elseif ratingReceived.evaluation == 2 %}
+                            <div class="evaluation-label rating-grade--1">Décevant</div>
+                        {% elseif ratingReceived.evaluation == 3 %}
+                            <div class="evaluation-label rating-grade--2">Bien</div>
+                        {% elseif ratingReceived.evaluation == 4 %}
+                            <div class="evaluation-label rating-grade--3">Excellent</div>
+                        {% else %}
+                            <div class="evaluation-label rating-grade--4">Extraordinaire</div>
+                        {% endif %}
+                        {{ ratingReceived.description }}
+                    </div>
+                    <div class="cold-md-1 date-message">
+                        {{ ratingReceived.date|date('d/m/Y') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -5,6 +5,7 @@ namespace CV\ProfileBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
 use CV\ProfileBundle\Form\ProfileType;
 use CV\UserBundle\Entity\User;
@@ -65,15 +66,15 @@ class ProfileController extends Controller
         }
 
         return $this->render('CVProfileBundle::view.html.twig', array(
-            'profile'                   => $profile,
-            'listRatingsReceived'       => $listRatingsReceived,
-            'totalEvaluation'           => $totalEvaluation,
-            'evaluation1ToPercent'      => $countEvaluation1*100/$totalEvaluation,
-            'evaluation2ToPercent'      => $countEvaluation2*100/$totalEvaluation,
-            'evaluation3ToPercent'      => $countEvaluation3*100/$totalEvaluation,
-            'evaluation4ToPercent'      => $countEvaluation4*100/$totalEvaluation,
-            'evaluation5ToPercent'      => $countEvaluation5*100/$totalEvaluation,
-            'avgEvaluations'            => $avgEvaluations,
+            'profile'               => $profile,
+            'listRatingsReceived'   => $listRatingsReceived,
+            'totalEvaluation'       => $totalEvaluation,
+            'countEvaluation1'      => $countEvaluation1,
+            'countEvaluation2'      => $countEvaluation2,
+            'countEvaluation3'      => $countEvaluation3,
+            'countEvaluation4'      => $countEvaluation4,
+            'countEvaluation5'      => $countEvaluation5,
+            'avgEvaluations'        => $avgEvaluations,
             ));
     }
 
@@ -115,5 +116,45 @@ class ProfileController extends Controller
             'profile'   => $profile,
             'thumb'     => $thumb
             ));
+    }
+
+    public function avgEvaluationsAction(User $user) {
+        $totalEvaluation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->totalEvaluation($user->getId());
+
+        if ( $totalEvaluation != 0 ) {
+            $countEvaluation1 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 1);        
+
+            $countEvaluation2 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 2);        
+
+            $countEvaluation3 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 3);        
+
+            $countEvaluation4 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 4);
+
+            $countEvaluation5 = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->countEvaluation($user->getId(), 5);
+
+            $avgEvaluations = ($countEvaluation1*1 + $countEvaluation2*2 + $countEvaluation3*3 + $countEvaluation4*4 + $countEvaluation5*5) / $totalEvaluation;  
+        } else {
+            $avgEvaluations = 0;
+        }
+
+        return new Response($avgEvaluations);
     }
 }

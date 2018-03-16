@@ -1,59 +1,56 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes réservations en cours - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Reservation:menu.html.twig") }}  
+    Vos réservations | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Liste de mes réservations en cours</h2>
+    {{ include("CVPlatformBundle:Reservation:menu.html.twig") }}  
 
-
-{% if listCurrentReservations|length == 0 %}
-    <p>
-        {% for message in app.session.flashbag.get('info') %}
-            <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
+    {% if listCurrentReservations|length == 0 %}
+        <p>
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
     {% else %}
+        <p>Retrouvez ici vos réservations en cours. Accédez aux autres réservations dans l'historique.</p>
 
-    {% for currentReservation in listCurrentReservations %}
-          <table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
+        <div id="my-bookings">
+            {% for currentReservation in listCurrentReservations %}
+                <div class="trip">
+                    <div class="row">
+                        <div class="itineraire col-md-12">
+                            {{ currentReservation.ride.departure }} → {{ currentReservation.ride.arrival }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <i class="fa fa-calendar" aria-hidden="true"></i> {{ currentReservation.ride.departureDate|localizeddate('medium', 'none', 'fr') }}
+                            à {{ currentReservation.ride.departureDate|localizeddate('none', 'medium', 'fr') }}
+                        </div>
+                        <div class="col-md-2">
+                            <span class="space-black">{{ currentReservation.getNumberOfPlaces() }}</span> place(s) restante(s)
+                        </div>
+                        <div class="col-md-2">
+                            <span class="price-black">{{ currentReservation.ride.price }}€</span> par passager
+                        </div>
+                        <div class="date-offer-published col-md-12">Annonce créé le {{ currentReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <i class="cv fa fa-eye" aria-hidden="true"></i> <a href="{{ path('cv_platform_reservation', {'id': currentReservation.ride.id   }) }}" class="cv">Voir la réservation</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
+        <ul class="pagination">
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
+            {% endfor %}
+        </ul>
 
-        <i>Annonce créé le {{ currentReservation.ride.offerPublished|date('d/m/Y à H:i:s') }}<i/>
-        <tr>
-
-            <td class="col-sm-1 col-md-5 text-center"><strong>{{ currentReservation.ride.departure }} --> {{ currentReservation.ride.arrival }} <br>
-
-
-                le  {{ currentReservation.ride.departureDate|localizeddate('medium', 'none', 'fr') }}
-                à {{ currentReservation.ride.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
-                <td class="col-sm-1 col-md-5 text-center"><strong>{{ currentReservation.ride.price }}€ <br> par place
-                    <br><br>                                         
-                    {{ currentReservation.getNumberOfPlaces() }} place(s) réservé(s) sur {{ currentReservation.ride.numberPassenger }} 
-                </strong></td>
-                <td col-sm-1 col-md-5 text-center>            
-                    <p>
-                    </p>
-                    <p>
-                        <a href="{{ path('cv_platform_reservation_ride', {'id': currentReservation.ride.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
-                    </p>
-                </td>
-                <br>                 
-            </tr>
-
-        </table>
-    {% endfor %}
-
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul>
     {% endif %}    
 {% endblock %}

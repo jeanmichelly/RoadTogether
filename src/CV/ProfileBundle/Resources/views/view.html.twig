@@ -1,223 +1,195 @@
-		{% extends "CVPlatformBundle::layout.html.twig" %}
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+	Profil de {{profile.user}} | {{ parent() }}
+{% endblock %}
 		
-		{% block title %}
-		Profil de {{profile.user}} - {{ parent() }}
-		{% endblock %}
-		
-		{% block stylesheets %}
-		{{ parent() }}
-		{% stylesheets 
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets 
 		'@CVProfileBundle/Resources/public/css/block_left.css' 
 		'@CVPlatformBundle/Resources/public/css/dialog.css' 
 		'@CVProfileBundle/Resources/public/css/evaluations.css' %}
 		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-		{% endstylesheets %}
-		{% endblock %}
+	{% endstylesheets %}
+{% endblock %}
 		
-		{% block menu_lateral %}  
-		<div id="body" class="container">
-			<div class="plan">
-
-				<div class="data_profile">
-					<h4>Informations</h4>
-					<i class="glyphicon glyphicon-user"></i> Nom : {{ profile.name }}</br>
-					<i class="glyphicon glyphicon-user"></i> Prénom : {{ profile.firstName }}</br>
-					<i class="glyphicon glyphicon-user"></i> Age : {{ profile.age }}
-				</div>
-
-
-				<div class="data_profile">
-					<h4>Activité</h4>
-					<i class="glyphicon glyphicon-time"></i> Dernière connexion : {{ profile.user.lastLogin | date('d/m/Y') }}</br>
-					<i class="glyphicon glyphicon-calendar"></i> Date d'inscription : {{ profile.user.dateRegistration | date('d/m/Y') }}
-				</div>
-				<ul class="data_profile">
-					<li class="plan-feature">
-						<h4>Voiture</h4>
-						
+{% block cvplatform_body %}
+	<p>
+		{% for message in app.session.flashbag.get('notice') %}
+			<p class="alert alert-success">{{ message }}</p> 
+		{% endfor %}
+	</p>
+	<div id="profile-panel" class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div>
+						<div class="title">Activité</div>
+						<div class="info-label">
+							<div>Annonces publiées : </div>
+						</div>
+						<div class="info-label">
+							<div>Dernière connexion : {{ profile.user.lastLogin | date('d/m/Y') }}</div>
+						</div>
+						<div class="info-label">
+							<div>Membre depuis : {{ profile.user.dateRegistration | date('d/m/Y') }}</div>
+						</div>
+						<hr>
+					</div>
+					<div>
+						<div class="title">Véhicule</div>
 						{% for car in profile.getCar() %}
-						<i class="glyphicon glyphicon-road"></i>{{ car.mark|e }} {{ car.model|e }}
+							<div class="info-label">{{ car.mark|e }} {{ car.model|e }}</div>
+							<div class="info-label">Couleur : {{ car.color }}</div>
 						{% endfor %}
-						
-					</li>
-				</ul>
+					</div>
+				</div>
 			</div>
 		</div>
-		{% endblock %}
-		
-		{% block cvplatform_body %}
-		
-		<p>
-			{% for message in app.session.flashbag.get('notice') %}
-			
-			<p class="alert alert-success">{{ message }}</p> 
-			{% endfor %}
-		</p>
-		
-		<div class="container" style="padding-top:20px;">
+		<div class="col-md-8">
 			<div class="row">
-				<div class="col-sm-2 col-md-2">
+				<div id="user-picture-profile" class="col-md-2">
 					{{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_profile_medium', 'user': profile.user})) }} 
 				</div>
-				<div class="col-sm-4 col-md-4">
-					<blockquote>
-						<p>{{ profile.user.username }}</p>
-						<p> 
-							<i class="glyphicon glyphicon-envelope"></i> {{ profile.user.email }}<br /> 
-							<br>
-
-							<h3>Mes préférences</h3>
-							<div class="well well-sm " style="width:600px;">
-								{% if profile.getPreference().discussion %}
-								J'aime bien discuter
-								{% else %}
-								Vous ne m'entendrez pas beaucoup
-								{%endif%}<br>
-								{% if profile.getPreference().music %}
-								J'aime bien écouter de la musique
-								{% else %}
-								Je n'écoute pas de musique en voiture
-								{%endif%}<br>
-								{% if profile.getPreference().cigarette %}
-								La cigarette ne me dérange pas
-								{% else %}
-								La cigarette me dérange
-								{%endif%}<br>
-								{% if profile.getPreference().animal %}
-								Je peux transporter des animaux
-								{% else %}
-								Je ne transporte pas d'animaux
-								{%endif%}
-							</div>
-							<h3>Ma biographie</h3>
-							<div class="well well-sm" style="width:600px;">
-								{{ profile.biography }}
-							</div>
-
-		<!-- 						<i class="glyphicon glyphicon-gift"></i> {{ profile.birthday | date('d/m/Y') }}
-	-->	            	</p>
-</blockquote>
-<a href="{{ path('cv_platform_add_private_message', {'id': profile.user.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-envelope"></i>Envoyer un message</a>
-</div>
-</div>
-</div>
-
-<div class="container" style="padding-top:20px;">
-	<div class="row">
-		<div class="col-xs-12 col-md-6">
-			<div class="well well-sm" style="width:780px;">
+				<div class="col-md-10">
+					<div id="user-firstname-profile">{{ profile.firstName }} {{ profile.name[:1] }}</div>
+					<div class="pull-right">
+						<a href="{{ path('cv_platform_add_private_message', {'id': profile.user.id }) }}" class="cv-btn-primary"><i class="glyphicon glyphicon-send"></i>Envoyer un message</a>
+					</div>
+					<div id="user-age-profile">{{ profile.age }} ans</div>
+				</div>
+			</div>
+			<div id="user-details-profile">
 				<div class="row">
-					<div class="col-xs-12 col-md-6 text-center">
-						<h1 class="rating-num">
-							{% if totalEvaluation < 0 %} 
-							-
-							{% else %}
-							{{ avgEvaluations }}
-							{% endif %}
-						</h1>
-						<div class="rating">
-							{% for i in 1..5 %}
-							{% if i <= avgEvaluations|round %}
-							<span class="glyphicon glyphicon-star"></span>
-							{% else %}
-							<span class="glyphicon glyphicon-star-empty"></span>
-							{% endif %}	
-							{% endfor %}
-						</div>
-						<div>
-							<span class="glyphicon glyphicon-user"></span>
-							{% if totalEvaluation < 0 %}
-							0 total
-							{% else %}
-							{{ totalEvaluation }} total
-							{% endif %}
-						</div>
+					<div class="info-label col-md-3">
+						Expérience :
 					</div>
-					<div class="col-xs-12 col-md-6">
-						<div class="row rating-desc">
-							<div class="col-xs-3 col-md-3 text-left">
-								<p style="float: right;">Extraordinaire </p>
-								<span class="glyphicon glyphicon-star"></span>5
-							</div>
-							<div class="col-xs-8 col-md-9">
-								<div class="progress progress-striped">
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20"
-									aria-valuemin="0" aria-valuemax="100" style="width: {{ evaluation5ToPercent }}%">
-									<span class="sr-only">{{ evaluation5ToPercent }}%</span>
-								</div>
-							</div>
-						</div>
-						<!-- end 5 -->
-						<div class="col-xs-3 col-md-3 text-left">
-							<p style="float: right;">Excellent </p>
-							<span class="glyphicon glyphicon-star"></span>4
-						</div>
-						<div class="col-xs-8 col-md-9">
-							<div class="progress">
-								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20"
-								aria-valuemin="0" aria-valuemax="100" style="width: {{ evaluation4ToPercent }}%">
-								<span class="sr-only">{{ evaluation4ToPercent }}%</span>
-							</div>
-						</div>
-					</div>
-					<!-- end 4 -->
-					<div class="col-xs-3 col-md-3 text-left">
-						<p style="float: right;">Bien</p>
-						<span class="glyphicon glyphicon-star"></span>3
-					</div>
-					<div class="col-xs-8 col-md-9">
-						<div class="progress">
-							<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20"
-							aria-valuemin="0" aria-valuemax="100" style="width: {{ evaluation3ToPercent }}%">
-							<span class="sr-only">{{ evaluation3ToPercent }}%</span>
-						</div>
+					<div class="col-md-9">
+						{% if profile.level == 1 %}
+							Débutant
+						{% elseif profile.level == 2 %}
+							Habitué
+						{% elseif profile.level == 3 %}
+							Confirmé
+						{% elseif profile.level == 4 %}
+							Expert
+						{% endif %}
 					</div>
 				</div>
-				<!-- end 3 -->
-				<div class="col-xs-3 col-md-3 text-left">
-					<p style="float: right;">Décevant </p>
-					<span class="glyphicon glyphicon-star"></span>2
-				</div>
-				<div class="col-xs-8 col-md-9">
-					<div class="progress">
-						<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20"
-						aria-valuemin="0" aria-valuemax="100" style="width: {{ evaluation2ToPercent }}%">
-						<span class="sr-only">{{ evaluation2ToPercent }}%</span>
+				<div class="row">
+					<div class="info-label col-md-3">
+						Avis moyen :
+					</div>
+					<div class="col-md-9">
+						<span class="glyphicon glyphicon-star"></span> {{ render(controller('CVPlatformBundle:Rating:avgEvaluationsOfUser', {'user': profile.user}))|round(1, 'floor') }}/5 <span class="info-label">- {{ listRatingsReceived|length }} avis</span>
 					</div>
 				</div>
-			</div>
-			<!-- end 2 -->
-			<div class="col-xs-3 col-md-3 text-left">
-				<p style="float: right;">A éviter</p>
-				<span class="glyphicon glyphicon-star"></span>1
-			</div>
-			<div class="col-xs-8 col-md-9">
-				<div class="progress">
-					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
-					aria-valuemin="0" aria-valuemax="100" style="width: {{ evaluation1ToPercent }}%">
-					<span class="sr-only">{{ evaluation1ToPercent }}%</span>
+				<div class="row">
+					<div class="info-label col-md-3">
+						Mes préférences :
+					</div>
+					<div class="col-md-9">
+						<span class="{% if profile.getPreference().getDiscussion() == 1 %}blablabla{% else %}blabla{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+						<span class="{% if profile.getPreference().getCigarette() == 1 %}smoking{% else %}no-smoking{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+						<span class="{% if profile.getPreference().getAnimal() == 1 %}pet{% else %}no-pet{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+						<span class="{% if profile.getPreference().getMusic() == 1 %}music{% else %}no-music{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+					</div>
 				</div>
+				<div id="user-bio-profile">
+					<div id="user-bio-title-profile">En quelques mots...</div>
+					“{{ profile.biography }}”
+				</div>
+				<div id="synthesis-rating" class="panel panel-default">
+		            <div class="panel-body">
+		                <div class="col-md-6">
+		                    <h4>Synthèse des avis reçus</h4>
+		                    <span class="glyphicon glyphicon-star"></span> {{ render(controller('CVPlatformBundle:Rating:avgEvaluations'))|round(1, 'floor') }}/5 <span class="info-label">- {{ listRatingsReceived|length }} avis</span><br>
+		                    Conduite : {{ render(controller('CVPlatformBundle:Rating:avgDriving'))|round(1, 'floor') }}/3           
+		                </div>
+		                <div class="col-md-6">
+		                    <div class="pull-right">
+		                        <div class="row">
+		                            <div class="label-evaluation col-md-4"><span class="pull-right">Parfait</span></div>
+		                            <div class="col-md-7">
+		                                <div class="progress">
+		                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation5*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation5*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-1 count-evaluation">{{ countEvaluation5 }}</div>
+		                        </div>
+		                        <div class="row">
+		                            <div class="label-evaluation col-md-4"><span class="pull-right">Très bien</span></div>
+		                            <div class="col-md-7">
+		                                <div class="progress">
+		                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation4*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation4*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-1 count-evaluation">{{ countEvaluation4 }}</div>
+		                        </div>
+		                        <div class="row">
+		                            <div class="label-evaluation col-md-4"><span class="pull-right">Bien</span></div>
+		                            <div class="col-md-7">
+		                                <div class="progress">
+		                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation3*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation3*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-1 count-evaluation">{{ countEvaluation3 }}</div>
+		                        </div>
+		                        <div class="row">
+		                            <div class="label-evaluation col-md-4"><span class="pull-right">Décevant</span></div>
+		                            <div class="col-md-7">
+		                                <div class="progress">
+		                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation2*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation2*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-1 count-evaluation">{{ countEvaluation2 }}</div>
+		                        </div>
+		                        <div class="row">
+		                            <div class="label-evaluation col-md-4"><span class="pull-right">À éviter</span></div>
+		                            <div class="col-md-7">
+		                                <div class="progress">
+		                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ countEvaluation1*100/totalEvaluation }}%" aria-valuenow="{{ countEvaluation1*100/totalEvaluation }}" aria-valuemin="0" aria-valuemax="100"></div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-1 count-evaluation">{{ countEvaluation1 }}</div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="list-messages-profile">
+		            {% for ratingReceived in listRatingsReceived %}
+		                <div class="row">
+		                    <div class="col-md-1">
+		                        <a href="{{ path('cv_profile_view', {'id': ratingReceived.user.id }) }}">
+		                            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ratingReceived.user})) }} 
+		                        </a>
+		                    </div>
+		                    <div class="col-md-11 username-message">
+		                    	{% if ratingReceived.evaluation == 1 %}
+		                            <div class="evaluation-label rating-grade--0">A éviter</div>
+		                        {% elseif ratingReceived.evaluation == 2 %}
+		                            <div class="evaluation-label rating-grade--1">Décevant</div>
+		                        {% elseif ratingReceived.evaluation == 3 %}
+		                            <div class="evaluation-label rating-grade--2">Bien</div>
+		                        {% elseif ratingReceived.evaluation == 4 %}
+		                            <div class="evaluation-label rating-grade--3">Excellent</div>
+		                        {% else %}
+		                            <div class="evaluation-label rating-grade--4">Extraordinaire</div>
+		                        {% endif %}
+		                        <div class="content-message">
+			                        {{ ratingReceived.user.profile.firstname }} {{ ratingReceived.user.profile.name[:1] }} : 
+			                        {{ ratingReceived.description }}
+			                    </div>
+			                    <div class="date-message">
+			                        {{ ratingReceived.date|date('d/m/Y') }}
+			                    </div>
+		                    </div>
+		                </div>
+		            {% endfor %}
+		        </div>
 			</div>
 		</div>
-		<!-- end 1 -->
 	</div>
-	<!-- end row -->
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="container" style="padding:60px;">
-	<div class="row">
-		<div class="col-md-8">
-			<section class="comment-list">
-				{% for ratingReceived in listRatingsReceived %}
-				{% include 'CVPlatformBundle:Rating:view.html.twig' with {'ratingReceived': ratingReceived} %}
-				{% endfor %}
-			</section>
-		</div>
-	</div>
-</div>
 {% endblock %}

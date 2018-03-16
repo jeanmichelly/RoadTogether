@@ -16,10 +16,10 @@ group:
 # Security
 security:
     login:
-        username: "Nom d'utilisateur :"
-        password: "Mot de passe :"
+        username: "Nom d'utilisateur"
+        password: "Mot de passe"
         remember_me: Se souvenir de moi
-        submit: Connexion
+        submit: Login
 
 # Profile
 profile:
@@ -79,7 +79,7 @@ resetting:
 
 # Global strings
 layout:
-    logout: Déconnexion
+    logout: Se déconnecter
     login: Connexion
     register: Inscription
     logged_in_as: Connecté en tant que %username%

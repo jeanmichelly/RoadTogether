@@ -1,73 +1,50 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Avis laissés - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}  
+    Avis laissés | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-
-    <h2>Avis laissés</h2>
+    {{ include("CVPlatformBundle:Rating:menu.html.twig") }}
 
     {% if listRatingsSended|length == 0 %}
         <p>
-        {% for message in app.session.flashbag.get('info') %}
-
-        <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
     {% else %}
-
-    {% for ratingSended in listRatingsSended %}
-<table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
-    <i>Avis reçu le {{ ratingSended.date|date('d/m/Y') }}, par {{ ratingSended.user.username }}<i/>
-            <tr>
-           <td width="120px" height="100px">
-                 <figure class="thumbnail">
-
-                     <a href="{{ path('cv_profile_view', {'id': app.user.id   }) }}">
-       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': app.user })) }} 
-                     </a>
-                        <div class="media-body">
-                            <h4 class="media-heading text-center">{{ app.user }}</h4>
-                        </div>
-                    </figure> 
-                </td>
-               <td class="col-sm-1 col-md-9 text-center" ><strong>
-                Evaluation : 
-                {% if ratingSended.evaluation == 0 %}
-                à éviter
-                {% elseif ratingSended.evaluation == 1 %}
-                décevant
-                {% elseif ratingSended.evaluation == 2 %}
-                bien
-                {% elseif ratingSended.evaluation == 3 %}
-                excellent
-                {% else %}
-                extraordinaire
-                {% endif %}
-                <br><br>
-                {{ ratingSended.description }}
-               </strong></td>
-
-                <td width="120px" height="100px">
-                 <figure class="thumbnail">
-
-                     <a href="{{ path('cv_profile_view', {'id': ratingSended.relateduser.id   }) }}">
-       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ratingSended.relateduser})) }} 
-                     </a>
-                        <div class="media-body">
-                            <h4 class="media-heading text-center"> {{ ratingSended.relateduser }} </h4>
-                        </div>
-                    </figure> 
-                </td>
-
-    </table>
-    {% endfor %}
-        {% endif %}
-
+        {{ listRatingsSended|length }} avis laissés 
+        <div class="container list-messages">
+            {% for ratingSended in listRatingsSended %}
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href="{{ path('cv_profile_view', {'id': ratingSended.relateduser.id }) }}">
+                            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ratingSended.relateduser})) }} 
+                        </a>
+                    </div>
+                    <div class="col-md-2 username-message">
+                        {{ ratingSended.relateduser.getProfile().getFirstname() }} {{ ratingSended.relateduser.getProfile().getName()[:1] }}
+                    </div>
+                    <div class="col-md-8 content-message">
+                        {% if ratingSended.evaluation == 1 %}
+                            <div class="evaluation-label rating-grade--0">A éviter</div>
+                        {% elseif ratingSended.evaluation == 2 %}
+                            <div class="evaluation-label rating-grade--1">Décevant</div>
+                        {% elseif ratingSended.evaluation == 3 %}
+                            <div class="evaluation-label rating-grade--2">Bien</div>
+                        {% elseif ratingSended.evaluation == 4 %}
+                            <div class="evaluation-label rating-grade--3">Excellent</div>
+                        {% else %}
+                            <div class="evaluation-label rating-grade--4">Extraordinaire</div>
+                        {% endif %}
+                        {{ ratingSended.description }}
+                    </div>
+                    <div class="cold-md-1 date-message">
+                        {{ ratingSended.date|date('d/m/Y') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

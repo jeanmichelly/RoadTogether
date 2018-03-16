@@ -1,7 +1,7 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Modifier une voiture - {{ parent() }}
+    Modifier une voiture | {{ parent() }}
 {% endblock %}
 
 {% block menu_lateral %}    
@@ -9,22 +9,24 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-  
-    <h2>Modifier ma voiture</h2>
+    <div class="container">
+        <div class="col-md-3">
+            {{ include("CVProfileBundle::menu.html.twig") }}
+        </div>
+        <div class="col-md-9">
+            <p>
+                {% for message in app.session.flashbag.get('notice') %}
+                    <p class="alert alert-success">{{ message }}</p> 
+                {% endfor %}
+            </p>
 
-    <p>
-        {% for message in app.session.flashbag.get('notice') %}
-
-        <p class="alert alert-success">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-    {{ include("CVProfileBundle:Car:form.html.twig") }}
-
-    <p>Vous éditez une voiture déjà existante, merci de ne pas changer l'esprit générale de la voiture déjà publiée.</p>
-
-    <p>
-        <a href="{{ path('cv_profile_view_car', {'id': form.vars.value.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour à la voiture</a>
-    </p>
+            <h3 class="sub-title">Votre voiture</h3>
+            <hr>
+            {{ include("CVProfileBundle:Car:form.html.twig") }}
+            <div class="nav">
+                <a href="{{ path('cv_profile_my_cars') }}" class="cv">← Précédent</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

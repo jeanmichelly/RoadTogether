@@ -6,60 +6,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% block title %}CV Plateforme{% endblock %}</title>
+  <title>{% block title %}Road Together{% endblock %}</title>
 
     {% block stylesheets %}
-        {% stylesheets 'css/nav_account_manager.css' %}
+        {% stylesheets 'css/nav_account_manager.css' 
+        '@CVPlatformBundle/Resources/public/css/style.css' %}
+            <link rel="icon" type="image/png" href="{{ asset('images/roadTogetherIcon.png') }}" />
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
-
-    <style>
-        .badge-notify{
-            background:red;
-            position:relative;
-            top: -53px;
-            left: 24px;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="container">
-        <nav class="navbar navbar-default">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{ path('cv_platform_home') }}">Covoiturage</a>
-            {% if is_granted('ROLE_ADMIN') %}
-            <a class="navbar-brand" href="{{ path('cv_admin_home') }}">Administration</a>
-            {% endif %}
-            </div>
+    <div class="page">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('cv_platform_home') }}"><img id="road-together-logo" src="{{ asset('images/roadTogetherLogo.png') }}" alt="Logo"/></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="cv navbar-brand" href="{{ path('cv_admin_home') }}"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Administration</a>
+                    {% endif %}
+                </div>
                 {% include '::navbar-top.html.twig' %}
-        </nav>
-      
-        <div class="row">
-            <div id="menu" class="col-md-3">
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    {% block menu_lateral %}    
-                    {% endblock %}    
-    
-                {% elseif app.request.attributes.get('_route') != 'fos_user_security_login' %}
-                    <h3>Identification</h3>
-                    {{ render(controller('CVUserBundle:Security:login')) }}
-                {% endif %}
-            </div>  
-               
-            <div id="content" class="col-md-9">
+            </nav>
+          
+            <div class="row">
+                {% block navtab_top %}  
+                {% endblock %}
+                
                 {% block body %}
                 {% endblock %}
             </div>
+
+            <hr>
+
+            <footer>
+                <p>Jean-Michel LY, Projet covoiturage - Road Together © {{ 'now'|date('Y') }}</p>
+            </footer>
         </div>
-
-        <hr>
-
-        <footer>
-            <p>Jean-Michel LY, Projet covoiturage © {{ 'now'|date('Y') }}</p>
-        </footer>
     </div>
     {% block javascripts %}
         {% javascripts 'js/jquery.js' %}
@@ -67,6 +53,17 @@
         {% endjavascripts %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script>
+            $( ".dropdown" ).hover(
+                 function() {
+                    $("#navbartop-username").addClass("hover");
+                    $("#navbartop-dropdown-icon").addClass("hover");
+                }, function() {
+                    $("#navbartop-username").removeClass("hover");
+                    $("#navbartop-dropdown-icon").removeClass("hover");
+                }
+            );
+        </script>
     {% endblock %}
 </body>
 </html>

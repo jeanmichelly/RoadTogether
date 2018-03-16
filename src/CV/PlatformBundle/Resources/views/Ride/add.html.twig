@@ -1,11 +1,7 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Ajouter une annonce - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Ride:menu.html.twig") }}  
+    Ajouter une annonce | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
@@ -13,9 +9,10 @@
 	    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
 	{% endstylesheets %}
 	<style type="text/css">
-    		#map{width:300px;height:300px;margin:auto;}
+    	#map{width:300px;height:300px;margin:auto;}
   	</style>
-
+    <h3>Publier une annonce</h3>
+    <hr>
   	{{ include("CVPlatformBundle:Ride:form.html.twig") }}
 {% endblock %}
 

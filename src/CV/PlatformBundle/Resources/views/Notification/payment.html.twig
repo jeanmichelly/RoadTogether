@@ -1,7 +1,9 @@
 <tr id="notif_{{paymentNotification.id}}">
 	<td class="col-md-8">
-		{{ paymentNotification.ride.departureDate }}  : Voyage {{ paymentNotification.ride.departure }} -> {{ paymentNotification.ride.arrival }}. </br>
+		{{ paymentNotification.ride.departureDate }}  : Voyage {{ paymentNotification.ride.departure }} → {{ paymentNotification.ride.arrival }}. </br>
 	</td>
-	<td><a id="{{paymentNotification.id}}" class="validateNotificationPayment btn btn-success"><i class="glyphicon glyphicon-ok"></i> Valider le voyage</a></td>
+
+	<td><a id="{{paymentNotification.id}}" class="validateNotificationPayment btn icon-btn btn-success btn-sm" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>Valider le voyage</a></td>
+
 	<!-- <td><a id="{{paymentNotification.id}}" class="deleteNotificationPayment"><img src="{{ asset('icon/delete.png') }}"></img></a></td> -->
 </tr> 

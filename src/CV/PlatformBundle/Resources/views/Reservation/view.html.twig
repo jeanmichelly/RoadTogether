@@ -1,84 +1,113 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Lecture d'une annonce - {{ parent() }}
+    Réservation | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
     {% stylesheets 
+        'css/sweetalert.css' 
         '@CVPlatformBundle/Resources/public/css/dialog.css'
         '@CVPlatformBundle/Resources/public/css/button.css' %}
-        <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
-
-
-    <div class="well">
-        <p>{% include 'CVPlatformBundle:Ride:focus_details.html.twig' with {'ride': ride} %}</p></br>
-        <p>
-            <a href="{{ path('cv_platform_home') }}" class="btn btn-primary btn-outline btn-lg"><i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste</a>
-
-
-            {% if app.security.getToken().getUser() != ride.user %}
-            {% if isFull %}
-            <button class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok-circle"></i> Complet</button>                 
-            {% else %}
-            {% if existPassenger %}
-            Vous avez déjà réservé une ou plusieurs places pour cette annonce
-            {% else %}   
-
-            {% if ride.getNumberPassenger() - numberOfPlacesBooked != 0 %}
-
-            <button class="btn btn-lg btn-warning sweet-13" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Warning']);"><i class="glyphicon glyphicon-hand-up"></i> Réserver</button>
-
-            <p> Sélectionnez le nombre de places à réserver</p>
-            <FORM>
-                <SELECT name="numberOfPlacesBooked" id="numberOfPlacesBooked" size="1">
-
-                    {% for i in 1..ride.getNumberPassenger() - numberOfPlacesBooked %}
-                    <OPTION value = '{{i}}'>{{i}}</OPTION>
-                    {% endfor %}
-                </SELECT>
-            </FORM>
-        </p>
-
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-
-          
-    </div>
-    <div class="well">
-<!--         <ol id="messages" class="messages">
-            {% for publicMessage in listPublicMessagesOfRide %}
-                {% include 'CVPlatformBundle:PublicMessage:view.html.twig' with {'publicMessage': publicMessage} %}
-            {% endfor %}
-        </ol> -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <h2 class="page-header">Questions posées</h2>
-                    <section id="messages" class="messages comment-list">
-                        {% for publicMessage in listPublicMessagesOfRide %}
-                            {% include 'CVPlatformBundle:PublicMessage:view.html.twig' %}
-                        {% endfor %}
-                    </section>
+    <div id="booking" class="container">
+        <div class="nav">
+            <a href="{{ path('cv_platform_home') }}" class="cv">← Retour à la liste</a>
+        </div>
+        <div class="panel panel-default">
+            <div class="cv panel-heading">Votre réservation</div>
+            <div class="panel-body">
+                <div id="detail-booking" class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ride.departure}} → {{ride.arrival}}
+                        <div class="pull-right"><a href="{{ path('cv_platform_view', {'id': ride.id   }) }}" class="cv">Voir l'annonce</a></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-9">
+                            <div class="row">
+                                <span class="info-label col-md-3">Lieu de départ</span>
+                                <span class="cv col-md-9"><img class="icon-departure" src="{{ asset('icon/departure.png') }}"></img> {{ ride.departure }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Lieu d'arrivée</span>
+                                <span class="cv col-md-9"><img class="icon-arrival" src="{{ asset('icon/arrival.png') }}"></img> {{ ride.arrival }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Date de départ</span>
+                                <span class="cv col-md-9"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ ride.departureDate|localizeddate('medium', 'none', 'fr') }} à {{ ride.departureDate|localizeddate('none', 'medium', 'fr') }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Places</span>
+                                <span class="cv col-md-9">{{ numberOfPlacesBooked }} place(s) réservée(s)</span>
+                            </div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Montant</span>
+                                <span class="cv col-md-9">{{ ride.price }} €</span>
+                            </div>
+                        </div>
+                        <div id="details-ride" class="col-md-3">
+                            <div class="label-ride">Description du trajet</div>
+                            <div>“{{ ride.details }}”</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="conduteur-booking" class="panel panel-default">
+                            <div class="panel-heading">Conducteur</div>
+                            <div class="panel-body">
+                                <div class="info-user row">
+                                    <div class="col-md-2">
+                                        {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ride.user})) }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('cv_profile_view', {'id': ride.user.id   }) }}">
+                                            <span class="cv">{{ ride.user.getUsername() }} ({{ ride.user.getProfile().getAge() }} ans)</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="car-booking" class="panel panel-default">
+                            <div class="panel-heading">Véhicule</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-  
-        <div class="well">
-            <textarea id="contentT" rows="5" cols="100" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
-            <div align="right"><button id="publish" class="btn btn-primary" type="button" >Publier</button></div>
+    </div>
+
+    <div id="public-messages-booking" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Questions posées</div>
+                    <div class="panel-body">
+                        <section id="messages" class="messages comment-list">
+                            {% for publicMessage in listPublicMessagesOfRide %}
+                                {% include 'CVPlatformBundle:PublicMessage:view.html.twig' %}
+                            {% endfor %}
+                        </section>
+                        <textarea id="contentT" rows="5" cols="94" placeholder="Posez vos questions ou réponses ici."></textarea><br/>
+                        <div id="container-publish-btn">
+                            <button id="publish" class="cv-btn-primary pull-right" type="button">Publier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+    {% javascripts 'js/sweetalert.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script type="text/javascript"> // Commentaires
         $("#publish").on("click", addPublicMessage);
         function addPublicMessage(){
@@ -93,55 +122,5 @@
             $("#messages").append(data);
             document.getElementById('contentT').value="";
         }
-    </script>
-    <script> // Boite de confirmation
-
-    //alert(document.getElementById("numberOfPlacesBooked").value);
-
-        document.querySelector('.sweet-13').onclick = function(){
-            swal({
-                title: "Êtes vous sure de vouloir réserver cette annonce ?",
-                text: "Vous serez débité 2 jours après le voyage",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-warning",
-                confirmButtonText: "Oui",
-                cancelButtonText: "Non",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function(isConfirm) {
-                if (isConfirm) {
-                    swal({
-                        title: "Votre réservation a bien été enregistrée",
-                        text: "Veuillez donner le code que nous vous avons envoyé au conducteur à la fin de votre voyage",
-                        type: "success",
-                        confirmButtonClass: "btn-success",
-                        confirmButtonText: "Ok",
-                        closeOnConfirm: true,
-                    },
-                    function() {
-                 var valeur = 'valeur='+document.getElementById("numberOfPlacesBooked").value;
-
-                        $.ajax({
-                            url: "{{ path('cv_platform_confirm_reservation_ride', {'id': ride.id }) }}",
-                            data: valeur,
-                            success: function(data) {
-                                window.location.replace("{{ path('cv_platform_current_reservations') }}");
-                            }
-                        }); 
-                    });
-                } else {
-                    swal({
-                        title: "Annulation",
-                        text: "Vous ne serez pas débité",
-                        type: "error",
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Ok",
-                        closeOnConfirm: true,
-                    });
-                }
-            });
-        };
     </script>
 {% endblock %}

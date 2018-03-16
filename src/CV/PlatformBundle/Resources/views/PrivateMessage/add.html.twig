@@ -1,31 +1,31 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Envoyer un message à {{relatedUser}} - {{ parent() }}
-{% endblock %}      
+    Envoyer un message à {{relatedUser}} | {{ parent() }}
+{% endblock %}
+
+{% block navtab_top %}
+{% endblock %}
 
 {% block cvplatform_body %}
-
-        <div class="well well-sm">
-                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    <div class="nav">
+        <a href="{{ path('cv_profile_view', {'id': relatedUser.id}) }}" class="cv">← Retour au profil</a>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="cv panel-heading">Envoyer un message à {{relatedUser}}</div>
+        <div class="panel-body">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
-                <fieldset>
-                <legend class="text-center">Envoyer un message à {{relatedUser}}</legend>
-
-                <div class="form-group">
-                    {{ form_label(form.content, "Message", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.content) }}</div>
-                </div>
-
-    <a href="{{ path('cv_profile_view', {'id': relatedUser.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour au profil
-    </a>
-           {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
-            </fieldset>
-            {{ form_rest(form) }}
-        {{ form_end(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.content, "Message", {'label_attr': {'class': 'col-md-1 control-label'}}) }}
+                        <div class="col-md-11">{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9"> {{ form_errors(form.content) }}</div>
+                    </div>
+                    {{ form_widget(form.enregistrer, {'attr': {'class': 'cv-btn-secondary pull-right'}}) }}
+                {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

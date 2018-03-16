@@ -1,52 +1,43 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes voitures - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}    
-    {{ include("CVProfileBundle::menu.html.twig") }}
+    Votre voiture | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Liste de mes voitures</h2>
-
-    <p>
-        {% for message in app.session.flashbag.get('notice') %}
-
-        <p class="alert alert-success">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-
-{% if cars|length == 0 %}
-        <p>
-        {% for message in app.session.flashbag.get('info') %}
-
-        <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-    {% else %}
-
-
-    {% for car in cars %}
-        <div class="well">
-
-            <li>Marque : {{ car.mark }}</li>
-            <li>Modele : {{ car.model }}</li>
-
-
-            <p>
-                <a href="{{ path('cv_profile_view_car', {'id': car.id   }) }}" class="btn btn-default"> <i class="glyphicon glyphicon-eye-open"></i>Voir détails</a>
-            </p>
+    <div class="container">
+        <div class="col-md-3">
+            {{ include("CVProfileBundle::menu.html.twig") }}
         </div>
-    {% endfor %}
-
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_profile_my_cars', {'page': p}) }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul>
-  {% endif %}     
+        <div class="col-md-9">
+            {% if cars|length == 0 %}
+                <p>
+                    {% for message in app.session.flashbag.get('info') %}
+                        <p class="alert alert-info">{{ message }}</p> 
+                    {% endfor %}
+                </p>
+            {% else %}
+                <h3 class="sub-title">Véhicule</h3>
+                <hr>
+                <div class="well well-sm well-profile">
+                    {% for car in cars %}
+                        <div class="well">
+                            {{ car.mark }} {{ car.model }}
+                            <p>
+                                <a href="{{ path('cv_profile_edit_car', {'id': car.id   }) }}" class="cv"> <i class="glyphicon glyphicon-edit"></i></a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                    {% if range(1, nbPages) == 1 %}
+                        <ul class="pagination">
+                            {% for p in range(1, nbPages) %}
+                                <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_profile_my_cars', {'page': p}) }}">{{ p }}</a></li>
+                            {% endfor %}
+                        </ul><br>
+                    {% endif %}
+                    <a href="{{ path('cv_profile_add_car') }}" class="cv-btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Ajouter un véhicule</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

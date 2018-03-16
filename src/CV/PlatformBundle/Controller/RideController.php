@@ -17,19 +17,15 @@ use CV\PlatformBundle\Form\RideSearchType;
 class RideController extends Controller
 {
     public function viewAction(Ride $ride) {
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        if($ride->getUser() != $user) {
-            throw new NotFoundHttpException("Désolé la page est introuvable");
-        }
-
-        $form = $this->createForm(new RideViewType, $ride,array(
-            'read_only' => true
-            ));
+        $totalEvaluation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CVPlatformBundle:Rating')
+            ->totalEvaluation($ride->getUser()->getId());
 
         return $this->render('CVPlatformBundle:Ride:my_ride_details.html.twig', array(
-            'form' => $form->createView(),
-            ));
+            'ride' => $ride,
+            'totalEvaluation' => $totalEvaluation
+        ));
     }
 
     public function addAction(Request $request) {
@@ -50,7 +46,7 @@ class RideController extends Controller
 
         return $this->render('CVPlatformBundle:Ride:add.html.twig', array(
             'form' => $form->createView(),
-            ));
+        ));
     }
 
     public function editAction(Ride $ride, Request $request) {
@@ -72,7 +68,7 @@ class RideController extends Controller
 
         return $this->render('CVPlatformBundle:Ride:edit.html.twig', array(
             'form' => $form->createView(),
-            ));
+        ));
     }
 
     public function deleteAction(Ride $ride, Request $request) {
@@ -119,11 +115,11 @@ class RideController extends Controller
 
 
         if (count($listUpcomingRides) == 0) {
-            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez pas encore de trajets à venir');
+            $request->getSession()->getFlashBag()->add('info', 'Vous n\'avez aucun trajet de prévu.');
 
             return $this->render('CVPlatformBundle:Ride:upcoming.html.twig', array(
                 'listUpcomingRides'     => $listUpcomingRides,
-                ));
+            ));
         }
 
         $nbPages = ceil(count($listUpcomingRides)/$nbPerPage);
@@ -132,7 +128,7 @@ class RideController extends Controller
             'listUpcomingRides'     => $listUpcomingRides,
             'nbPages'       => $nbPages,
             'page'          => $page,
-            ));
+        ));
     }
 
     public function pastRidesAction($page, Request $request) {
@@ -150,7 +146,7 @@ class RideController extends Controller
 
             return $this->render('CVPlatformBundle:Ride:past.html.twig', array(
                 'listPastRides'     => $listPastRides,
-                ));
+            ));
         }
 
         $nbPages = ceil(count($listPastRides)/$nbPerPage);
@@ -159,7 +155,7 @@ class RideController extends Controller
             'listPastRides'     => $listPastRides,
             'nbPages'           => $nbPages,
             'page'              => $page,
-            ));
+        ));
     }
 
     public function myRidesAction($page) {
@@ -186,7 +182,7 @@ class RideController extends Controller
             'listRides'     => $listRides,
             'nbPages'       => $nbPages,
             'page'          => $page,
-            ));
+        ));
     }
 
     public function searchRidesUserAction(Request $request) {
@@ -203,7 +199,7 @@ class RideController extends Controller
                 'departure'     => $form->getDeparture(),
                 'arrival'       => $form->getArrival(),
                 'departureDate' => $form->getDepartureDate(),
-                )));
+            )));
         }
         return $this->render('CVPlatformBundle:Ride:search.html.twig', array('form' => $form->createView()));
     }
@@ -227,10 +223,10 @@ class RideController extends Controller
         $nbPages = ceil(count($listRides)/$nbPerPage);
 
         return $this->render('CVPlatformBundle:Ride:focus.html.twig', array(
-          'listRides'   => $listRides,
-          'nbPages'     => $nbPages,
-          'page'        => $page
-          ));
+            'listRides'   => $listRides,
+            'nbPages'     => $nbPages,
+            'page'        => $page
+        ));
     }
 
     public function numberOfRemainingSpaceAction(Ride $ride) {

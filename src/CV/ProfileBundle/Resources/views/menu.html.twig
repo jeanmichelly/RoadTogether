@@ -1,23 +1,35 @@
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-plus"></span><a href="{{ path('cv_profile_add_car') }}"> Ajouter une voiture</a>       
-            </h4>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-edit"></span> Editer profil</a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse ">
-            <ul class="list-group">
-                <li class="list-group-item"><span class="glyphicon glyphicon-pencil text-primary"></span><a href="{{ path('cv_profile_edit') }}"> Editer mon profil</a></li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-pencil text-primary"></span><a href="{{ path('cv_profile_my_cars') }}"> Editer mes voitures</a></li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-pencil text-primary"></span><a href="{{ path('cv_profile_edit_preference') }}"> Editer mes préférences</a></li>
-            </ul>
-        </div>
-    </div>
-</div> 
+<ul class="nav nav-tabs nav-stacked profile-menu">
+    <li class="profile-header-menu">Profil</li>
+    <li {% if app.request.attributes.get('_route') == 'cv_profile_edit' %}class="active"{% endif %}>
+        <a href="{{ path('cv_profile_edit') }}">Informations personnelles</a>
+    </li>
+    <li>
+        <a href="{{ path('cv_profile_edit_preference') }}">Préférences</a>
+    </li>
+    <li {% if app.request.attributes.get('_route') == 'cv_profile_my_cars' or app.request.attributes.get('_route') == 'cv_profile_add_car' or app.request.attributes.get('_route') == 'cv_profile_edit_car' %}class="active"{% endif %}>
+        <a href="{{ path('cv_profile_my_cars') }}">Véhicule</a>
+    </li>
+    <li>
+        <a href="">Adresse postale</a>
+    </li>
+</ul>
+
+<ul class="nav nav-tabs nav-stacked profile-menu">
+    <li class="profile-header-menu">Avis</li>
+    <li>
+        <a href="{{ path('cv_platform_ratings_received') }}">Avis reçus</a>
+    </li>
+    <li>
+        <a href="{{ path('cv_platform_ratings_sended') }}">Avis laissés</a>
+    </li>
+</ul>
+
+<ul class="nav nav-tabs nav-stacked profile-menu">
+    <li class="profile-header-menu">Compte</li>
+    <li>
+        <a href="{{ path('fos_user_change_password') }}">Mot de passe</a>
+    </li>
+</ul>
+<div id="show_profil_public" class="text-center">
+    <a href="{{ path('cv_profile_view', {'id': app.security.getToken().getUser().getId() } ) }}" class="cv"><button class="cv-btn-primary">Visualiser le profil public</button></a>
+</div>

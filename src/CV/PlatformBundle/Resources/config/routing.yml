@@ -11,11 +11,11 @@ cv_platform_view:
         id: \d+
 
 cv_platform_add:
-    path:      /add
+    path:      /offer-seats
     defaults:  { _controller: CVPlatformBundle:Ride:add }
 
 cv_platform_edit:
-    path:      /edit/{id}
+    path:      /trip/edit/{id}
     defaults:  { _controller: CVPlatformBundle:Ride:edit }
     requirements:
         id: \d+
@@ -27,13 +27,13 @@ cv_platform_delete:
         id: \d+
 
 cv_platform_upcoming_rides:
-    path:      /upcoming-rides/{page}
+    path:      /trip-offers/active/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:upcomingRides, page: 1 }
     requirements:
         page: \d*
 
 cv_platform_past_rides:
-    path:      /past-rides/{page}
+    path:      /trip-offers/inactive/{page}
     defaults:  { _controller: CVPlatformBundle:Ride:pastRides, page: 1 }
     requirements:
         page: \d*
@@ -45,7 +45,7 @@ cv_platform_my_rides:
         page: \d*
 
 cv_platform_search_rides:
-    path:      /search-rides
+    path:      /search-car-sharing
     defaults:  { _controller: CVPlatformBundle:Ride:searchRidesUser }
 
 cv_platform_focus_rides:
@@ -54,9 +54,9 @@ cv_platform_focus_rides:
     requirements:
         page: \d*
 
-cv_platform_reservation_ride:
-    path:      /reservation-ride/{id}
-    defaults:  { _controller: CVPlatformBundle:Reservation:add }
+cv_platform_reservation:
+    path:      /manage-my-booking/{id}
+    defaults:  { _controller: CVPlatformBundle:Reservation:view }
     requirements:
         id: \d+
 
@@ -75,13 +75,13 @@ cv_platform_confirm_reservation_ride:
         id: \d+
 
 cv_platform_current_reservations:
-    path:      /current-reservations/{page}
+    path:      /my-bookings/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:currentReservations, page: 1 }
     requirements:
         page: \d*
 
 cv_platform_past_reservations:
-    path:      /past-reservations/{page}
+    path:      /my-bookings/history/{page}
     defaults:  { _controller: CVPlatformBundle:Reservation:pastReservations, page: 1 }
     requirements:
         page: \d*
@@ -140,3 +140,7 @@ cv_platform_delete_rating_notification:
 cv_platform_validate_payment:
     path:      /validate-payment
     defaults:  { _controller: CVPlatformBundle:Payment:validate }
+
+cv_platform_dashboard:
+    path:      /dashboard
+    defaults:  { _controller: CVPlatformBundle:Dashboard:view }

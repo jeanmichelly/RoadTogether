@@ -1,44 +1,22 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes notifications - {{ parent() }}
+    Mes notifications | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Notifications</h2>
+    <h3><i class="fa fa-bell-o" aria-hidden="true"></i> Notifications ({{ listRatingNotifications|length + listPaymentNotifications|length }})</h3>
 
-    <h3>Avis</h3>
+    <h3 class="dashboard-right-subtitle">Avis ({{ listRatingNotifications|length }})</h4>
+    <table id="tableRatingNotifications" class="table table-bordred table-striped">
+        <tbody>
+            {% for ratingNotification in listRatingNotifications %}
+                {% include 'CVPlatformBundle:Notification:rating.html.twig' with {'ratingNotification': ratingNotification} %}
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <p>
-        {% for message in app.session.flashbag.get('notice') %}
-            <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-
-	<table id="tableRatingNotifications" class="table table-bordred table-striped">
-		<tbody>
-			{% for ratingNotification in listRatingNotifications %}
-				{% include 'CVPlatformBundle:Notification:rating.html.twig' with {'ratingNotification': ratingNotification} %}
-    		{% endfor %}
-		</tbody>
-	</table>
-
-<!-- 	<ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_current_reservations', {'page': p}) }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul> -->
-
-    <h3>Paiement</h3>
-
-    <p>
-        {% for message in app.session.flashbag.get('notice2') %}
-            <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
-
+    <h3 class="dashboard-right-subtitle">Paiement ({{ listPaymentNotifications|length }}) </h4>
     <table id="tablePaymentNotifications" class="table table-bordred table-striped">
         <tbody>
             {% for paymentNotification in listPaymentNotifications %}
@@ -49,7 +27,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+    {% javascripts 'js/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script>
         $( ".deleteNotificationRating" ).click(function() {
             var notifId = this.id;
@@ -60,7 +40,6 @@
                 success: function(data) {
                     //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );
                     $('#notif_'+notifId).remove();       
-                    window.location.replace("{{ path('cv_platform_my_notifications') }}");
                 }
             }); 
         });
@@ -74,9 +53,8 @@
                 success: function(data) {
                     //$("#numberNotify").html( {{ app.session.get('numberNotify') }} );
                     $('#notif_'+notifId).remove();       
-                    window.location.replace("{{ path('cv_platform_my_notifications') }}");
                 }
             }); 
         });
-    </script>   
+    </script>
 {% endblock %}

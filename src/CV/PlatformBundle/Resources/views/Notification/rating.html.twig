@@ -2,6 +2,9 @@
 	<td class="col-md-8">
 		{{ ratingNotification.relateduser }}
 	</td>
-	<td><a href="{{ path('cv_platform_leave_rating', {'id': ratingNotification.id }) }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Laisser un avis</a></td>
-	<td><a id="{{ratingNotification.id}}" class="deleteNotificationRating"><img src="{{ asset('icon/delete.png') }}"></img></a></td>
+	<td>
+		<a class="btn icon-btn btn-primary btn-sm" href="{{ path('cv_platform_leave_rating', {'id': ratingNotification.id }) }}"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-primary"></span>Laisser un avis</a>
+
+		<a id="{{ratingNotification.id}}" class="btn icon-btn btn-danger deleteNotificationRating btn-sm" href="#"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>Supprimer</a>
+	</td>
 </tr> 

@@ -17,7 +17,7 @@ class RideSearchType extends AbstractType
         $builder->remove('price');
         $builder->remove('numberPassenger');
         $builder->remove('details');
-        $builder->add('rechercher',         'submit');
+        $builder->add('rechercher', 'submit', array('label' => 'Chercher un trajet'));
         
     }
     

@@ -1,58 +1,50 @@
 <div class="collapse navbar-collapse" id="navbar-collapse-4">
-    <ul class="nav navbar-nav navbar-right">
+    <ul id="navbartop-cv" class="nav navbar-nav navbar-right">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <li>
-                <a href=" {{ path('cv_platform_my_notifications') }}" class="btn btn-default btn-lg btn-link" style="font-size:20px;"><span class="glyphicon glyphicon-bell"></span></a>
-
-                {% if app.session.get('numberNotify') != 0 %}
-                    <span id="numberNotify" class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
-                {% endif %}
-            </li>
-            <li><a href="{{ path('cv_platform_ratings_received') }}">Avis</a> </li>
-            <li><a href="{{ path('cv_platform_current_reservations') }}">Réservations</a> </li>
-            <li><a href="{{ path('cv_platform_public_messages_received') }}"> Messages</a> </li>
-            <li><a href="{{ path('cv_platform_search_rides') }}"> Annonces</a> </li>
-        {% endif %}
-
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
-            <li><a href="{{ path('cv_profile_edit') }}">Profil</a> </li>
-
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Compte<b class="caret"></b></a>
+            {% if app.request.attributes.get('_route') != 'cv_platform_home' %}
+                <li><a href="{{ path('cv_platform_search_rides') }}" id="search-car-charing" class="cv-btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Rechercher</a></li>
+            {% endif %}
+            <li><a href="{{ path('cv_platform_add') }}" id="offer-ride" class="cv-btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Proposer un trajet</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span id="navbartop-username" class="cv">{{app.user.username}}</span>
+                    {% if app.session.get('numberNotify') != 0 %}
+                        <span id="numberNotify" class="badge badge-notify">{{ app.session.get('numberNotify')}}</span>
+                    {% endif %}
+                    <span id="picture_navbartop">
+                        {% block profile_picture %}   
+                            {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': app.user})) }} 
+                        {% endblock %}
+                    </span>
+                    <span id="navbartop-dropdown-icon" class="dropdown-icon">
+                        <svg width="16" height="16" fill="currentColor" id="icon-arrow-down" viewBox="0 0 100 100"><path d="M98.5 23.4l-3.4-3.8c-2-2.2-5.2-2.2-7.1 0L50 61.2 12 19.6c-2-2.2-5.2-2.2-7.1 0l-3.4 3.8c-2 2.2-2 5.7 0 7.8l44.9 49.2c1 1.1 2.3 1.6 3.6 1.6 1.3 0 2.6-.5 3.6-1.6l44.9-49.2c2-2.2 2-5.7 0-7.8z"></path></svg>
+                    </span>
+                </a>
                 <ul class="dropdown-menu">
                     <li>
                         <div class="navbar-content">
                             <div class="row">
-                                <div class="col-md-5">
-                                 {% block profile_picture %}   
-                                    {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_profile_small', 'user': app.user})) }} 
-                                 {% endblock %}   
-                                    <p class="text-center small"><a href="#">Changer la photo</a></p>
-                                </div>
-                                <div class="col-md-7">
-                                    <span>{{app.user.username}}</span>
-                                    <p class="text-muted small">{{app.user.email}}</p>
-                                    <div class="divider"></div>
-                                    <a href="{{ path('cv_profile_view', {'id': app.security.getToken().getUser().getId() } ) }}" class="btn btn-primary btn-sm active">Voir profil</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="navbar-footer">
-                            <div class="navbar-footer-content">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                       <a href="{{ path('fos_user_change_password') }}" class="btn btn-default btn-sm">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-sm pull-right">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-                                    </div>
-                                </div>
+                                <ul id="menu_navbartop">
+                                    <li><a href=" {{ path('cv_platform_dashboard') }}">Tableau de bord</a></li>
+                                    <li><a href=" {{ path('cv_platform_upcoming_rides') }}">Trajets publiés</a></li>
+                                    <li><a href=" {{ path('cv_platform_current_reservations') }}">Mes réservations</a></li>
+                                    <li><a href=" {{ path('cv_platform_public_messages_received') }}">Messages publiques</a></li>
+                                    <li><a href=" {{ path('cv_platform_private_messages_received') }}">Messages privés</a></li>
+                                    <li><a href=" {{ path('cv_profile_view', {'id': app.security.getToken().getUser().getId() } ) }}">Profil</a></li>
+
+                                    <li><a href=" {{ path('cv_platform_my_notifications') }}">Notifications</a></li>
+                                    <li><a href="{{ path('cv_platform_ratings_received') }}">Avis</a> </li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                                </ul>
+                                
                             </div>
                         </div>
                     </li>
                 </ul>
             </li>
             {% else %}
-                <li><a href="{{ path('fos_user_registration_register') }}">S'inscire</a> </li>
+                <li><a href="{{ path('fos_user_registration_register') }}" class="cv">Inscription</a> </li>
+                <li><a href="{{ path('fos_user_security_login') }}" class="cv">Connexion</a> </li>
         {% endif %}
     </ul>           
 </div>

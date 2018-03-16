@@ -1,0 +1,28 @@
+<div class="tab-details">
+    <ul class="nav nav-tabs new" id="myTab">
+        <li {% if app.request.attributes.get('_route') == 'cv_platform_dashboard' %} class="active"{% endif %}>
+            <a href="{{ path('cv_platform_dashboard') }}" class="cv">Tableau de bord</a>
+        </li>
+        <li {% if app.request.attributes.get('_route') == 'cv_platform_upcoming_rides' or  app.request.attributes.get('_route') == 'cv_platform_past_rides' %} class="active"{% endif %}>
+        	<a href="{{ path('cv_platform_upcoming_rides') }}" class="cv"> Trajets publiés</a>
+        </li>
+        <li {% if app.request.attributes.get('_route') == 'cv_platform_current_reservations' or  app.request.attributes.get('_route') == 'cv_platform_past_reservations' or app.request.attributes.get('_route') == 'cv_platform_reservation' %} class="active"{% endif %}>
+        	<a href="{{ path('cv_platform_current_reservations') }}" class="cv"> Mes réservations</a>
+        </li>
+        <li class="dropdown{% if app.request.attributes.get('_route') == 'cv_platform_public_messages_received' or  app.request.attributes.get('_route') == 'cv_platform_public_messages_sended' or  app.request.attributes.get('_route') == 'cv_platform_private_messages_received' or  app.request.attributes.get('_route') == 'cv_platform_private_messages_sended' %} active{% endif %}">
+            <a class="cv dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">Messages<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="{{ path('cv_platform_public_messages_received') }}" class="cv">Messages publiques</a>
+                </li>
+                <li>
+                    <a href="{{ path('cv_platform_private_messages_received') }}" class="cv">Messages privés</a>
+                </li>
+            </ul>
+        </li>
+        <li {% if app.request.attributes.get('_route') == 'cv_profile_edit' %} class="active"{% endif %}>
+            <a href="{{ path('cv_profile_edit') }}" class="cv">Profil</a>
+        </li>
+	</ul>
+</div>

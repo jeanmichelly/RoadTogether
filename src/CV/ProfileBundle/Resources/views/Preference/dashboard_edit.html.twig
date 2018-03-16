@@ -5,14 +5,20 @@
 {% endblock %}
 
 {% block cvplatform_body %}
-	<div class="container">
-        <div class="col-md-3">
-            {{ include("CVProfileBundle::menu.html.twig") }}
+    <p>
+        {% for message in app.session.flashbag.get('notice') %}
+            <p class="alert alert-success">{{ message }}</p> 
+        {% endfor %}
+    </p>
+
+    <div class="container">
+        <div class="nav">
+            <a href="{{ path('cv_platform_dashboard') }}" class="cv">← Retour au tableau de bord</a>
         </div>
-        <div class="col-md-9">
-			<h3 class="sub-title">Préférences</h3>
-            <hr>
-            <div class="well well-sm well-profile">
+
+        <div class="panel panel-default">
+            <div class="cv panel-heading">Préférences</div>
+            <div class="panel-body">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                     {{ form_errors(form) }}
                     <h3>Discussion</h3>
@@ -68,6 +74,6 @@
           
                 {{ form_end(form) }}
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 {% endblock %}

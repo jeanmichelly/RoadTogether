@@ -1,84 +1,230 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Lecture d'une annonce - {{ parent() }}
+    Annonce de covoiturage | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">
+    {% stylesheets 'css/sweetalert.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+
     <p>
         {% for message in app.session.flashbag.get('notice') %}
-            <p>{{ message }}</p>
+            <p class="alert alert-info">{{ message }}</p>
         {% endfor %}
     </p>
+    <div id="trip">
+        <div class="row">
+            <div class="itineraire col-md-10">
+                {{ ride.departure }} → {{ ride.arrival }}
+            </div>
+            <div class="date-offer-published col-md-2">
+                Annonce créé le {{ ride.offerPublished|date('d/m/Y') }}
+            </div>
+        </div>
 
-    <i>Annonce créé le {{ form.vars.value.offerPublished|date('d/m/Y') }}</i>
-
-                <div class="well well-sm">
-                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                        {{ form_errors(form) }}
-                        <fieldset>
-                            <legend class="text-center">Mon annonce</legend>
-                            <div class="form-group">
-                                {{ form_label(form.departure, "Lieu de départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.departure) }}
-
-                                <div class="col-md-9">{{ form_widget(form.departure, {'attr': {'class': 'form-control'}}) }}</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <span class="info-label col-md-3">Départ</span>
+                                <span class="cv col-md-9"><img class="icon-departure" src="{{ asset('icon/departure.png') }}"></img> {{ ride.departure }}</span>
                             </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.arrival, "Lieu d'arrivé", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.arrival) }}
-
-                                <div class="col-md-9">{{ form_widget(form.arrival, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Arrivée</span>
+                                <span class="cv col-md-9"><img class="icon-arrival" src="{{ asset('icon/arrival.png') }}"></img> {{ ride.arrival }}</span>
                             </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.departureDate, "Date du départ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.departureDate) }}
-
-                                <div class="col-md-9">{{ form_widget(form.departureDate) }}</div>
+                            <div class="row">
+                                <span class="info-label col-md-3">Date de départ</span>
+                                <span class="cv col-md-9"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ ride.departureDate|localizeddate('medium', 'none', 'fr') }} à {{ ride.departureDate|localizeddate('none', 'medium', 'fr') }}</span>
                             </div>
-        
-                            <div class="form-group">
-                                {{ form_label(form.price, "Prix du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.price) }}
-
-                                <div class="col-md-9">{{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}</div>
+                            <div class="info-details-user row">
+                               <div class="col-md-1">
+                                    {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ride.user})) }} 
+                               </div>
+                               <div class="col-md-11">
+                                   <span class="info-details-username">{{ ride.user.getUsername() }}</span>
+                                    <p class="info-details">
+                                        {{ ride.details }}
+                                    </p>
+                               </div>
                             </div>
-
-                            <div class="form-group">
-                                {{ form_label(form.numberPassenger, "Nombre de passagers", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.numberPassenger) }}
-
-                                <div class="col-md-9">{{ form_widget(form.numberPassenger, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
+                    </div>
+                    <div id="panel-itineraire" class="panel panel-default">
+                        <div class="title-info-itineraire panel-heading">
+                            Itinéraire et remplissage du véhicule
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="cell cell-departure col-md-4">
+                                    <img class="icon-departure" src="{{ asset('icon/departure.png') }}"></img> {{ ride.departure }}
+                                </div>
+                                <div class="cell col-md-2">
+                                    <center><img class="driver" src="{{ asset('images/driver.png') }}"></img></center>
+                                </div>
+                                <div class="cell col-md-2">
+                                    <center><img class="driver" src="{{ asset('images/passager.png') }}"></img></center>
+                                </div>
+                                <div class="cell col-md-2">
+                                    <center><img class="driver" src="{{ asset('images/passager.png') }}"></img></center>
+                                </div>
+                                <div class="cell col-md-2">
+                                    <center><img class="driver" src="{{ asset('images/passager.png') }}"></img></center>
+                                </div>
                             </div>
+                            <div class="passengers row">
+                                <div class="cell cell-arrival col-md-4">
+                                    <img class="icon-arrival" src="{{ asset('icon/arrival.png') }}"></img> {{ ride.arrival }}
+                                </div>
+                                <div class="cell-driver cell col-md-2">
+                                    <div class="row">
+                                        <center>
+                                            <a href="{{ path('cv_profile_view', {'id': ride.user.id   }) }}">
+                                                {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ride.user})) }}
+                                            </a><br/>
+                                            <span class="info-username">{{ ride.user.getUsername() }}</span><br/>
+                                            <span class="info-age">{{ ride.user.getProfile().getAge() }} ans</span>
+                                        </center>
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                {{ form_label(form.details, "Description du voyage", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                                {{ form_errors(form.details) }}
-
-                                <div class="col-md-9">{{ form_widget(form.details, {'attr': {'class': 'form-control'}}) }}</div>
+                                {% for reservation in ride.getReservations() %}
+                                    <div class="cell col-md-2">
+                                        <center>
+                                            <a href="{{ path('cv_profile_view', {'id': reservation.user.id   }) }}">
+                                                {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': reservation.user})) }}
+                                            </a><br/>
+                                            <span class="info-username">{{ reservation.user.getUsername() }}</span><br/>
+                                            <span class="info-age">{{ reservation.user.getProfile().getAge() }} ans</span>
+                                        </center>
+                                    </div>
+                                {% endfor %}
+                                {% set numberOfRemainingSpace = render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': ride})) %}
+                                {% if numberOfRemainingSpace > 0 %}
+                                    {% for i in 0..numberOfRemainingSpace-1 %}
+                                        <div class="cell col-md-2">
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
-                        </fieldset>
-                        {{ form_rest(form) }}
-                    {{ form_end(form) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="{{ path('cv_platform_upcoming_rides') }}" class="cv">← Retour aux annonces</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ path('cv_platform_edit', {'id': ride.id }) }}" class="cv"><i class="glyphicon glyphicon-edit"></i> Modifier l'annonce</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="cv sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><i class="glyphicon glyphicon-remove-circle"></i> Supprimer l'annonce</a>
+                        </div>
+                    </div>
                 </div>
-    <p>
-        <a href="{{ path('cv_platform_upcoming_rides') }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour aux annonces </a>
-        <a href="{{ path('cv_platform_edit', {'id': form.vars.value.id }) }}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i>Modifier l'annonce</a>
-        <button class="btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><i class="glyphicon glyphicon-trash"></i> Supprimer l'annonce</button>
-    </p>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="info-label-price col-md-4">
+                                    <span class="info-label">Prix par place</span>
+                                </div>
+                                <div class="col-md-3 col-md-offset-5">
+                                    <span class="cv price">{{ ride.price }} €</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <center><span class="info-label">Passagers sur ce trajet</span></center>
+                            <center>
+                                <table>
+                                    {% if ride.getReservations()|length == 0 %}
+                                        <i>Pas encore de passagers pour cette annonce<i/>  
+                                    {% else %}
+                                        <tr>
+                                            {% for reservation in ride.getReservations() %}
+                                               <td width="50px" height="50px">
+                                                    <figure class="booking-occupant thumbnail">
+                                                        <a href="{{ path('cv_profile_view', {'id': reservation.user.id   }) }}">
+                                                            {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': reservation.user})) }}
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading text-center">{{ reservation.user }}</h4>
+                                                        </div>
+                                                    </figure> 
+                                                </td>
+                                            {% endfor %}
+                                            {% set numberOfRemainingSpace = render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': ride})) %}
+                                            {% if numberOfRemainingSpace > 0 %}
+                                                {% for i in 0..numberOfRemainingSpace-1 %}
+                                                    <td class="booking-occupant booking-seatavailable"></td>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                            </center>
+                            <center><span class="info-label">{{ numberOfRemainingSpace }} place(s) restante(s)</span></center>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="title-info-conducteur panel-heading">
+                            Conducteur
+                        </div>
+                        <div class="panel-body">
+                            <div class="info-user row">
+                                <div class="col-md-2">
+                                    {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ride.user})) }} 
+                                </div>
+                                <div class="col-md-4">
+                                   <span class="info-username">{{ ride.user.getUsername() }}</span><br/>
+                                   <span class="info-age">{{ ride.user.getProfile().getAge() }} ans</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span class="cv glyphicon glyphicon-star"></span> <span class="cv">{{ render(controller('CVProfileBundle:Profile:avgEvaluations', {'user': ride.user})) }}/5</span> <span class="info-label">- {{ totalEvaluation }} avis</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <span class="{% if ride.user.getProfile().getPreference().getDiscussion() == 1 %}blablabla{% else %}blabla{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+                                    <span class="{% if ride.user.getProfile().getPreference().getCigarette() == 1 %}smoking{% else %}no-smoking{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+                                    <span class="{% if ride.user.getProfile().getPreference().getAnimal() == 1 %}pet{% else %}no-pet{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+                                    <span class="{% if ride.user.getProfile().getPreference().getMusic() == 1 %}music{% else %}no-music{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="title-info-activite col-md-5">Activité</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">Membre depuis : {{ ride.user.getDateRegistration | date("d/m/Y") }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }} 
-    <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+    {% javascripts 'js/sweetalert.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     <script> // Boite de confirmation
         document.querySelector('.sweet-14').onclick = function(){
             swal({
-                  title: "Êtes vous sure de vouloir supprimer ?",
+                title: "Êtes vous sure de vouloir supprimer ?",
                 text: "Vous ne pourrez plus récupérer l'annonce",
                 type: "error",
                 showCancelButton: true,
@@ -89,7 +235,7 @@
             function(isConfirm) {
                 if (isConfirm) {
                     $.ajax({
-                        url: "{{ path('cv_platform_delete', {'id':  form.vars.value.id }) }}",
+                        url: "{{ path('cv_platform_delete', {'id':  ride.id }) }}",
                         success: function(data) {
                             window.location.replace("{{ path('cv_platform_my_rides') }}");
                         }

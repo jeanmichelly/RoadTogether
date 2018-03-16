@@ -1,13 +1,10 @@
-{% extends "CVPlatformBundle::layout.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block title %}
-    Accueil - {{ parent() }}
+    Le covoiturage simplifie vos trajets | {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>Accueil</h1>
-    <hr>
-
     {% block cvplatform_body %}
         {% stylesheets 'css/jquery.datetimepicker.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -18,23 +15,34 @@
             {{ form_start(form) }}
                 {{ form_errors(form) }}
                 <fieldset>
-                    <legend class="text-center"><h2>Trouver votre covoiturage</h2><a id="swap"><i class="glyphicon glyphicon-transfer"></i></a></legend>
-                    <div class="input-group">
-                        <div class="input-group-addon"><img src="{{ asset('icon/departure.png') }}"></img></div>
-                        {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:250px', 'placeholder': 'De' }}) }}
-                        <div class="input-group-addon"><img src="{{ asset('icon/arrival.png') }}"></img></div>
-                        {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:250px', 'placeholder': 'A' }}) }}
-                        
-                        <div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
-                        {{ form_widget(form.departureDate, {'attr': {'class': 'form-control', 'style': 'width:160px'}}) }}
-                    </div></br>
-                    <center>{{ form_widget(form.rechercher, {'attr': {'class': 'btn btn-primary'}}) }}</center>
-                </fieldset>
+                    <legend class="text-center"><h2>Trouver votre covoiturage</h2><a id="swap"><i class="cv glyphicon glyphicon-transfer"></i></a></legend>
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3" style="left:40px;">
+                            <div class="input-group">
+                                <div class="input-group-addon"><img src="{{ asset('icon/departure.png') }}"></img></div>
+                            {{ form_widget(form.departure, {'attr': {'class': 'form-control', 'style': 'width:200px;height:50px;', 'placeholder': 'Départ' }}) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <div class="input-group-addon"><img src="{{ asset('icon/arrival.png') }}"></img></div>
+                                {{ form_widget(form.arrival, {'attr': {'class': 'form-control', 'style': 'width:200px;height:50px;', 'placeholder': 'Destination' }}) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="right:40px;">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
+                                {{ form_widget(form.departureDate, {'attr': {'class': 'form-control', 'style': 'width:110px;height:50px;', 'placeholder': 'Date'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="right:75px;">
+                        {{ form_widget(form.rechercher, {'attr': {'class': 'cv-btn-primary', 'style': 'width:181px;height:50px;'}}) }}
+                        </div>
+                    </div>
                 {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
-        <hr>
-        <p><a href="{{ path('cv_platform_add') }}" class="btn btn-primary">Publier une annonce</a></p>
 <!--         <div class="well well-sm" style="margin-top: 100px">
             {{ include("CVPlatformBundle::news.html.twig") }}  
         </div> -->

@@ -71,7 +71,7 @@ class RatingRepository extends EntityRepository
         }
     }
 
-    public function myNotifications($page, $nbPerPage, $userId) {
+    public function myNotifications($userId) {
         $query = $this->createQueryBuilder('r')
         ->leftJoin('r.user', 'user')
         ->addSelect('user')
@@ -80,11 +80,7 @@ class RatingRepository extends EntityRepository
         ->andWhere('r.state = 0')
         ->getQuery();
 
-        $query
-        ->setFirstResult(($page-1) * $nbPerPage)
-        ->setMaxResults($nbPerPage);
-
-        return new Paginator($query, true);
+        return $query->getResult();
     }
 
     public function numberOfNotification($userId) {
@@ -150,12 +146,34 @@ class RatingRepository extends EntityRepository
         ->setParameter('evaluation', $evaluation);
 
         return $query->getSingleScalarResult();
-    } 
+    }
 
     public function totalRatings() {
         $query = $this->_em->createQuery('
             SELECT COUNT(r) 
             FROM CVPlatformBundle:Rating r');
+        
+        return $query->getSingleScalarResult();
+    }
+
+    public function avgEvaluations($userId) {
+        $query = $this->_em->createQuery('
+            SELECT avg(r.evaluation) 
+            FROM CVPlatformBundle:Rating r
+            WHERE r.relateduser = :userId
+            GROUP BY r.relateduser')
+        ->setParameter('userId', $userId);
+        
+        return $query->getSingleScalarResult();
+    }     
+
+    public function avgDriving($userId) {
+        $query = $this->_em->createQuery('
+            SELECT avg(r.driving) 
+            FROM CVPlatformBundle:Rating r
+            WHERE r.relateduser = :userId
+            GROUP BY r.relateduser')
+        ->setParameter('userId', $userId);
         
         return $query->getSingleScalarResult();
     }     

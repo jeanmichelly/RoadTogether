@@ -8,7 +8,6 @@ cv_profile:
 
 cv_platform:
     resource: "@CVPlatformBundle/Resources/config/routing.yml"
-    prefix:   /platform
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

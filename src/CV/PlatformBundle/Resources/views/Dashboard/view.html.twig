@@ -1,0 +1,33 @@
+{% extends "CVPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Tableau de bord | {{ parent() }}
+{% endblock %}
+
+{% block cvplatform_body %}
+	{{ include("CVPlatformBundle:Dashboard:header.html.twig") }}
+	<div class="container">
+		<div class="row">
+			<div id="dashboard-left" class="col-md-3">
+				<div class="row dashboard-left-block">
+					<h3 class="dashboard-left-title">Préférences</h3>
+					<span class="{% if user_preference.getDiscussion() == 1 %}blablabla{% else %}blabla{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+					<span class="{% if user_preference.getCigarette() == 1 %}smoking{% else %}no-smoking{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+					<span class="{% if user_preference.getAnimal() == 1 %}pet{% else %}no-pet{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+					<span class="{% if user_preference.getMusic() == 1 %}music{% else %}no-music{% endif %} prefs tip" style="background-image:url('{{ asset('bundles/cvplatform/img/sprite-prefs.png') }}')"></span>
+				</div><br/>
+
+				<a href="{{ path('cv_dashboard_edit_preference') }}" class="cv">→ Modifier vos préférences</a>
+				<hr>
+
+				<div class="row dashboard-left-block">
+					<h3 class="dashboard-left-title">Activité</h3>
+					Membre depuis : {{ user_registration | date("d/m/Y") }}
+				</div>
+			</div>
+			<div id="dashboard-right" class="col-md-9">
+				{{ include("CVPlatformBundle:Dashboard:notifications.html.twig") }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

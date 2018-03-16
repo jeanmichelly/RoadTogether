@@ -4,69 +4,80 @@
         {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
         {{ form_errors(form) }}
         <fieldset>
-            <legend class="text-center">Inscription</legend>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form id="form-register" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">{{ form_errors(form.username) }}</div>
 
-            <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                        <div class="row">
+                            <div class="col-md-6 form-left">
+                                <div class="form-group">
+                                    {{ form_widget(form.profile.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-right">
+                                <div class="form-group">
+                                    {{ form_widget(form.profile.firstName, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"> {{ form_errors(form.profile.name) }}</div>
+                        <div class="col-md-12"> {{ form_errors(form.profile.firstName) }}</div>
 
-                <div class="form-group">
-                    {{ form_label(form.username, "Nom du compte", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.username) }}</div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.profile.birthday, {'attr': {'class': 'form-control', 'placeholder': 'Date de naissance'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"> {{ form_errors(form.profile.birthday) }}</div>
 
-                <div class="form-group">
-                    {{ form_label(form.profile.name, "Nom de famille", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.profile.name, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.profile.name) }}</div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.profile.image.file, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"> {{ form_errors(form.profile.image.file) }}</div>
 
-                <div class="form-group">
-                    {{ form_label(form.profile.firstName, "Prénom", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.profile.firstName, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.profile.firstName) }}</div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"> {{ form_errors(form.email) }}</div>
 
-                <div class="form-group">
-                    {{ form_label(form.profile.birthday, "Date de naissance", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.profile.birthday, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.profile.birthday) }}</div>
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.profile.image.file, "Photo", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.profile.image.file, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.profile.image.file) }}</div>
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.email, "Adresse email", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.email) }}</div>
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.plainPassword.first) }}</div>
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.plainPassword.second, "Confirmation du mot de passe", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
-                    <div class="col-md-9">{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9"> {{ form_errors(form.plainPassword.second) }}</div>
-                </div>
-                <input class="btn btn-primary" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
-        </fieldset>
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
+                        <div class="row">
+                            <div class="col-md-6 form-left">
+                                <div class="form-group">
+                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-right">
+                                <div class="form-group">
+                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirmer le mot de passe'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"> {{ form_errors(form.plainPassword.first) }}</div>
+                        <div class="col-md-12"> {{ form_errors(form.plainPassword.second) }}</div>
+                        <center><input class="cv-btn-primary" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" /></center>
+                </fieldset>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
 

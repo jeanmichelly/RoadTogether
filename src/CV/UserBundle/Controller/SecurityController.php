@@ -49,6 +49,6 @@ class SecurityController extends BaseController
             'last_username' => $lastUsername,
             'error'         => $error,
             'csrf_token' => $csrfToken,
-            ));
+        ));
     }
 }

@@ -1,0 +1,8 @@
+<ul class="sub-menu nav nav-pills">
+    <li class="{% if app.request.attributes.get('_route') == 'cv_platform_private_messages_received' %} active{% endif %}">
+        <a href="{{ path('cv_platform_private_messages_received') }}">Messages reçus</a>
+    </li>
+    <li class="{% if app.request.attributes.get('_route') == 'cv_platform_private_messages_sended' %} active{% endif %}">
+        <a href="{{ path('cv_platform_private_messages_sended') }}">Messages envoyés</a>
+    </li>
+</ul>

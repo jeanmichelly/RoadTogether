@@ -1,10 +1,11 @@
 {% extends "::layout.html.twig" %}
 
 {% block title %}
-  	Annonces - {{ parent() }}
+  	{{ parent() }}
 {% endblock %}
 
-{% block menu_lateral %}    
+{% block navtab_top %}
+	{{ include("CVPlatformBundle::navtab-top.html.twig") }}  
 {% endblock %}
 
 {% block body %}

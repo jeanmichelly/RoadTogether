@@ -1,89 +1,55 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes trajets passés - {{ parent() }}
-{% endblock %}
-
-{% block menu_lateral %}  
-    {{ include("CVPlatformBundle:Ride:menu.html.twig") }}  
+    Trajets passés | {{ parent() }}
 {% endblock %}
 
 {% block cvplatform_body %}
-    <h2>Liste de mes trajets passés</h2>
+    {{ include("CVPlatformBundle:Ride:menu.html.twig") }}  
 
-{% if listPastRides|length == 0 %}
+    {% if listPastRides|length == 0 %}
         <p>
-        {% for message in app.session.flashbag.get('info') %}
-
-        <p class="alert alert-info">{{ message }}</p> 
-        {% endfor %}
-    </p>
-
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
     {% else %}
-
-     {% for pastRide in listPastRides %}
-
-
-
- <table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black">
-  
-
-           <i>Annonce créé le {{ pastRide.offerPublished|date('d/m/Y à H:i:s') }}<i/>
-            <tr>
-
-                <td class="col-sm-1 col-md-5 text-center"><strong>{{ pastRide.departure }} --> {{ pastRide.arrival }} <br>
-
-
-                    le  {{ pastRide.departureDate|localizeddate('medium', 'none', 'fr') }}
-                    à {{ pastRide.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
-                <td class="col-sm-1 col-md-5 text-center"><strong>{{ pastRide.price }}€ <br> par place
-                    <br><br>                                         
- {{ render(controller('CVPlatformBundle:Ride:numberOfPlacesBooked', {'ride': pastRide})) }} place(s) réservé(s) sur {{ pastRide.numberPassenger }} 
-                    </strong></td>
-                    <td col-sm-1 col-md-5 text-center>            
-                <p>
-            </p>
-            <p>
-                <a href="{{ path('cv_platform_reservation_ride', {'id': pastRide.id   }) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i>Voir l'annonce</a>
-            </p>
-            </td>
-            <br>                 
-            </tr>
-                <table>
-                    {% if pastRide.getReservations()|length == 0 %}
-                  <i>Il n'y a pas eu de passagers pour cette annonce<i/>  
-                
-                {% else %}
-        <i>Passagers : <i/>
-            <tr>
-             {% for reservation in pastRide.getReservations() %}
-               <td width="120px" height="100px">
-                 <figure class="thumbnail">
-
-                     <a href="{{ path('cv_profile_view', {'id': reservation.user.id   }) }}">
-       {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': reservation.user})) }} 
-                     </a>
-                        <div class="media-body">
-                            <h4 class="media-heading text-center">{{ reservation.user }}</h4>
+        <p>Voici vos annonces de trajets à venir.</p>
+        <div id="my-trips">
+            {% for pastRide in listPastRides %}
+                <div class="trip">
+                    <div class="row">
+                        <div class="itineraire col-md-12">
+                            {{ pastRide.departure }} → {{ pastRide.arrival }}
                         </div>
-                               {{ reservation.getNumberOfPlaces() }} place(s)
-                    </figure> 
-                </td>
-                {% endfor %}
-       
-            </tr>
-        {% endif %}
-    </table>
-<br><br>
-<hr >
-<br><br>
-    {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <i class="fa fa-calendar" aria-hidden="true"></i> {{ pastRide.departureDate|localizeddate('medium', 'none', 'fr') }}
+                            à {{ pastRide.departureDate|localizeddate('none', 'medium', 'fr') }}
+                        </div>
+                        <div class="col-md-2">
+                            <span class="space-black">{{ render(controller('CVPlatformBundle:Ride:numberOfPlacesBooked', {'ride': pastRide})) }}</span> place(s) restante(s)
+                        </div>
+                        <div class="col-md-2">
+                            <span class="price-black">{{ pastRide.price }}€</span> par passager
+                        </div>
+                        <div class="date-offer-published col-md-12">Annonce créé le {{ pastRide.offerPublished|date('d/m/Y à H:i:s') }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <i class="cv fa fa-eye" aria-hidden="true"></i> <a href="{{ path('cv_platform_view', {'id': pastRide.id }) }}" class="cv">Voir l'annonce test</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-    <ul class="pagination">
-        {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_upcoming_rides', {'page': p}) }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul>
+        <ul class="pagination">
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}><a href="{{ path('cv_platform_upcoming_rides', {'page': p}) }}">{{ p }}</a></li>
+            {% endfor %}
+        </ul>
 
     {% endif %}
 {% endblock %}

@@ -1,22 +1,8 @@
-{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <a href="{{ path('cv_platform_ratings_received') }}"> Avis reçus</a>   
-                </h4>
-            </div>
-        </div>
-         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <a href="{{ path('cv_platform_ratings_sended') }}"> Avis laissés</a>   
-                </h4>
-            </div>
-        </div>
-    </div> 
-{% endif %}
+<ul class="sub-menu nav nav-pills">
+    <li class="{% if app.request.attributes.get('_route') == 'cv_platform_ratings_received' %} active{% endif %}">
+        <a href="{{ path('cv_platform_ratings_received') }}">Avis reçus</a>
+    </li>
+    <li class="{% if app.request.attributes.get('_route') == 'cv_platform_ratings_sended' %} active{% endif %}">
+        <a href="{{ path('cv_platform_ratings_sended') }}">Avis laissés</a>
+    </li>
+</ul>

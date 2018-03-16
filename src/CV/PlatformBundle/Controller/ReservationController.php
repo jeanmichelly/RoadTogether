@@ -12,7 +12,7 @@ use CV\PlatformBundle\Entity\Reservation;
 
 class ReservationController extends Controller
 {
-    public function addAction(Ride $ride) {
+    public function viewAction(Ride $ride) {
 
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
 
@@ -21,28 +21,16 @@ class ReservationController extends Controller
         ->getRepository('CVPlatformBundle:PublicMessage')
         ->publicMessagesOfRide($ride);
 
-        $isFull = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('CVPlatformBundle:Ride')
-        ->isFull($ride);
-
         $numberOfPlacesBooked = $this->getDoctrine()
         ->getManager()
         ->getRepository('CVPlatformBundle:Ride')
         ->numberOfPlacesBooked($ride);
 
-        $existPassenger = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('CVPlatformBundle:Reservation')
-        ->existPassenger($userId, $ride->getId());
-
         return $this->render('CVPlatformBundle:Reservation:view.html.twig', array(
-          'ride'                        => $ride,
-          'listPublicMessagesOfRide'    => $listPublicMessagesOfRide,
-          'isFull'                      => $isFull,
-          'numberOfPlacesBooked'        => $numberOfPlacesBooked,
-          'existPassenger'              => $existPassenger,
-          ));
+            'ride'                        => $ride,
+            'listPublicMessagesOfRide'    => $listPublicMessagesOfRide,
+            'numberOfPlacesBooked'        => $numberOfPlacesBooked,
+        ));
     }
     
     public function confirmAction(Ride $ride, Request $request) {
@@ -70,7 +58,7 @@ class ReservationController extends Controller
 
             return $this->render('CVPlatformBundle:Reservation:current.html.twig', array(
                 'listCurrentReservations'     => $listCurrentReservations,
-                ));
+            ));
         }
 
         $nbPages = ceil(count($listCurrentReservations)/$nbPerPage);
@@ -79,7 +67,7 @@ class ReservationController extends Controller
             'listCurrentReservations'   => $listCurrentReservations,
             'nbPages'                   => $nbPages,
             'page'                      => $page,
-            ));
+        ));
     }
 
     public function pastReservationsAction($page, Request $request) {      
@@ -105,7 +93,7 @@ class ReservationController extends Controller
             'listPastReservations'  => $listPastReservations,
             'nbPages'           => $nbPages,
             'page'              => $page,
-            ));
+        ));
     }
 
     public function myReservationsAction($page) {
@@ -131,6 +119,6 @@ class ReservationController extends Controller
             'listReservations'  => $listReservations,
             'nbPages'           => $nbPages,
             'page'              => $page,
-            ));
+        ));
     }
 }

@@ -1,57 +1,66 @@
 {% extends "CVPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-Réserver - {{ parent() }}
+    {{ app.request.get('departure') }} - {{ app.request.get('arrival') }} | {{ parent() }}
+{% endblock %}
+
+{% block navtab_top %}
 {% endblock %}
 
 {% block cvplatform_body %}
-<h2>Liste des annonces</h2>
+    {% if listRides|length == 0 %}
+        <p>
+            {% for message in app.session.flashbag.get('info') %}
 
-
-{% if listRides|length == 0 %}
-<p>
-    {% for message in app.session.flashbag.get('info') %}
-
-    <p class="alert alert-info">{{ message }}</p> 
-    {% endfor %}
-</p>
-
-{% else %}
-
-{% for ride in listRides %}
-
-    <table class="table table-hover" style="background-color:#F0F0F0;border:1px solid black" onclick="document.location.href='{{ path('cv_platform_reservation_ride', {'id': ride.id   }) }}'" style="cursor:pointer">
-        <tbody>
-            <tr>
-                <td class="col-md-2">
-                    <figure class="thumbnail">
-                        {{ render(controller('CVPlatformBundle:Rating:picture', {'thumb': 'picture_rating_dialog_medium', 'user': ride.user})) }} 
-                        <div class="media-body">
-                            <h4 class="media-heading text-center">{{ ride.user }}</h4>
+            <p class="alert alert-info">{{ message }}</p> 
+            {% endfor %}
+        </p>
+    {% else %}
+        <div id="trips-itineraire">
+            {{ listRides|length }} {{ app.request.get('departure') }} → {{ app.request.get('arrival') }} disponibles
+        </div>
+        <div id="trips" class="container">
+            {% for ride in listRides %}
+                <div class="row" onclick="document.location.href='{{ path('cv_platform_reservation', {'id': ride.id   }) }}'">
+                    <div class="col-md-2">
+                        {{ render(controller('CVProfileBundle:Profile:picture', {'thumb': 'my_picture_navbartop_small', 'user': ride.user})) }}
+                        <div class="pull-right">
+                            {{ ride.user.getProfile().getFirstname() }} {{ ride.user.getProfile().getName()[:1] }}<br>
+                            <span  class="info-label">{{ ride.user.getProfile().getAge() }} ans</span>
+                        </div><br><br>
+                        {{ render(controller('CVPlatformBundle:Rating:avgEvaluationsOfUser', {'user': ride.user}))|round(1, 'floor') }}/5 <span class="info-label">- {{ render(controller('CVPlatformBundle:Rating:totalEvaluationOfUser', {'user': ride.user}))|round(1, 'floor') }} avis</span>
+                    </div>
+                    <div class="borderleft col-md-10">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="datetime">
+                                    {{ ride.departureDate|localizeddate('medium', 'none', 'fr') }} à {{ ride.departureDate|localizeddate('none', 'medium', 'fr') }}
+                                </div>
+                                <img class="icon-departure" src="{{ asset('icon/departure.png') }}"></img> <span class="info-label">{{ride.departure }}</span> <br>
+                                <img class="icon-arrival" src="{{ asset('icon/arrival.png') }}"></img> <span class="info-label">{{ride.arrival }}</span>
+                                
+                            </div>
+                            <div class="col-md-5" style="text-align:right;">
+                                <span class="price-black">{{ ride.price }}</span>,00 €<br>
+                                <div>par place</div>
+                                <div>
+                                    <span class="space-black">{{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': ride})) }}</span> places restantes
+                                </div>
+                            </div>
                         </div>
-                    </figure>
-                </td>
-                <td class="col-sm-1 col-md-6 text-center"><strong>{{ ride.departure }} --> {{ ride.arrival }} <br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
 
-                    le  {{ ride.departureDate|localizeddate('medium', 'none', 'fr') }}
-                    à {{ ride.departureDate|localizeddate('none', 'medium', 'fr') }}</strong></td>
-                <td class="col-sm-1 col-md-3 text-center"><strong>{{ ride.price }}€ <br> par place
-                    <br><br>                                         {{ render(controller('CVPlatformBundle:Ride:numberOfRemainingSpace', {'ride': ride})) }} places restantes</strong></td>
-            </tr>
-        </tbody>
-    </table>
-{% endfor %}
-
-
-<ul class="pagination">
-    {% for p in range(1, nbPages) %}
-    <li{% if p == page %} class="active"{% endif %}>
-    <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
-</li>
-{% endfor %}
-</ul>
-
-{% endif %}
+        <ul class="pagination">
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('cv_platform_my_rides', {'page': p}) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
 
