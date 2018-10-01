@@ -133,7 +133,7 @@ class RatingRepository extends EntityRepository
             WHERE r.relateduser = :userId')
         ->setParameter('userId', $userId);
 
-        return $query->getSingleScalarResult();
+        return $query->getOneOrNullResult()[1];
     }   
 
     public function countEvaluation($userId, $evaluation) {
@@ -164,7 +164,7 @@ class RatingRepository extends EntityRepository
             GROUP BY r.relateduser')
         ->setParameter('userId', $userId);
         
-        return $query->getSingleScalarResult();
+        return $query->getOneOrNullResult()[1];
     }     
 
     public function avgDriving($userId) {
